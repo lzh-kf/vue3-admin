@@ -1,0 +1,283 @@
+<template>
+  <div>
+    <el-form :inline="true" :model="param" class="demo-form-inline">
+      <el-form-item label="名字：">
+        <el-input
+          v-model="param.name"
+          placeholder="请输入名字"
+          clearable
+        ></el-input>
+      </el-form-item>
+      <el-form-item label="班级：">
+        <el-input
+          v-model="param.class"
+          placeholder="请输入班级"
+          clearable
+        ></el-input>
+      </el-form-item>
+      <el-form-item label="兴趣：">
+        <el-input
+          v-model="param.interest"
+          placeholder="请输入兴趣"
+          clearable
+        ></el-input>
+      </el-form-item>
+      <el-form-item label="性别：">
+        <el-radio-group v-model="param.gender">
+          <el-radio label="0">女</el-radio>
+          <el-radio label="1">男</el-radio>
+        </el-radio-group>
+      </el-form-item>
+      <el-form-item style="margin-left: 10px">
+        <el-button type="primary" @click="handleSearch">查询</el-button>
+        <el-button @click="handleReset">重置</el-button>
+      </el-form-item>
+    </el-form>
+    <el-row>
+      <el-col :span="24" style="margin: 15px 20px 15px 0; text-align: right">
+        <el-button
+          @click="handleCreate"
+          type="primary"
+          style="margin-right: 10px"
+          v-permission="'student.create'"
+          >创建学生</el-button
+        >
+      </el-col>
+    </el-row>
+    <el-table :data="list" style="width: 100%" v-loading="loading">
+      <el-table-column
+        prop="name"
+        label="姓名"
+        align="center"
+        header-align="center"
+      ></el-table-column>
+      <el-table-column
+        prop="class"
+        label="班级"
+        align="center"
+        header-align="center"
+      ></el-table-column>
+      <el-table-column
+        prop="interest"
+        label="兴趣"
+        align="center"
+        header-align="center"
+      ></el-table-column>
+      <el-table-column
+        prop="gender"
+        label="性别"
+        align="center"
+        header-align="center"
+        :formatter="formatterGender"
+      ></el-table-column>
+      <el-table-column label="操作" align="center" header-align="center">
+        <template #default="{ row }">
+          <el-button @click="handleEdit(row)" v-permission="'student.update'"
+            >编辑</el-button
+          >
+          <el-popconfirm title="确定删除吗？" @confirm="handleDeleteEvent(row)">
+            <template #reference>
+              <el-button
+                type="danger"
+                style="margin-left: 10px"
+                v-permission="'student.del'"
+                >删除</el-button
+              >
+            </template>
+          </el-popconfirm>
+        </template>
+      </el-table-column>
+    </el-table>
+    <div class="pagination">
+      <el-pagination
+        @size-change="handleSizeChange"
+        @current-change="handleCurrentChange"
+        :current-page="pagination.pageNum"
+        :page-sizes="pageSizes"
+        :page-size="pagination.pageSize"
+        layout="total, sizes, prev, pager, next, jumper"
+        :total="total"
+      ></el-pagination>
+    </div>
+    <el-dialog
+      :title="isCreated ? '学生信息录入' : '学生信息修改'"
+      v-model="visible"
+      width="30%"
+      :before-close="handleClose"
+    >
+      <el-form
+        :model="formData"
+        :rules="rules"
+        ref="ruleForm"
+        label-width="100px"
+        class="demo-ruleForm"
+      >
+        <el-form-item label="名字" prop="name">
+          <el-input v-model="formData.name"></el-input>
+        </el-form-item>
+        <el-form-item label="班级" prop="class">
+          <el-input v-model="formData.class"></el-input>
+        </el-form-item>
+        <el-form-item label="兴趣" prop="interest">
+          <el-input type="textarea" v-model="formData.interest"></el-input>
+        </el-form-item>
+        <el-form-item label="性别" prop="gender">
+          <el-radio-group v-model="formData.gender">
+            <el-radio label="0">女</el-radio>
+            <el-radio label="1">男</el-radio>
+          </el-radio-group>
+        </el-form-item>
+      </el-form>
+      <template #footer>
+        <span class="dialog-footer">
+          <el-button @click="handleCancel">取 消</el-button>
+          <el-button type="primary" @click="handleSubmit">确 定</el-button>
+        </span>
+      </template>
+    </el-dialog>
+  </div>
+</template>
+
+<script lang="ts">
+import getHandleFn from "@/utils/curd";
+import { defineComponent, reactive, toRefs, ref, nextTick } from "vue";
+import { Data, Record, FormData } from "./dataType";
+import { Done, Config } from "@/utils/base";
+import {
+  studentCreate,
+  studentUpdate,
+  studentdel,
+  studentQuery,
+} from "@/apis/student";
+
+const formData: FormData = {
+  name: "",
+  gender: "",
+  interest: "",
+  class: "",
+};
+
+// 配置项
+const config: Config = {
+  handleAdd: studentCreate,
+  handleDel: studentdel,
+  handleUpdate: studentUpdate,
+  handleQuery: studentQuery,
+  queryParam: {},
+};
+
+export default defineComponent({
+  setup() {
+    const ruleForm = ref();
+    const data: Data = reactive({
+      param: { ...formData }, // 查询参数
+      formData: { ...formData }, // 表单数据
+      rules: {
+        name: [{ required: true, message: "请输入名字", trigger: "blur" }],
+        class: [{ required: true, message: "请输入班级", trigger: "blur" }],
+        interest: [{ required: true, message: "请输入兴趣", trigger: "blur" }],
+        gender: [{ required: true, message: "请选择性别", trigger: "change" }],
+      }, // 校验规则
+    });
+
+    // 基础数据（分页数据），和增删改查处理函数，以及分页查询变化处理函数
+    const {
+      baseData,
+      handleAdd,
+      handleDel,
+      handleUpdate,
+      handleQuery,
+      handleSizeChange,
+      handleCurrentChange,
+      handleDialog,
+    } = getHandleFn(config);
+
+    const handleSearch = () => {
+      config.queryParam = { ...data.param };
+      handleQuery();
+    };
+
+    const handleReset = () => {
+      data.param = { ...formData };
+      handleSearch();
+    };
+
+    const handleCreate = () => {
+      baseData.isCreated = true;
+      handleDialog(true);
+    };
+
+    const handleEdit = (row: Record) => {
+      baseData.isCreated = false;
+      data.formData = { ...row };
+      handleDialog(true);
+    };
+
+    const handleDeleteEvent = (row: Record) => {
+      handleDel({ id: row._id });
+    };
+
+    const handleCancel = () => {
+      data.formData = { ...formData };
+      nextTick(ruleForm.value.clearValidate);
+      handleDialog(false);
+    };
+
+    const handleClose = (done: Done) => {
+      handleCancel();
+      done();
+    };
+
+    const handleSubmit = () => {
+      ruleForm.value.validate((valid: boolean) => {
+        if (valid) {
+          if (baseData.isCreated) {
+            handleAdd(data.formData);
+          } else {
+            handleUpdate({ ...data.formData, id: data.formData._id });
+          }
+        }
+      });
+    };
+
+    const formatterGender = (
+      row: Record,
+      column: unknown,
+      value: "0" | "1"
+    ): string => {
+      const map = {
+        "0": "女",
+        "1": "男",
+      };
+      return map[value];
+    };
+
+    handleSearch();
+
+    return {
+      ...toRefs(data),
+      ...toRefs(baseData),
+      handleSearch,
+      handleReset,
+      ruleForm,
+      handleClose,
+      handleCreate,
+      handleEdit,
+      handleDeleteEvent,
+      handleCancel,
+      handleSubmit,
+      handleSizeChange,
+      handleCurrentChange,
+      formatterGender,
+    };
+  },
+});
+</script>
+
+<style lang="scss" scoped>
+.pagination {
+  margin: 20px;
+  display: flex;
+  justify-content: flex-end;
+}
+</style>:

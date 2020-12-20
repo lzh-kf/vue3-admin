@@ -1,9 +1,9 @@
 <template>
   <div>
     <el-form :inline="true" :model="param" class="demo-form-inline">
-      <el-form-item label="属性标签：">
+      <el-form-item label="角色名：">
         <el-input
-          v-model="param.defaultProperty"
+          v-model="param.roleName"
           placeholder="请输入"
           clearable
         ></el-input>
@@ -26,16 +26,26 @@
     </el-row>
     <el-table :data="list" style="width: 100%" v-loading="loading">
       <el-table-column
-        prop="defaultProperty"
-        label="属性名"
+        prop="roleName"
+        label="角色名"
+        align="center"
+        header-align="center"
+      ></el-table-column>
+      <el-table-column
+        prop="createTime"
+        label="创建时间"
+        align="center"
+        header-align="center"
+      ></el-table-column>
+      <el-table-column
+        prop="roleName"
+        label="角色名"
         align="center"
         header-align="center"
       ></el-table-column>
       <el-table-column label="操作" align="center" header-align="center">
         <template #default="{ row }">
-          <el-button @click="handleEdit(row)" v-permission="''"
-            >编辑</el-button
-          >
+          <el-button @click="handleEdit(row)" v-permission="''">编辑</el-button>
           <el-popconfirm title="确定删除吗？" @confirm="handleDeleteEvent(row)">
             <template #reference>
               <el-button
@@ -64,7 +74,7 @@
       :title="isCreated ? '录入' : '修改'"
       v-model="visible"
       width="30%"
-      :before-close="handleClose"
+      :destroy-on-close="true"
     >
       <el-form
         :model="formData"
@@ -73,8 +83,30 @@
         label-width="100px"
         class="demo-ruleForm"
       >
-        <el-form-item label="属性名" prop="defaultProperty">
-          <el-input v-model="formData.defaultProperty"></el-input>
+        <el-form-item label="角色名" prop="roleName">
+          <el-input v-model="formData.roleName"></el-input>
+        </el-form-item>
+        <el-form-item label="菜单" prop="menuIds" style="width: 45%">
+          <el-tree
+            :data="menus"
+            show-checkbox
+            node-key="menuId"
+            ref="menuTree"
+            :default-checked-keys="formData.menuIds"
+            :props="defaultProps"
+          >
+          </el-tree>
+        </el-form-item>
+        <el-form-item label="权限" prop="permissionIds" style="width: 45%">
+          <el-tree
+            :data="actions"
+            show-checkbox
+            node-key="menuId"
+            ref="permissionTree"
+            :default-checked-keys="formData.permissionIds"
+            :props="defaultProps"
+          >
+          </el-tree>
         </el-form-item>
       </el-form>
       <template #footer>
@@ -89,12 +121,23 @@
 
 <script lang="ts">
 import getHandleFn from "@/utils/curd";
-import { defineComponent, reactive, toRefs, ref, nextTick } from "vue";
+import { defineComponent, reactive, toRefs, ref, nextTick, watch } from "vue";
 import { Done, Config } from "@/utils/base";
-import { Data, Record, FormData } from "./dataType";
-import { roleCreate, roleDel, roleUpdate, roleQuery } from "@/apis/user/role/index";
+import { Data, Record, FormData, Param } from "./dataType";
+import { menuQuery } from "@/apis/user/menu";
+import { permissionQuery } from "@/apis/user/permission";
+import lodash from "lodash";
+import {
+  roleCreate,
+  roleDel,
+  roleUpdate,
+  roleQuery,
+} from "@/apis/user/role/index";
 
 const formData: FormData = {
+  roleName: "",
+  menuIds: [],
+  permissionIds: [],
 };
 
 // 配置项
@@ -109,11 +152,22 @@ const config: Config = {
 export default defineComponent({
   setup() {
     const ruleForm = ref();
+    const menuTree = ref();
+    const permissionTree = ref();
     const data: Data = reactive({
-      param: { ...formData }, // 查询参数
-      formData: { ...formData }, // 表单数据
+      param: { roleName: "" }, // 查询参数
+      formData: lodash.cloneDeep(formData), // 表单数据
       rules: {
+        roleName: [
+          { required: true, message: "请输入角色名", trigger: "blur" },
+        ],
       }, // 校验规则
+      defaultProps: {
+        children: "children",
+        label: "menuName",
+      },
+      menus: [],
+      actions: [],
     });
 
     // 基础数据（分页数据），和增删改查处理函数，以及分页查询变化处理函数
@@ -134,8 +188,18 @@ export default defineComponent({
     };
 
     const handleReset = () => {
-      data.param = { ...formData };
+      data.param = { roleName: "" };
       handleSearch();
+    };
+
+    const getMenusKeys = () => {
+      data.formData.menuIds = menuTree.value
+        .getCheckedNodes(false, true)
+        .map((item: Param) => item.menuId);
+    };
+
+    const getPermissionKeys = () => {
+      data.formData.permissionIds = permissionTree.value.getCheckedKeys(true);
     };
 
     const handleCreate = () => {
@@ -145,38 +209,55 @@ export default defineComponent({
 
     const handleEdit = (row: Record) => {
       baseData.isCreated = false;
-      data.formData = { ...row };
+      data.formData = lodash.cloneDeep(row);
       handleDialog(true);
     };
 
     const handleDeleteEvent = (row: Record) => {
-      handleDel({ id: row._id });
+      handleDel({ _id: row._id });
     };
 
     const handleCancel = () => {
-      data.formData = { ...formData };
+      data.formData = lodash.cloneDeep(formData);
       nextTick(ruleForm.value.clearValidate);
-      handleDialog(false);
     };
 
-    const handleClose = (done: Done) => {
-      handleCancel();
-      done();
-    };
+    watch(
+      () => baseData.visible,
+      (newVal) => {
+        !newVal && handleCancel();
+      }
+    );
 
     const handleSubmit = () => {
       ruleForm.value.validate((valid: boolean) => {
         if (valid) {
+          getMenusKeys();
+          getPermissionKeys();
           if (baseData.isCreated) {
             handleAdd(data.formData);
           } else {
-            handleUpdate({ ...data.formData});
+            handleUpdate(data.formData);
           }
         }
       });
     };
 
+    const getMenus = () => {
+      menuQuery().then((res) => {
+        data.menus = res.data;
+      });
+    };
+
+    const getPermission = () => {
+      permissionQuery().then((res) => {
+        data.actions = res.data;
+      });
+    };
+
     handleSearch();
+    getPermission();
+    getMenus();
 
     return {
       ...toRefs(data),
@@ -184,7 +265,6 @@ export default defineComponent({
       handleSearch,
       handleReset,
       ruleForm,
-      handleClose,
       handleCreate,
       handleEdit,
       handleDeleteEvent,
@@ -192,6 +272,8 @@ export default defineComponent({
       handleSubmit,
       handleSizeChange,
       handleCurrentChange,
+      menuTree,
+      permissionTree,
     };
   },
 });

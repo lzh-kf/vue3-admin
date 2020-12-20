@@ -1,5 +1,5 @@
-import { createStore } from 'vuex'
-import Store from './interface';
+import { createStore } from 'vuex';
+import Store from './dataType';
 
 const store: Store = {
   state: {

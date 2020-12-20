@@ -7,12 +7,13 @@ interface Child {
 }
 
 interface Menu {
-    children?: Array<Child>;
-    name: string;
-    path: string;
-    menuName: string;
-    menuId: number;
-    parentId: number;
+    [key: string]: any;
+    // children?: Array<Child>;
+    // name: string;
+    // path: string;
+    // menuName: string;
+    // menuId: number;
+    // parentId: number;
 }
 
 interface Result {
@@ -23,7 +24,7 @@ interface Result {
 }
 
 
-function findParentElement(data: Array<Menu>, parentId: number, tempdata: Array<Menu>): Array<Result> {
+function findParentElement(data: Array<Menu>, parentId: number, tempdata: Array<Menu>,): Array<Result> {
     const result = [];
     const { length } = data;
     for (let i = 0; i < length; i++) {
@@ -47,4 +48,4 @@ function findParentElement(data: Array<Menu>, parentId: number, tempdata: Array<
     return result;
 }
 
-export { findParentElement };
+export { findParentElement, Menu };

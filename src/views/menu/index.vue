@@ -1,7 +1,7 @@
 <template>
   <el-container>
     <el-aside width="180px">
-      <custom-menu :menus="menus"></custom-menu>
+      <custom-menus :menus="menus" id="custom-menu"></custom-menus>
     </el-aside>
     <el-main>
       <div class="header">

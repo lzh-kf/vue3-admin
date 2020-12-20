@@ -1,8 +1,15 @@
 import request from "@/utils/request";
 import { AxiosPromise } from 'axios';
+import { Pagination } from '@/utils/base';
 
 interface Data {
-    [key: string]: unknown;
+    roleName: string;
+    menuIds: Array<string>;
+    permissionIds: Array<string>;
+    roleId?: number;
+}
+interface QueryParam extends Pagination {
+    roleName?: string;
 }
 
 const roleCreate = (data: Data): AxiosPromise => {
@@ -13,28 +20,31 @@ const roleCreate = (data: Data): AxiosPromise => {
     })
 }
 
-const roleUpdate = (): AxiosPromise => {
+const roleUpdate = (data: Data): AxiosPromise => {
     return request({
         method: "post",
-        url: "/role/update"
+        url: "/role/update",
+        data
     })
 }
 
-const roleDel = (): AxiosPromise => {
+const roleDel = (data: { _id: string }): AxiosPromise => {
     return request({
         method: "delete",
         url: "/role/del",
+        data
     })
 }
 
-const roleQuery = (): AxiosPromise => {
+const roleQuery = (data: QueryParam): AxiosPromise => {
     return request({
         method: "post",
         url: "/role/query",
+        data
     });
 };
 
-const roleQueryAll = (): AxiosPromise  => {
+const roleQueryAll = (): AxiosPromise => {
     return request({
         method: "post",
         url: "/role/queryAll",

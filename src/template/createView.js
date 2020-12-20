@@ -73,6 +73,7 @@ async function createDir () {
         try {
             await fs.mkdirSync(`${filename}/views/${currentDirPath}`);
         } catch (error) {
+            // 如果异常说明文件夹已存在，则直接结束本次循环
             continue;
         }
     }

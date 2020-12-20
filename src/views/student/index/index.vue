@@ -103,7 +103,7 @@
       :title="isCreated ? '学生信息录入' : '学生信息修改'"
       v-model="visible"
       width="30%"
-      :before-close="handleClose"
+      :destroy-on-close="true"
     >
       <el-form
         :model="formData"
@@ -140,7 +140,7 @@
 
 <script lang="ts">
 import getHandleFn from "@/utils/curd";
-import { defineComponent, reactive, toRefs, ref, nextTick } from "vue";
+import { defineComponent, reactive, toRefs, ref, nextTick, watch } from "vue";
 import { Data, Record, FormData } from "./dataType";
 import { Done, Config } from "@/utils/base";
 import {
@@ -149,6 +149,7 @@ import {
   studentdel,
   studentQuery,
 } from "@/apis/student";
+import lodash from "lodash";
 
 const formData: FormData = {
   name: "",
@@ -170,8 +171,8 @@ export default defineComponent({
   setup() {
     const ruleForm = ref();
     const data: Data = reactive({
-      param: { ...formData }, // 查询参数
-      formData: { ...formData }, // 表单数据
+      param: lodash.cloneDeep(formData), // 查询参数
+      formData: lodash.cloneDeep(formData), // 表单数据
       rules: {
         name: [{ required: true, message: "请输入名字", trigger: "blur" }],
         class: [{ required: true, message: "请输入班级", trigger: "blur" }],
@@ -198,7 +199,7 @@ export default defineComponent({
     };
 
     const handleReset = () => {
-      data.param = { ...formData };
+      data.param = lodash.cloneDeep(formData);
       handleSearch();
     };
 
@@ -209,7 +210,7 @@ export default defineComponent({
 
     const handleEdit = (row: Record) => {
       baseData.isCreated = false;
-      data.formData = { ...row };
+      data.formData = lodash.cloneDeep(row);
       handleDialog(true);
     };
 
@@ -218,15 +219,16 @@ export default defineComponent({
     };
 
     const handleCancel = () => {
-      data.formData = { ...formData };
+      data.formData = lodash.cloneDeep(formData);
       nextTick(ruleForm.value.clearValidate);
-      handleDialog(false);
     };
 
-    const handleClose = (done: Done) => {
-      handleCancel();
-      done();
-    };
+    watch(
+      () => baseData.visible,
+      (newVal) => {
+        !newVal && handleCancel();
+      }
+    );
 
     const handleSubmit = () => {
       ruleForm.value.validate((valid: boolean) => {
@@ -260,7 +262,6 @@ export default defineComponent({
       handleSearch,
       handleReset,
       ruleForm,
-      handleClose,
       handleCreate,
       handleEdit,
       handleDeleteEvent,

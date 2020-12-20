@@ -1,7 +1,7 @@
 <template>
   <div>
     <el-form :inline="true" :model="param" class="demo-form-inline">
-      <el-form-item label="属性标签：">
+      <el-form-item label="用户名：">
         <el-input
           v-model="param.userName"
           placeholder="请输入"
@@ -81,7 +81,6 @@
       v-model="visible"
       width="30%"
       :destroy-on-close="true"
-      :before-close="handleClose"
     >
       <el-form
         :model="formData"
@@ -131,7 +130,7 @@
 
 <script lang="ts">
 import getHandleFn from "@/utils/curd";
-import { defineComponent, reactive, toRefs, ref, nextTick } from "vue";
+import { defineComponent, reactive, toRefs, ref, nextTick, watch } from "vue";
 import { Done, Config } from "@/utils/base";
 import { Data, Record, FormData } from "./dataType";
 import {
@@ -142,6 +141,7 @@ import {
 } from "@/apis/user/user/index";
 import { roleQueryAll } from "@/apis/user/role/index";
 import lodash from "lodash";
+import blueimpmd5 from "blueimp-md5";
 
 const formData: FormData = {
   userName: "",
@@ -216,21 +216,31 @@ export default defineComponent({
     const handleCancel = () => {
       data.formData = lodash.cloneDeep(formData);
       nextTick(ruleForm.value.clearValidate);
-      handleDialog(false);
     };
 
-    const handleClose = (done: Done) => {
-      handleCancel();
-      done();
+    watch(
+      () => baseData.visible,
+      (newVal) => {
+        !newVal && handleCancel();
+      }
+    );
+
+    const setParam = (): FormData => {
+      const params = lodash.cloneDeep(data.formData);
+      if (params.password) {
+        params.password = blueimpmd5(params.password);
+      }
+      return params;
     };
 
     const handleSubmit = () => {
       ruleForm.value.validate((valid: boolean) => {
+        const params = {};
         if (valid) {
           if (baseData.isCreated) {
-            handleAdd(data.formData);
+            handleAdd(setParam());
           } else {
-            handleUpdate({ ...data.formData });
+            handleUpdate(setParam());
           }
         }
       });
@@ -251,7 +261,6 @@ export default defineComponent({
       handleSearch,
       handleReset,
       ruleForm,
-      handleClose,
       handleCreate,
       handleEdit,
       handleDeleteEvent,

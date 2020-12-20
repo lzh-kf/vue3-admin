@@ -69,6 +69,12 @@ export default defineComponent({
       },
     });
 
+    const getParam = (): Form => {
+      const param: Form = { ...data.formData };
+      param.password = blueimpmd5(param.password);
+      return param;
+    };
+
     const handleLogin = (): void => {
       login(getParam()).then((response) => {
         const { userInfo, token } = response.data;
@@ -79,12 +85,6 @@ export default defineComponent({
           path: "/user/user",
         });
       });
-    };
-
-    const getParam = (): Form => {
-      const param: Form = { ...data.formData };
-      param.password = blueimpmd5(param.password);
-      return param;
     };
 
     const submitForm = () => {

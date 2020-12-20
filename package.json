@@ -19,10 +19,13 @@
     "vuex": "^4.0.0-0"
   },
   "devDependencies": {
+    "@types/axios": "^0.14.0",
     "@types/blueimp-md5": "^2.7.0",
     "@types/lodash": "^4.14.165",
     "@typescript-eslint/eslint-plugin": "^2.33.0",
     "@typescript-eslint/parser": "^2.33.0",
+    "@vue/babel-helper-vue-jsx-merge-props": "^1.2.1",
+    "@vue/babel-preset-jsx": "^1.2.4",
     "@vue/cli-plugin-eslint": "~4.5.0",
     "@vue/cli-plugin-router": "~4.5.0",
     "@vue/cli-plugin-typescript": "~4.5.0",

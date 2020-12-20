@@ -39,6 +39,6 @@ const getProxy = (type: number, StorageData: StorageData) => {
 };
 
 // Storage工具类
-const [setLocal, setSession] = [getProxy(0, {}), getProxy(1, {})];
+const [setLocal, setSession]: Array<StorageData> = [getProxy(0, {}), getProxy(1, {})];
 
 export { setLocal, setSession };

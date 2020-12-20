@@ -14,7 +14,8 @@
     "types": [
       "webpack-env",
       "lodash",
-      "blueimp-md5"
+      "blueimp-md5",
+      "axios"
     ],
     "paths": {
       "@/*": [

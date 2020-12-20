@@ -1,5 +1,4 @@
 import { AxiosPromise } from 'axios';
-
 // 基础接口
 
 interface Rule {
@@ -29,9 +28,14 @@ interface Config {
     handleQuery: HandleFn;
     queryParam?: Param; // 查询参数
     customHandle?: {
-        (data: any, response: unknown): void;
+        (data: any, response: any): void;
     }; // 自定义处理查询函数(一般是非分页的时候)
     isNotPagination?: boolean; // 非分页
 }
 
-export { Rule, Done, Config, Param }
+interface Pagination {
+    pageSize: number;
+    pageNum: number;
+}
+
+export { Rule, Done, Config, Param, Pagination }

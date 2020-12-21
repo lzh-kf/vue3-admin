@@ -17,7 +17,7 @@ export default {
   value: {
     inserted: function (el: El, Binding: Binding): void {
       setTimeout(() => {
-        if (!store.state.permissions.includes(Binding.value as never)) {
+        if (!store.state.permissions.includes(Binding.value)) {
           if (el.style) {
             el.style.display = "none";
           }

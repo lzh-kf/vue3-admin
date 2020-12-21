@@ -34,7 +34,7 @@ const userUpdate = (data: UpdateData): AxiosPromise => {
     })
 }
 
-const userDel = (data: { id: string }): AxiosPromise => {
+const userDel = (data: { _id: string }): AxiosPromise => {
     return request({
         method: "delete",
         url: "/user/del",

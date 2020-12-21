@@ -215,7 +215,7 @@ export default defineComponent({
     };
 
     const handleDeleteEvent = (row: Record) => {
-      handleDel({ id: row._id });
+      handleDel({ _id: row._id });
     };
 
     const handleCancel = () => {

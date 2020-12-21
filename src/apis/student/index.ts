@@ -9,7 +9,7 @@ interface Data {
 }
 
 interface UpdateParams extends Data {
-    id: string;
+    _id: string;
 }
 
 interface Pagination {
@@ -37,7 +37,7 @@ const studentUpdate = (data: UpdateParams): AxiosPromise => {
     })
 }
 
-const studentdel = (data: { id: string }): AxiosPromise => {
+const studentdel = (data: { _id: string }): AxiosPromise => {
     return request({
         method: "delete",
         url: "/student/del",

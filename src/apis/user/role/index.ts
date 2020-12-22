@@ -1,10 +1,9 @@
 import request from "@/utils/request";
 import { AxiosPromise } from 'axios';
 import { Pagination } from '@/utils/base';
-
 interface Data {
     roleName: string;
-    menuIds: Array<string>;
+    menuIds: Array<number>;
     permissionIds: Array<string>;
     roleId?: number;
 }

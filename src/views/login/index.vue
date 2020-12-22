@@ -37,7 +37,7 @@
 import { defineComponent, reactive, ref, toRefs } from "vue";
 import { login } from "@/apis/login";
 import { setSession } from "@/utils/cache";
-import { Data, Form } from "./dataType";
+import { Data, FormData } from "./dataType";
 import { useRouter } from "vue-router";
 import { useStore } from "vuex";
 import blueimpmd5 from "blueimp-md5";
@@ -69,14 +69,14 @@ export default defineComponent({
       },
     });
 
-    const getParam = (): Form => {
-      const param: Form = { ...data.formData };
+    const setParam = (): FormData => {
+      const param: FormData = { ...data.formData };
       param.password = blueimpmd5(param.password);
       return param;
     };
 
     const handleLogin = (): void => {
-      login(getParam()).then((response) => {
+      login(setParam()).then((response) => {
         const { userInfo, token } = response.data;
         setSession.token = token;
         setSession.user = userInfo;

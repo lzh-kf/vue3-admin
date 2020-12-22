@@ -1,17 +1,14 @@
 import request from "@/utils/request";
 import { AxiosPromise } from 'axios';
-
 interface Data {
     userName: string;
     password: string;
     roleId: Array<string>;
     userAccount: string;
 }
-
 interface UpdateData extends Data {
     _id: string;
 }
-
 interface QueryParam {
     pageSize: number;
     pageNum: number;

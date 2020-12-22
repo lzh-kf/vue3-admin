@@ -1,8 +1,13 @@
 import request from "@/utils/request";
-import { AxiosPromise, AxiosRequestConfig } from 'axios';
-
+import { AxiosPromise } from 'axios';
 interface Data {
-    [key: string]: unknown;
+    menuName: string;
+    path: string;
+    componentFilePath: string;
+    parentId?: undefined | number;
+}
+interface UpdateData extends Data {
+    _id: string;
 }
 
 const menuCreate = (data: Data): AxiosPromise => {
@@ -13,7 +18,7 @@ const menuCreate = (data: Data): AxiosPromise => {
     })
 }
 
-const menuUpdate = (data: Data): AxiosPromise => {
+const menuUpdate = (data: UpdateData): AxiosPromise => {
     return request({
         method: "post",
         url: "/menu/update",

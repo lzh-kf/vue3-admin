@@ -8,8 +8,8 @@ interface Param {
 // 表单参数
 interface FormData {
     roleName: string;
-    menuIds: Array<Param>;
-    permissionIds: Array<Param>;
+    menuIds: Array<number>;
+    permissionIds: Array<string>;
     roleId?: string;
 }
 
@@ -20,12 +20,14 @@ interface Record extends FormData {
 
 // data的数据
 interface Data {
-    param: Param;
+    param: {
+        roleName?: string
+    };
     formData: FormData;
     rules: Rule;
     defaultProps: {
-        children: "children";
-        label: "menuName";
+        children: string;
+        label: string;
     };
     menus: Array<Param>;
     actions: Array<Param>;

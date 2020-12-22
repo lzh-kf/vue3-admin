@@ -7,7 +7,7 @@ import store from "@/store/index";
 
 import getRoutes from './config';
 
-const whites: Array<string> = ['/', '/login','/test'];
+const whites: Array<string> = ['/', '/login'];
 
 const router = createRouter({
   history: createWebHistory(process.env.BASE_URL),

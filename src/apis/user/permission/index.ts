@@ -2,7 +2,13 @@ import request from "@/utils/request";
 import { AxiosPromise, AxiosRequestConfig } from 'axios';
 
 interface Data {
-    [key: string]: unknown;
+    parentId: number;
+    action: string;
+    permissionName: string;
+}
+
+interface UpdateData extends Data {
+    _id: string;
 }
 
 const permissionCreate = (data: Data): AxiosPromise => {
@@ -13,7 +19,7 @@ const permissionCreate = (data: Data): AxiosPromise => {
     })
 }
 
-const permissionUpdate = (data: Data): AxiosPromise => {
+const permissionUpdate = (data: UpdateData): AxiosPromise => {
     return request({
         method: "post",
         url: "/permission/update",

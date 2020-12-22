@@ -131,7 +131,7 @@
 <script lang="ts">
 import getHandleFn from "@/utils/curd";
 import { defineComponent, reactive, toRefs, ref, nextTick, watch } from "vue";
-import { Done, Config } from "@/utils/base";
+import { Config } from "@/utils/base";
 import { Data, Record, FormData } from "./dataType";
 import {
   userCreate,
@@ -175,7 +175,6 @@ export default defineComponent({
       }, // 校验规则
       roles: [],
     });
-
     // 基础数据（分页数据），和增删改查处理函数，以及分页查询变化处理函数
     const {
       baseData,
@@ -226,7 +225,7 @@ export default defineComponent({
     );
 
     const setParam = (): FormData => {
-      const params = lodash.cloneDeep(data.formData);
+      const params: FormData = lodash.cloneDeep(data.formData);
       if (params.password) {
         params.password = blueimpmd5(params.password);
       }
@@ -235,7 +234,6 @@ export default defineComponent({
 
     const handleSubmit = () => {
       ruleForm.value.validate((valid: boolean) => {
-        const params = {};
         if (valid) {
           if (baseData.isCreated) {
             handleAdd(setParam());

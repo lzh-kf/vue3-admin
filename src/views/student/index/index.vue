@@ -142,7 +142,7 @@
 import getHandleFn from "@/utils/curd";
 import { defineComponent, reactive, toRefs, ref, nextTick, watch } from "vue";
 import { Data, Record, FormData } from "./dataType";
-import { Done, Config } from "@/utils/base";
+import { Config } from "@/utils/base";
 import {
   studentCreate,
   studentUpdate,
@@ -236,7 +236,7 @@ export default defineComponent({
           if (baseData.isCreated) {
             handleAdd(data.formData);
           } else {
-            handleUpdate({ ...data.formData, id: data.formData._id });
+            handleUpdate(data.formData);
           }
         }
       });

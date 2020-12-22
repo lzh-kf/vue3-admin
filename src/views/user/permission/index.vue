@@ -46,7 +46,6 @@
       v-model="visible"
       width="30%"
       :destroy-on-close="true"
-      :before-close="handleClose"
     >
       <el-form
         :model="formData"
@@ -82,8 +81,8 @@
 
 <script lang="ts">
 import getHandleFn from "@/utils/curd";
-import { defineComponent, reactive, toRefs, ref, nextTick } from "vue";
-import { Done, Config } from "@/utils/base";
+import { defineComponent, reactive, toRefs, ref, nextTick, watch } from "vue";
+import { Config } from "@/utils/base";
 import { Data, Record, FormData } from "./dataType";
 import {
   permissionCreate,
@@ -91,7 +90,7 @@ import {
   permissionUpdate,
   permissionQuery,
 } from "@/apis/user/permission/index";
-import { findParentElement, Menu } from "@/utils";
+import { findParentElement, Result, Menu } from "@/utils";
 import lodash from "lodash";
 
 const formData: FormData = {
@@ -132,7 +131,6 @@ export default defineComponent({
         checkStrictly: true,
       },
     });
-
     // 基础数据（分页数据），和增删改查处理函数，以及分页查询变化处理函数
     const {
       baseData,
@@ -153,10 +151,10 @@ export default defineComponent({
     const handleEdit = (row: Record) => {
       baseData.isCreated = false;
       const parentIds = findParentElement(
-        baseData.list,
+        baseData.list as Array<Menu>,
         row.parentId,
-        baseData.list
-      ).map((item: any) => item.menuId);
+        baseData.list as Array<Menu>
+      ).map((item: Result) => item.menuId);
       data.formData = lodash.cloneDeep(row);
       data.formData.ids = [...parentIds, row.menuId];
       handleDialog(true);
@@ -169,16 +167,17 @@ export default defineComponent({
     const handleCancel = () => {
       data.formData = lodash.cloneDeep(formData);
       nextTick(ruleForm.value.clearValidate);
-      handleDialog(false);
     };
 
-    const handleClose = (done: Done) => {
-      handleCancel();
-      done();
-    };
+    watch(
+      () => baseData.visible,
+      (newVal) => {
+        !newVal && handleCancel();
+      }
+    );
 
     const setParams = () => {
-      const params = lodash.cloneDeep(data.formData);
+      const params: FormData = lodash.cloneDeep(data.formData);
       const ids: Array<number> = params.ids || [];
       const length: number = ids?.length;
       if (baseData.isCreated) {
@@ -211,7 +210,6 @@ export default defineComponent({
       ...toRefs(data),
       ...toRefs(baseData),
       ruleForm,
-      handleClose,
       handleCreate,
       handleEdit,
       handleDeleteEvent,

@@ -1,10 +1,5 @@
 import { Rule } from '@/utils/base';
 
-// 查询参数
-interface Param {
-    [key: string]: any;
-}
-
 // 表单参数
 interface FormData {
     menuName: string;
@@ -18,7 +13,8 @@ interface FormData {
 // 当前表格行数据
 interface Record extends FormData {
     parentId: number;
-    [key: string]: any;
+    menuId: number;
+    _id: string;
 }
 
 // data的数据

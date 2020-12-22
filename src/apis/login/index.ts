@@ -6,7 +6,6 @@ interface Data {
     password: string;
 }
 
-
 const login = (data: Data): AxiosPromise => {
     return request({
         method: "post",

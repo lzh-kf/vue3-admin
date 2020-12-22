@@ -65,7 +65,6 @@
       v-model="visible"
       width="30%"
       :destroy-on-close="true"
-      :before-close="handleClose"
     >
       <el-form
         :model="formData"
@@ -90,8 +89,8 @@
 
 <script lang="ts">
 import getHandleFn from "@/utils/curd";
-import { defineComponent, reactive, toRefs, ref, nextTick } from "vue";
-import { Done, Config } from "@/utils/base";
+import { defineComponent, reactive, toRefs, ref, nextTick, watch } from "vue";
+import { Config } from "@/utils/base";
 import { Data, Record, FormData } from "./dataType";
 import { {{create}}, {{del}}, {{update}}, {{query}} } from "@/apis/{{apiFilePath}}/index";
 import lodash from "lodash";
@@ -117,7 +116,6 @@ export default defineComponent({
       rules: {
       }, // 校验规则
     });
-
     // 基础数据（分页数据），和增删改查处理函数，以及分页查询变化处理函数
     const {
       baseData,
@@ -158,13 +156,14 @@ export default defineComponent({
     const handleCancel = () => {
       data.formData = lodash.cloneDeep(formData);
       nextTick(ruleForm.value.clearValidate);
-      handleDialog(false);
     };
 
-    const handleClose = (done: Done) => {
-      handleCancel();
-      done();
-    };
+    watch(
+      () => baseData.visible,
+      (newVal) => {
+        !newVal && handleCancel();
+      }
+    );
 
     const handleSubmit = () => {
       ruleForm.value.validate((valid: boolean) => {
@@ -186,7 +185,6 @@ export default defineComponent({
       handleSearch,
       handleReset,
       ruleForm,
-      handleClose,
       handleCreate,
       handleEdit,
       handleDeleteEvent,

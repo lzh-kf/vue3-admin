@@ -5,7 +5,7 @@ interface FormData {
     userName: string;
     password: string;
     userAccount: string;
-    roleId: Array<string>;
+    roleId: Array<number>;
 }
 
 // 当前表格行数据
@@ -13,14 +13,11 @@ interface Record extends FormData {
     [key: string]: any;
 }
 
-// 查询的数据
-interface Param {
-    userName?: string;
-}
-
 // data的数据
 interface Data {
-    param: Param;
+    param: {
+        userName?: string
+    };
     formData: FormData;
     rules: Rule;
     roles: Array<{

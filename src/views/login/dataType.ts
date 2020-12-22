@@ -1,21 +1,11 @@
-interface Form {
+import { Rule } from '@/utils/base';
+interface FormData {
     userAccount: string;
     password: string;
 }
-
-interface Rule {
-    required?: boolean;
-    message?: string;
-    trigger?: string;
-}
-
-interface RuleObject {
-    [key: string]: Array<Rule>;
-}
-
 interface Data {
-    formData: Form;
-    rules: RuleObject;
+    formData: FormData;
+    rules: Rule;
 }
 
-export { Data, Form }
+export { Data, FormData }

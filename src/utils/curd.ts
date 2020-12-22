@@ -9,7 +9,7 @@ interface Data {
     pagination: Pagination;
     pageSizes: Array<number>;
     list: Array<{
-        [key: string]: unknown;
+        [key: string]: any;
     }>;
     total: number;
     isCreated: boolean;

@@ -12,7 +12,6 @@ interface FormData {
     gender: string;
     interest: string;
     class: string;
-    _id?: string;
 }
 
 interface Record extends FormData {

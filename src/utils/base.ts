@@ -9,10 +9,6 @@ interface Rule {
     }>;
 }
 
-interface Done {
-    (): void;
-}
-
 interface HandleFn {
     (data?: any): AxiosPromise;
 }
@@ -38,4 +34,4 @@ interface Pagination {
     pageNum: number;
 }
 
-export { Rule, Done, Config, Param, Pagination }
+export { Rule, Config, Param, Pagination }

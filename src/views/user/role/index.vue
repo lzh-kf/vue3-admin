@@ -122,7 +122,7 @@
 <script lang="ts">
 import getHandleFn from "@/utils/curd";
 import { defineComponent, reactive, toRefs, ref, nextTick, watch } from "vue";
-import { Done, Config } from "@/utils/base";
+import { Config } from "@/utils/base";
 import { Data, Record, FormData, Param } from "./dataType";
 import { menuQuery } from "@/apis/user/menu";
 import { permissionQuery } from "@/apis/user/permission";

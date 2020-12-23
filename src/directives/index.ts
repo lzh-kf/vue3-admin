@@ -1,4 +1,3 @@
-
 function registrationDirectives(app: any) {
   const files = require.context("./module", true, /index\.ts$/);
   files.keys().forEach((key: string) => {

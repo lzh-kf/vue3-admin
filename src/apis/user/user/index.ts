@@ -1,5 +1,6 @@
 import request from "@/utils/request";
 import { AxiosPromise } from 'axios';
+import { Pagination } from '@/utils/base';
 interface Data {
     userName: string;
     password: string;
@@ -9,9 +10,7 @@ interface Data {
 interface UpdateData extends Data {
     _id: string;
 }
-interface QueryParam {
-    pageSize: number;
-    pageNum: number;
+interface QueryParam extends Pagination {
     userName?: string;
 }
 

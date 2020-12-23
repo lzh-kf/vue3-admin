@@ -6,7 +6,7 @@
           @click="handleCreate"
           type="primary"
           style="margin-right: 10px"
-          v-permission="''"
+          v-permission="'permission.create'"
           >创建</el-button
         >
       </el-col>
@@ -27,9 +27,11 @@
             type="text"
             @click="handleEdit(data)"
             v-if="data.permissionId"
+            v-permission="'permission.update'"
             >编辑</el-button
           >
           <el-popconfirm
+            v-permission="'permission.del'"
             v-if="data.permissionId"
             title="确定删除吗？"
             @confirm="handleDeleteEvent(data)"

@@ -1,9 +1,13 @@
 `import request from "@/utils/request";
-import { AxiosPromise, AxiosRequestConfig } from 'axios';
+import { AxiosPromise } from 'axios';
 import { Pagination } from '@/utils/base';
 
 interface Data {
     [key: string]: unknown
+}
+
+interface UpdateData extends Data {
+    _id:string
 }
 
 interface QueryParam extends Pagination {
@@ -17,26 +21,26 @@ const {{create}} = (data: Data): AxiosPromise => {
     })
 }
 
-const {{update}} = (data:Data): AxiosPromise => {
+const {{update}} = (data: UpdateData): AxiosPromise => {
     return request({
         method: "post",
         url: ""
     })
 }
 
-const {{del}} = (data:{_id:string}): AxiosPromise => {
+const {{del}} = (data: {_id: string}): AxiosPromise => {
     return request({
         method: "delete",
         url: "",
     })
 }
 
-const {{query}} = (data:QueryParam): AxiosPromise => {
+const {{query}} = (data: QueryParam): AxiosPromise => {
     return request({
         method: "post",
         url: "",
         data
-    } as AxiosRequestConfig);
+    });
 };
 
 

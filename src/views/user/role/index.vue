@@ -19,7 +19,7 @@
           @click="handleCreate"
           type="primary"
           style="margin-right: 10px"
-          v-permission="''"
+          v-permission="'role.create'"
           >创建</el-button
         >
       </el-col>
@@ -45,8 +45,8 @@
       ></el-table-column>
       <el-table-column label="操作" align="center" header-align="center">
         <template #default="{ row }">
-          <el-button @click="handleEdit(row)" v-permission="''">编辑</el-button>
-          <el-popconfirm title="确定删除吗？" @confirm="handleDeleteEvent(row)">
+          <el-button @click="handleEdit(row)" v-permission="'role.update'">编辑</el-button>
+          <el-popconfirm title="确定删除吗？" v-permission="'role.del'" @confirm="handleDeleteEvent(row)">
             <template #reference>
               <el-button
                 type="danger"

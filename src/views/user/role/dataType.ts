@@ -21,7 +21,7 @@ interface Record extends FormData {
 // data的数据
 interface Data {
     param: {
-        roleName?: string
+        roleName?: string;
     };
     formData: FormData;
     rules: Rule;

@@ -48,8 +48,8 @@ export default defineComponent({
     const store = useStore();
     const data: Data = reactive({
       formData: {
-        userAccount: "lzh",
-        password: "19960919lzh",
+        userAccount: "admin",
+        password: "a123456",
       },
       rules: {
         userAccount: [

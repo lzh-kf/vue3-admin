@@ -4,8 +4,15 @@ import { ElMessage } from "element-plus";
 
 axios.defaults.baseURL = process.env.VUE_APP_API;
 
+let token: string
+
 axios.interceptors.request.use((config) => {
-  config.headers.common["Authorization"] = setSession.token;
+  if (token) {
+    config.headers.common["Authorization"] = token
+  } else {
+    token = setSession.token as string
+    config.headers.common["Authorization"] = token
+  }
   return config;
 }, (error) => {
   return Promise.reject(error);

@@ -1,7 +1,6 @@
 import store from "@/store";
 
 interface Binding {
-  name: string;
   value: string;
   oldValue: unknown;
 }
@@ -12,17 +11,16 @@ interface El {
     [key: string]: unknown;
   };
 }
+Element
 export default {
   name: "permission",
   value: {
-    inserted: function (el: El, Binding: Binding): void {
-      setTimeout(() => {
-        if (!store.state.permissions.includes(Binding.value)) {
-          if (el.style) {
-            el.style.display = "none";
-          }
+    mounted(el: El, binding: Binding) {
+      if (!store.state.permissions.includes(binding.value)) {
+        if (el.style) {
+          el.style.display = "none";
         }
-      });
+      }
     }
   }
 };

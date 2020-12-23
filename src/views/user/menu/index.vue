@@ -6,7 +6,7 @@
           @click="handleCreate"
           type="primary"
           style="margin-right: 10px"
-          v-permission="''"
+          v-permission="'menu.create'"
           >创建</el-button
         >
       </el-col>
@@ -23,8 +23,9 @@
           <span style="font-size: 12px; margin-right: 10px">{{
             data.menuName
           }}</span>
-          <el-button type="text" @click="handleEdit(data)">编辑</el-button>
+          <el-button type="text" v-permission="'menu.update'" @click="handleEdit(data)">编辑</el-button>
           <el-popconfirm
+            v-permission="'menu.del'"
             title="确定删除吗？"
             @confirm="handleDeleteEvent(data)"
           >

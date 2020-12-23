@@ -2,10 +2,10 @@
 interface State {
     permissions: Array<string>;
     menus: Array<{
-        [key: string]: unknown;
+        [key: string]: any;
     }>;
     user: {
-        [key: string]: unknown;
+        [key: string]: any;
     };
     routeNames: Array<string>;
 }

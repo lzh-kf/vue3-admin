@@ -7,6 +7,10 @@ interface Data {
     permissionIds: Array<string>;
     roleId?: number;
 }
+
+interface UpdateData extends Data {
+    _id: string;
+}
 interface QueryParam extends Pagination {
     roleName?: string;
 }
@@ -19,7 +23,7 @@ const roleCreate = (data: Data): AxiosPromise => {
     })
 }
 
-const roleUpdate = (data: Data): AxiosPromise => {
+const roleUpdate = (data: UpdateData): AxiosPromise => {
     return request({
         method: "post",
         url: "/role/update",

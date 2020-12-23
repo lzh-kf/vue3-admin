@@ -1,17 +1,16 @@
 import request from "@/utils/request";
 import { AxiosPromise } from 'axios';
+import { Pagination } from '@/utils/base';
 interface Data {
     name: string;
     gender: string;
     interest: string;
     class: string;
 }
-interface UpdateParams extends Data {
+interface UpdateData extends Data {
     _id: string;
 }
-interface Pagination {
-    pageSize: number;
-    pageNum: number;
+interface QueryParam extends Pagination {
     name?: string;
     gender?: string;
     interest?: string;
@@ -26,7 +25,7 @@ const studentCreate = (data: Data): AxiosPromise => {
     })
 }
 
-const studentUpdate = (data: UpdateParams): AxiosPromise => {
+const studentUpdate = (data: UpdateData): AxiosPromise => {
     return request({
         method: "post",
         url: "/student/update",
@@ -42,7 +41,7 @@ const studentdel = (data: { _id: string }): AxiosPromise => {
     })
 }
 
-const studentQuery = (data: Pagination): AxiosPromise => {
+const studentQuery = (data: QueryParam): AxiosPromise => {
     return request({
         method: "post",
         url: "/student/query",
@@ -50,7 +49,7 @@ const studentQuery = (data: Pagination): AxiosPromise => {
     });
 };
 
-const donwloadStudentInfo = (data: Pagination): AxiosPromise => {
+const donwloadStudentInfo = (data: QueryParam): AxiosPromise => {
     return request({
         method: "post",
         url: "/student/download",

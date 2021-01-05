@@ -75,7 +75,7 @@ export default defineComponent({
       return param;
     };
 
-    const handleLogin = (): void => {
+    const handleLogin = () => {
       login(setParam()).then((response) => {
         const { userInfo, token } = response.data;
         setSession.token = token;

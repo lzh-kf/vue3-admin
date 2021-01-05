@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+</body>
+<script src="../cache/index.js"></script>
+<script src="../dataType/index.js"></script>
+<script src="./helpers.js"></script>
+<script src="./index.js"></script>
+<script>
+const xhr = new Request()
+
+xhr.options.baseUrl = 'http://127.0.0.1:7001';
+
+xhr.interceptRequest((config)=> {
+    config.headers['Authorization']=setSession.token
+    return Promise.resolve(config)
+})
+
+xhr.interceptResponse((response)=> {
+    return Promise.resolve(response.response)
+},(error)=> {
+    return Promise.reject(error)
+})
+
+xhr.post('/login', {
+    userAccount: 'lzh',
+    password: 'e3ab15edfeecea2c49270b07be22d7ef'
+}).then((response) => {
+    console.log('接口正常')
+    console.log(response.data);
+    const { token } = response.data
+    setSession.token  = token
+    xhr.get('/queryMenusAndPermission', {
+    userAccount: 'afaf',
+    password: 'fdafd'
+}).then((response) => {
+    console.log('接口正常')
+    console.log(response.data);
+}).catch((error) => {
+    console.log('接口异常');
+    console.log(error);
+});
+}).catch((error) => {
+    console.log('接口异常');
+    console.log(error);
+});
+</script>
+</html>

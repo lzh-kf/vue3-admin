@@ -3,7 +3,7 @@ interface Type {
 }
 
 interface StorageData {
-  [key: string]: unknown;
+  [key: string]: any;
 }
 
 const map: Type = {

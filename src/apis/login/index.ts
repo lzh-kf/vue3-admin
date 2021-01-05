@@ -21,6 +21,14 @@ const logout = (): AxiosPromise => {
     });
 };
 
+const refreshToken = (data: { userAccount: string }): AxiosPromise => {
+    return request({
+        method: "post",
+        url: "/refreshToken",
+        data
+    });
+};
+
 const queryPermission = (): AxiosPromise => {
     return request({
         method: "get",
@@ -28,4 +36,4 @@ const queryPermission = (): AxiosPromise => {
     });
 };
 
-export { login, logout, queryPermission };
+export { login, logout, queryPermission, refreshToken };

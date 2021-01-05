@@ -22,6 +22,7 @@ router.beforeEach(async (to, from, next) => {
       await setPermission()
       next(to)
     } catch (error) {
+      console.log(error)
       next(from)
     }
   }

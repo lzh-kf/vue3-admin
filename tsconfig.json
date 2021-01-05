@@ -36,7 +36,7 @@
     "tests/**/*.ts",
     "tests/**/*.tsx",
     "src/template/createApi.js"
-  ],
+, "vue.config.js"  ],
   "exclude": [
     "node_modules"
   ]

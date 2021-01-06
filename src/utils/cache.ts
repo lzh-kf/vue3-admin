@@ -16,7 +16,7 @@ const getValue = (key: string, type: number): unknown | undefined => {
   return value ? JSON.parse(value) : undefined;
 };
 
-const setValue = (key: string, value: any, type: number): boolean => {
+const setValue =<T> (key: string, value: T, type: number): boolean => {
   // 如果需要删除 则直接设置值为undefined即可
   if (undefined === value) {
     map[type].removeItem(key);

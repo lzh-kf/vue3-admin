@@ -3,13 +3,23 @@
 import axios from 'axios';
 import { setSession } from "@/utils/cache";
 import { ElMessage } from "element-plus";
-import { refreshToken } from '@/apis/login/index'
+import { refreshToken } from '@/apis/login/index';
 
 axios.defaults.baseURL = process.env.VUE_APP_API;
 
 let token: string
 
-const handleError = (message: string, data: any): Promise<never> => {
+interface Response {
+  err_code?: number,
+  data: {
+    token: string
+  },
+  error?: {
+    message: string
+  }
+}
+
+const handleError = <T>(message: string, data: T): Promise<T> => {
   ElMessage({
     message,
     type: "error"
@@ -34,13 +44,15 @@ axios.interceptors.response.use(async (response) => {
     return response.data;
   } else if (response.data.err_code === 1001) {
     // token过期
-    const responseData: any = await refreshToken({ userAccount: setSession.user.userAccount });
+    const responseData: Response = await refreshToken({ userAccount: setSession.user.userAccount });
     response.config.headers.Authorization = setSession.token = token = responseData.data.token;
-    const refreshResponse: any = await axios(response.config);
+    const refreshResponse: Response = await axios(response.config);
     if (refreshResponse.err_code === 0) {
       return refreshResponse;
     } else {
-      return handleError(refreshResponse.error.message, refreshResponse)
+      if (refreshResponse.error) {
+        return handleError(refreshResponse.error.message, refreshResponse)
+      }
     }
   } else {
     return handleError(response.data.error.message, response.data)

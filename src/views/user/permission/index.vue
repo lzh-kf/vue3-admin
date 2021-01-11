@@ -82,24 +82,24 @@
 </template>
 
 <script lang="ts">
-import getHandleFn from "@/utils/curd";
-import { defineComponent, reactive, toRefs, ref, nextTick, watch } from "vue";
-import { Config } from "@/utils/base";
-import { Data, Record, FormData } from "./dataType";
+import getHandleFn from '@/utils/curd'
+import { defineComponent, reactive, toRefs, ref, nextTick, watch } from 'vue'
+import { Config } from '@/utils/base'
+import { Data, Record, FormData } from './dataType'
 import {
   permissionCreate,
   permissionDel,
   permissionUpdate,
   permissionQuery,
-} from "@/apis/user/permission/index";
-import { findParentElement, Result, Menu } from "@/utils";
-import lodash from "lodash";
+} from '@/apis/user/permission/index'
+import { findParentElement, Result, Menu } from '@/utils'
+import lodash from 'lodash'
 
 const formData: FormData = {
-  action: "",
-  permissionName: "",
+  action: '',
+  permissionName: '',
   ids: [],
-};
+}
 
 // 配置项
 const config: Config = {
@@ -109,30 +109,30 @@ const config: Config = {
   handleQuery: permissionQuery,
   queryParam: {},
   customHandle: (baseData, res) => {
-    baseData.list = res.data;
+    baseData.list = res.data
   },
-};
+}
 
 export default defineComponent({
   setup() {
-    const ruleForm = ref();
+    const ruleForm = ref()
     const data: Data = reactive({
       formData: lodash.cloneDeep(formData), // 表单数据
       rules: {
         action: [
-          { required: true, message: "请输入权限行为", trigger: "blur" },
+          { required: true, message: '请输入权限行为', trigger: 'blur' },
         ],
         permissionName: [
-          { required: true, message: "请输入权限名", trigger: "blur" },
+          { required: true, message: '请输入权限名', trigger: 'blur' },
         ],
-        ids: [{ required: true, message: "请选择所属页面", trigger: "change" }],
+        ids: [{ required: true, message: '请选择所属页面', trigger: 'change' }],
       }, // 校验规则
       customProps: {
-        label: "menuName",
-        value: "menuId",
+        label: 'menuName',
+        value: 'menuId',
         checkStrictly: true,
       },
-    });
+    })
     // 基础数据（分页数据），和增删改查处理函数，以及分页查询变化处理函数
     const {
       baseData,
@@ -143,70 +143,70 @@ export default defineComponent({
       handleSizeChange,
       handleCurrentChange,
       handleDialog,
-    } = getHandleFn(config);
+    } = getHandleFn(config)
 
     const handleCreate = () => {
-      baseData.isCreated = true;
-      handleDialog(true);
-    };
+      baseData.isCreated = true
+      handleDialog(true)
+    }
 
     const handleEdit = (row: Record) => {
-      baseData.isCreated = false;
+      baseData.isCreated = false
       const parentIds = findParentElement(
         baseData.list as Array<Menu>,
         row.parentId,
         baseData.list as Array<Menu>
-      ).map((item: Result) => item.menuId);
-      data.formData = lodash.cloneDeep(row);
-      data.formData.ids = [...parentIds, row.menuId];
-      handleDialog(true);
-    };
+      ).map((item: Result) => item.menuId)
+      data.formData = lodash.cloneDeep(row)
+      data.formData.ids = [...parentIds, row.menuId]
+      handleDialog(true)
+    }
 
     const handleDeleteEvent = (row: Record) => {
-      handleDel({ _id: row._id });
-    };
+      handleDel({ _id: row._id })
+    }
 
     const handleCancel = () => {
-      data.formData = lodash.cloneDeep(formData);
-      nextTick(ruleForm.value.clearValidate);
-    };
+      data.formData = lodash.cloneDeep(formData)
+      nextTick(ruleForm.value.clearValidate)
+    }
 
     watch(
       () => baseData.visible,
       (newVal) => {
-        !newVal && handleCancel();
+        !newVal && handleCancel()
       }
-    );
+    )
 
     const setParams = () => {
-      const params: FormData = lodash.cloneDeep(data.formData);
-      const ids: Array<number> = params.ids || [];
-      const length: number = ids?.length;
+      const params: FormData = lodash.cloneDeep(data.formData)
+      const ids: Array<number> = params.ids || []
+      const length: number = ids?.length
       if (baseData.isCreated) {
-        params.parentId = ids[length - 1];
+        params.parentId = ids[length - 1]
       } else {
         if (ids[length - 1] === params.menuId) {
-          params.parentId = ids[length - 2];
+          params.parentId = ids[length - 2]
         } else {
-          params.parentId = ids[length - 1];
+          params.parentId = ids[length - 1]
         }
       }
-      return params;
-    };
+      return params
+    }
 
     const handleSubmit = () => {
       ruleForm.value.validate((valid: boolean) => {
         if (valid) {
           if (baseData.isCreated) {
-            handleAdd(setParams());
+            handleAdd(setParams())
           } else {
-            handleUpdate(setParams());
+            handleUpdate(setParams())
           }
         }
-      });
-    };
+      })
+    }
 
-    handleQuery();
+    handleQuery()
 
     return {
       ...toRefs(data),
@@ -219,9 +219,9 @@ export default defineComponent({
       handleSubmit,
       handleSizeChange,
       handleCurrentChange,
-    };
+    }
   },
-});
+})
 </script>
 
 <style lang="scss" scoped>

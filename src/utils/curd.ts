@@ -41,13 +41,13 @@ const getHandleFn = (config: Config) => {
         if (config.isNotPagination) {
             return config.queryParam || {}
         } else {
-            if (!loadsh.isEmpty(config.queryParam)) {
+            if (loadsh.isEmpty(config.queryParam)) {
+                return baseData.pagination
+            } else {
                 return {
                     ...config.queryParam,
                     ...baseData.pagination
                 }
-            } else {
-                return baseData.pagination
             }
         }
     }

@@ -51,8 +51,14 @@
       ></el-table-column>
       <el-table-column label="操作" align="center" header-align="center">
         <template #default="{ row }">
-          <el-button @click="handleEdit(row)" v-permission="'user.update'">编辑</el-button>
-          <el-popconfirm title="确定删除吗？" v-permission="'user.del'" @confirm="handleDeleteEvent(row)">
+          <el-button @click="handleEdit(row)" v-permission="'user.update'"
+            >编辑</el-button
+          >
+          <el-popconfirm
+            title="确定删除吗？"
+            v-permission="'user.del'"
+            @confirm="handleDeleteEvent(row)"
+          >
             <template #reference>
               <el-button
                 type="danger"
@@ -129,26 +135,26 @@
 </template>
 
 <script lang="ts">
-import getHandleFn from "@/utils/curd";
-import { defineComponent, reactive, toRefs, ref, nextTick, watch } from "vue";
-import { Config } from "@/utils/base";
-import { Data, Record, FormData } from "./dataType";
+import getHandleFn from '@/utils/curd'
+import { defineComponent, reactive, toRefs, ref, nextTick, watch } from 'vue'
+import { Config } from '@/utils/base'
+import { Data, Record, FormData } from './dataType'
 import {
   userCreate,
   userDel,
   userUpdate,
   userQuery,
-} from "@/apis/user/user/index";
-import { roleQueryAll } from "@/apis/user/role/index";
-import lodash from "lodash";
-import blueimpmd5 from "blueimp-md5";
+} from '@/apis/user/user/index'
+import { roleQueryAll } from '@/apis/user/role/index'
+import lodash from 'lodash'
+import blueimpmd5 from 'blueimp-md5'
 
 const formData: FormData = {
-  userName: "",
-  password: "",
-  userAccount: "",
+  userName: '',
+  password: '',
+  userAccount: '',
   roleId: [],
-};
+}
 // 配置项
 const config: Config = {
   handleAdd: userCreate,
@@ -156,25 +162,25 @@ const config: Config = {
   handleUpdate: userUpdate,
   handleQuery: userQuery,
   queryParam: {},
-};
+}
 
 export default defineComponent({
   setup() {
-    const ruleForm = ref();
+    const ruleForm = ref()
     const data: Data = reactive({
-      param: { userName: "" }, // 查询参数
+      param: { userName: '' }, // 查询参数
       formData: lodash.cloneDeep(formData), // 表单数据
       rules: {
         userName: [
-          { required: true, message: "请输入用户名", trigger: "blur" },
+          { required: true, message: '请输入用户名', trigger: 'blur' },
         ],
         userAccount: [
-          { required: true, message: "请输入用户账号", trigger: "blur" },
+          { required: true, message: '请输入用户账号', trigger: 'blur' },
         ],
-        roleId: [{ required: true, message: "请选择角色", trigger: "change" }],
+        roleId: [{ required: true, message: '请选择角色', trigger: 'change' }],
       }, // 校验规则
       roles: [],
-    });
+    })
     // 基础数据（分页数据），和增删改查处理函数，以及分页查询变化处理函数
     const {
       baseData,
@@ -185,73 +191,73 @@ export default defineComponent({
       handleSizeChange,
       handleCurrentChange,
       handleDialog,
-    } = getHandleFn(config);
+    } = getHandleFn(config)
 
     const handleSearch = () => {
-      config.queryParam = data.param;
-      handleQuery();
-    };
+      config.queryParam = data.param
+      handleQuery()
+    }
 
     const handleReset = () => {
-      data.param = { userName: "" };
-      handleSearch();
-    };
+      data.param = { userName: '' }
+      handleSearch()
+    }
 
     const handleCreate = () => {
-      baseData.isCreated = true;
-      handleDialog(true);
-    };
+      baseData.isCreated = true
+      handleDialog(true)
+    }
 
     const handleEdit = (row: Record) => {
-      baseData.isCreated = false;
-      data.formData = lodash.cloneDeep(row);
-      handleDialog(true);
-    };
+      baseData.isCreated = false
+      data.formData = lodash.cloneDeep(row)
+      handleDialog(true)
+    }
 
     const handleDeleteEvent = (row: Record) => {
-      handleDel({ _id: row._id });
-    };
+      handleDel({ _id: row._id })
+    }
 
     const handleCancel = () => {
-      data.formData = lodash.cloneDeep(formData);
-      nextTick(ruleForm.value.clearValidate);
-    };
+      data.formData = lodash.cloneDeep(formData)
+      nextTick(ruleForm.value.clearValidate)
+    }
 
     watch(
       () => baseData.visible,
       (newVal) => {
-        !newVal && handleCancel();
+        !newVal && handleCancel()
       }
-    );
+    )
 
     const setParam = (): FormData => {
-      const params: FormData = lodash.cloneDeep(data.formData);
+      const params: FormData = lodash.cloneDeep(data.formData)
       if (params.password) {
-        params.password = blueimpmd5(params.password);
+        params.password = blueimpmd5(params.password)
       }
-      return params;
-    };
+      return params
+    }
 
     const handleSubmit = () => {
       ruleForm.value.validate((valid: boolean) => {
         if (valid) {
           if (baseData.isCreated) {
-            handleAdd(setParam());
+            handleAdd(setParam())
           } else {
-            handleUpdate(setParam());
+            handleUpdate(setParam())
           }
         }
-      });
-    };
+      })
+    }
 
     const getRoles = () => {
       roleQueryAll().then((res) => {
-        data.roles = res.data;
-      });
-    };
+        data.roles = res.data
+      })
+    }
 
-    handleSearch();
-    getRoles();
+    handleSearch()
+    getRoles()
 
     return {
       ...toRefs(data),
@@ -266,9 +272,9 @@ export default defineComponent({
       handleSubmit,
       handleSizeChange,
       handleCurrentChange,
-    };
+    }
   },
-});
+})
 </script>
 
 <style lang="scss" scoped>

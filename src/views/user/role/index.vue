@@ -45,8 +45,14 @@
       ></el-table-column>
       <el-table-column label="操作" align="center" header-align="center">
         <template #default="{ row }">
-          <el-button @click="handleEdit(row)" v-permission="'role.update'">编辑</el-button>
-          <el-popconfirm title="确定删除吗？" v-permission="'role.del'" @confirm="handleDeleteEvent(row)">
+          <el-button @click="handleEdit(row)" v-permission="'role.update'"
+            >编辑</el-button
+          >
+          <el-popconfirm
+            title="确定删除吗？"
+            v-permission="'role.del'"
+            @confirm="handleDeleteEvent(row)"
+          >
             <template #reference>
               <el-button
                 type="danger"
@@ -120,25 +126,25 @@
 </template>
 
 <script lang="ts">
-import getHandleFn from "@/utils/curd";
-import { defineComponent, reactive, toRefs, ref, nextTick, watch } from "vue";
-import { Config } from "@/utils/base";
-import { Data, Record, FormData, Param } from "./dataType";
-import { menuQuery } from "@/apis/user/menu";
-import { permissionQuery } from "@/apis/user/permission";
-import lodash from "lodash";
+import getHandleFn from '@/utils/curd'
+import { defineComponent, reactive, toRefs, ref, nextTick, watch } from 'vue'
+import { Config } from '@/utils/base'
+import { Data, Record, FormData, Param } from './dataType'
+import { menuQuery } from '@/apis/user/menu'
+import { permissionQuery } from '@/apis/user/permission'
+import lodash from 'lodash'
 import {
   roleCreate,
   roleDel,
   roleUpdate,
   roleQuery,
-} from "@/apis/user/role/index";
+} from '@/apis/user/role/index'
 
 const formData: FormData = {
-  roleName: "",
+  roleName: '',
   menuIds: [],
   permissionIds: [],
-};
+}
 
 // 配置项
 const config: Config = {
@@ -147,28 +153,28 @@ const config: Config = {
   handleUpdate: roleUpdate,
   handleQuery: roleQuery,
   queryParam: {},
-};
+}
 
 export default defineComponent({
   setup() {
-    const ruleForm = ref();
-    const menuTree = ref();
-    const permissionTree = ref();
+    const ruleForm = ref()
+    const menuTree = ref()
+    const permissionTree = ref()
     const data: Data = reactive({
-      param: { roleName: "" }, // 查询参数
+      param: { roleName: '' }, // 查询参数
       formData: lodash.cloneDeep(formData), // 表单数据
       rules: {
         roleName: [
-          { required: true, message: "请输入角色名", trigger: "blur" },
+          { required: true, message: '请输入角色名', trigger: 'blur' },
         ],
       }, // 校验规则
       defaultProps: {
-        children: "children",
-        label: "menuName",
+        children: 'children',
+        label: 'menuName',
       },
       menus: [],
       actions: [],
-    });
+    })
 
     // 基础数据（分页数据），和增删改查处理函数，以及分页查询变化处理函数
     const {
@@ -180,84 +186,84 @@ export default defineComponent({
       handleSizeChange,
       handleCurrentChange,
       handleDialog,
-    } = getHandleFn(config);
+    } = getHandleFn(config)
 
     const handleSearch = () => {
-      config.queryParam = { ...data.param };
-      handleQuery();
-    };
+      config.queryParam = { ...data.param }
+      handleQuery()
+    }
 
     const handleReset = () => {
-      data.param = { roleName: "" };
-      handleSearch();
-    };
+      data.param = { roleName: '' }
+      handleSearch()
+    }
 
     const getMenusKeys = () => {
       data.formData.menuIds = menuTree.value
         .getCheckedNodes(false, true)
-        .map((item: Param) => item.menuId);
-    };
+        .map((item: Param) => item.menuId)
+    }
 
     const getPermissionKeys = () => {
-      data.formData.permissionIds = permissionTree.value.getCheckedKeys(true);
-    };
+      data.formData.permissionIds = permissionTree.value.getCheckedKeys(true)
+    }
 
     const handleCreate = () => {
-      baseData.isCreated = true;
-      handleDialog(true);
-    };
+      baseData.isCreated = true
+      handleDialog(true)
+    }
 
     const handleEdit = (row: Record) => {
-      baseData.isCreated = false;
-      data.formData = lodash.cloneDeep(row);
-      handleDialog(true);
-    };
+      baseData.isCreated = false
+      data.formData = lodash.cloneDeep(row)
+      handleDialog(true)
+    }
 
     const handleDeleteEvent = (row: Record) => {
-      handleDel({ _id: row._id });
-    };
+      handleDel({ _id: row._id })
+    }
 
     const handleCancel = () => {
-      data.formData = lodash.cloneDeep(formData);
-      nextTick(ruleForm.value.clearValidate);
-    };
+      data.formData = lodash.cloneDeep(formData)
+      nextTick(ruleForm.value.clearValidate)
+    }
 
     watch(
       () => baseData.visible,
       (newVal) => {
-        !newVal && handleCancel();
+        !newVal && handleCancel()
       }
-    );
+    )
 
     const handleSubmit = () => {
       ruleForm.value.validate((valid: boolean) => {
         if (valid) {
-          getMenusKeys();
-          getPermissionKeys();
+          getMenusKeys()
+          getPermissionKeys()
           if (baseData.isCreated) {
-            handleAdd(data.formData);
+            handleAdd(data.formData)
           } else {
-            handleUpdate(data.formData);
+            handleUpdate(data.formData)
           }
         }
-      });
-    };
+      })
+    }
 
     const getMenus = () => {
       menuQuery().then((res) => {
-        data.menus = res.data;
-      });
-    };
+        data.menus = res.data
+      })
+    }
 
     const getPermission = () => {
       permissionQuery().then((res) => {
-        data.actions = res.data;
-      });
-    };
+        data.actions = res.data
+      })
+    }
 
-    handleSearch();
-    getPermission();
-    getMenus();
+    handleSearch()
+    getPermission()
+    getMenus()
 
     return {
       ...toRefs(data),
@@ -274,9 +280,9 @@ export default defineComponent({
       handleCurrentChange,
       menuTree,
       permissionTree,
-    };
+    }
   },
-});
+})
 </script>
 
 <style lang="scss" scoped>

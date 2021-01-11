@@ -139,24 +139,24 @@
 </template>
 
 <script lang="ts">
-import getHandleFn from "@/utils/curd";
-import { defineComponent, reactive, toRefs, ref, nextTick, watch } from "vue";
-import { Data, Record, FormData } from "./dataType";
-import { Config } from "@/utils/base";
+import getHandleFn from '@/utils/curd'
+import { defineComponent, reactive, toRefs, ref, nextTick, watch } from 'vue'
+import { Data, Record, FormData } from './dataType'
+import { Config } from '@/utils/base'
 import {
   studentCreate,
   studentUpdate,
   studentdel,
   studentQuery,
-} from "@/apis/student";
-import lodash from "lodash";
+} from '@/apis/student'
+import lodash from 'lodash'
 
 const formData: FormData = {
-  name: "",
-  gender: "",
-  interest: "",
-  class: "",
-};
+  name: '',
+  gender: '',
+  interest: '',
+  class: '',
+}
 
 // 配置项
 const config: Config = {
@@ -165,21 +165,21 @@ const config: Config = {
   handleUpdate: studentUpdate,
   handleQuery: studentQuery,
   queryParam: {},
-};
+}
 
 export default defineComponent({
   setup() {
-    const ruleForm = ref();
+    const ruleForm = ref()
     const data: Data = reactive({
       param: lodash.cloneDeep(formData), // 查询参数
       formData: lodash.cloneDeep(formData), // 表单数据
       rules: {
-        name: [{ required: true, message: "请输入名字", trigger: "blur" }],
-        class: [{ required: true, message: "请输入班级", trigger: "blur" }],
-        interest: [{ required: true, message: "请输入兴趣", trigger: "blur" }],
-        gender: [{ required: true, message: "请选择性别", trigger: "change" }],
+        name: [{ required: true, message: '请输入名字', trigger: 'blur' }],
+        class: [{ required: true, message: '请输入班级', trigger: 'blur' }],
+        interest: [{ required: true, message: '请输入兴趣', trigger: 'blur' }],
+        gender: [{ required: true, message: '请选择性别', trigger: 'change' }],
       }, // 校验规则
-    });
+    })
 
     // 基础数据（分页数据），和增删改查处理函数，以及分页查询变化处理函数
     const {
@@ -191,70 +191,70 @@ export default defineComponent({
       handleSizeChange,
       handleCurrentChange,
       handleDialog,
-    } = getHandleFn(config);
+    } = getHandleFn(config)
 
     const handleSearch = () => {
-      config.queryParam = { ...data.param };
-      handleQuery();
-    };
+      config.queryParam = { ...data.param }
+      handleQuery()
+    }
 
     const handleReset = () => {
-      data.param = lodash.cloneDeep(formData);
-      handleSearch();
-    };
+      data.param = lodash.cloneDeep(formData)
+      handleSearch()
+    }
 
     const handleCreate = () => {
-      baseData.isCreated = true;
-      handleDialog(true);
-    };
+      baseData.isCreated = true
+      handleDialog(true)
+    }
 
     const handleEdit = (row: Record) => {
-      baseData.isCreated = false;
-      data.formData = lodash.cloneDeep(row);
-      handleDialog(true);
-    };
+      baseData.isCreated = false
+      data.formData = lodash.cloneDeep(row)
+      handleDialog(true)
+    }
 
     const handleDeleteEvent = (row: Record) => {
-      handleDel({ _id: row._id });
-    };
+      handleDel({ _id: row._id })
+    }
 
     const handleCancel = () => {
-      data.formData = lodash.cloneDeep(formData);
-      nextTick(ruleForm.value.clearValidate);
-    };
+      data.formData = lodash.cloneDeep(formData)
+      nextTick(ruleForm.value.clearValidate)
+    }
 
     watch(
       () => baseData.visible,
       (newVal) => {
-        !newVal && handleCancel();
+        !newVal && handleCancel()
       }
-    );
+    )
 
     const handleSubmit = () => {
       ruleForm.value.validate((valid: boolean) => {
         if (valid) {
           if (baseData.isCreated) {
-            handleAdd(data.formData);
+            handleAdd(data.formData)
           } else {
-            handleUpdate(data.formData);
+            handleUpdate(data.formData)
           }
         }
-      });
-    };
+      })
+    }
 
     const formatterGender = (
       row: Record,
       column: unknown,
-      value: "0" | "1"
+      value: '0' | '1'
     ): string => {
       const map = {
-        "0": "女",
-        "1": "男",
-      };
-      return map[value];
-    };
+        '0': '女',
+        '1': '男',
+      }
+      return map[value]
+    }
 
-    handleSearch();
+    handleSearch()
 
     return {
       ...toRefs(data),
@@ -270,9 +270,9 @@ export default defineComponent({
       handleSizeChange,
       handleCurrentChange,
       formatterGender,
-    };
+    }
   },
-});
+})
 </script>
 
 <style lang="scss" scoped>

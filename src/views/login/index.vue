@@ -34,72 +34,72 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, reactive, ref, toRefs } from "vue";
-import { login } from "@/apis/login";
-import { setSession } from "@/utils/cache";
-import { Data, FormData } from "./dataType";
-import { useRouter } from "vue-router";
-import { useStore } from "vuex";
-import blueimpmd5 from "blueimp-md5";
+import { defineComponent, reactive, ref, toRefs } from 'vue'
+import { login } from '@/apis/login'
+import { setSession } from '@/utils/cache'
+import { Data, FormData } from './dataType'
+import { useRouter } from 'vue-router'
+import { useStore } from 'vuex'
+import blueimpmd5 from 'blueimp-md5'
 export default defineComponent({
   setup() {
-    const ruleForm = ref();
-    const router = useRouter();
-    const store = useStore();
+    const ruleForm = ref()
+    const router = useRouter()
+    const store = useStore()
     const data: Data = reactive({
       formData: {
-        userAccount: "admin",
-        password: "a123456",
+        userAccount: 'admin',
+        password: 'a123456',
       },
       rules: {
         userAccount: [
           {
             required: true,
-            message: "请输入账号",
-            trigger: "blur",
+            message: '请输入账号',
+            trigger: 'blur',
           },
         ],
         password: [
           {
             required: true,
-            message: "请输入密码",
-            trigger: "blur",
+            message: '请输入密码',
+            trigger: 'blur',
           },
         ],
       },
-    });
+    })
 
     const setParam = (): FormData => {
-      const param: FormData = { ...data.formData };
-      param.password = blueimpmd5(param.password);
-      return param;
-    };
+      const param: FormData = { ...data.formData }
+      param.password = blueimpmd5(param.password)
+      return param
+    }
 
     const handleLogin = () => {
       login(setParam()).then((response) => {
-        const { userInfo, token } = response.data;
-        setSession.token = token;
-        setSession.user = userInfo;
-        store.commit("setUser", userInfo);
+        const { userInfo, token } = response.data
+        setSession.token = token
+        setSession.user = userInfo
+        store.commit('setUser', userInfo)
         router.push({
-          path: "/user/user",
-        });
-      });
-    };
+          path: '/user/user',
+        })
+      })
+    }
 
     const submitForm = () => {
       ruleForm.value.validate((valid: boolean) => {
-        valid && handleLogin();
-      });
-    };
+        valid && handleLogin()
+      })
+    }
 
     return {
       ...toRefs(data),
       ruleForm,
       submitForm,
-    };
+    }
   },
-});
+})
 </script>
 
 <style lang="scss" scoped>

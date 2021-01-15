@@ -46,7 +46,7 @@ export default defineComponent({
     const ruleForm = ref()
     const router = useRouter()
     const store = useStore()
-    const data: Data = reactive({
+    const data = reactive<Data>({
       formData: {
         userAccount: 'admin',
         password: 'a123456',

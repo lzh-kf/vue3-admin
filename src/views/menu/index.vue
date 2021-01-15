@@ -31,66 +31,29 @@
 <script lang="ts">
 import { logout } from '@/apis/login'
 
-import { Data, Menu, Result } from './interface'
+import { Data } from './interface'
 
 import { ElMessageBox } from 'element-plus'
 
-import { useRouter, useRoute } from 'vue-router'
+import { useRouter } from 'vue-router'
 
 import { useStore } from 'vuex'
 
-import { findParentElement } from '@/utils'
-
-import { defineComponent, reactive, ref, toRefs, computed, watch } from 'vue'
+import { defineComponent, reactive, toRefs, computed } from 'vue'
 
 export default defineComponent({
   setup() {
     const router = useRouter()
 
-    const route = useRoute()
-
     const store = useStore()
 
-    const data: Data = reactive({
+    const data = reactive<Data>({
       navs: [],
     })
 
     const user = computed(() => store.state.user)
 
     const menus = computed(() => store.state.menus)
-
-    const findName = (data: Array<Menu>, path: string): Array<Result> => {
-      const result = []
-      const { length } = data
-      for (let i = 0; i < length; i++) {
-        const item = data[i]
-        if (item.path === path) {
-          result.push({
-            path: item.path,
-            name: item.menuName,
-            menuId: item.menuId,
-            parentId: item.parentId,
-          })
-        } else if (item.children && item.children.length) {
-          result.push(...findName(item.children, path))
-        }
-      }
-      return result
-    }
-
-    const setNavs = () => {
-      // const result: Array<Result> = findName(menus, route.path);
-      // const parentElement = findParentElement(menus, result[0].parentId, menus);
-      // result.unshift(...parentElement);
-      // data.navs = result;
-    }
-    setNavs()
-    watch(
-      () => route.path,
-      () => {
-        setNavs()
-      }
-    )
 
     const removeData = () => {
       store.state.routeNames.forEach((name: string) => {

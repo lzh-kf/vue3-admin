@@ -160,7 +160,7 @@ export default defineComponent({
     const ruleForm = ref()
     const menuTree = ref()
     const permissionTree = ref()
-    const data: Data = reactive({
+    const data = reactive<Data>({
       param: { roleName: '' }, // 查询参数
       formData: lodash.cloneDeep(formData), // 表单数据
       rules: {

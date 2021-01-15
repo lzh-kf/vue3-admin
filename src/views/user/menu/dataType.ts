@@ -17,10 +17,17 @@ interface Record extends FormData {
     _id: string;
 }
 
+interface CustomProps {
+    label: string,
+    value: string,
+    checkStrictly: boolean
+}
+
 // data的数据
 interface Data {
     formData: FormData;
     rules: Rule;
+    customProps: CustomProps
 }
 
 export { Data, Record, FormData }

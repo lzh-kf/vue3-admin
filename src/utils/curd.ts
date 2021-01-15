@@ -19,7 +19,7 @@ interface Data {
 
 const getHandleFn = (config: Config) => {
 
-    const baseData: Data = reactive({
+    const baseData = reactive<Data>({
         pagination: {
             pageNum: 1,
             pageSize: 10,

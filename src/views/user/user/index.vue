@@ -167,7 +167,7 @@ const config: Config = {
 export default defineComponent({
   setup() {
     const ruleForm = ref()
-    const data: Data = reactive({
+    const data = reactive<Data>({
       param: { userName: '' }, // 查询参数
       formData: lodash.cloneDeep(formData), // 表单数据
       rules: {

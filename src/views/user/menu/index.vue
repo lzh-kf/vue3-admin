@@ -123,7 +123,7 @@ const config: Config = {
 export default defineComponent({
   setup() {
     const ruleForm = ref()
-    const data: Data = reactive({
+    const data = reactive<Data>({
       formData: lodash.cloneDeep(formData), // 表单数据
       rules: {}, // 校验规则
       customProps: {

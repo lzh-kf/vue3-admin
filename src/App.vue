@@ -2,20 +2,12 @@
   <router-view />
 </template>
 <script>
-export default {
-//   mounted() {
-//     const element = document.createElement('style')
-//     element.innerHTML = `:root {
-//   --first-color: #488cff;
-//   --second-color: gray !important;
-// }`
-//     document.getElementsByTagName('HEAD').item(0).appendChild(style)
-//   },
-}
+export default {}
 </script>
 
 <style>
+/* 默认主题色 */
 :root {
-  --theme-color: red;
+  --theme-color: #409eff;
 }
 </style>

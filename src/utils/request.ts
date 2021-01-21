@@ -7,7 +7,7 @@ import { refreshToken } from '@/apis/login/index';
 
 axios.defaults.baseURL = process.env.VUE_APP_API;
 
-let token: string
+let token: string | unknown
 
 interface Response {
   err_code?: number,
@@ -41,6 +41,9 @@ axios.interceptors.request.use((config) => {
 
 axios.interceptors.response.use(async (response) => {
   if (response.data.err_code === 0) {
+    if (response.config.url === '/logout') {
+      token = undefined
+    }
     return response.data;
   } else if (response.data.err_code === 1001) {
     // token过期

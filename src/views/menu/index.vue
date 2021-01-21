@@ -5,26 +5,20 @@
     </el-aside>
     <el-main>
       <div class="header">
-        <span class="name">当前用户：{{ user.userName }}</span>
+        <el-button
+          @click="changeThemeColor"
+          type="text"
+          style="margin-right: 10px"
+          >切换主题色</el-button
+        >
+        <span class="name">当前用户 {{ user.userName }}</span>
         <el-button @click="logoutSystem">退出</el-button>
       </div>
-      <!-- <div class="nav">
-        <ul>
-          <li
-            v-for="(item, index) in navs"
-            :key="item.path"
-            :class="index === navs.length - 1 ? 'heightLight' : ''"
-            @click="nav(index === navs.length - 1, item.path)"
-          >
-            {{ item.name
-            }}<span class="line" v-if="index < navs.length - 1">/</span>
-          </li>
-        </ul>
-      </div> -->
       <div class="place"></div>
       <router-view />
     </el-main>
     <el-backtop target=".el-main" :bottom="100"> </el-backtop>
+    <setThemeColor ref="setThemeColor" />
   </el-container>
 </template>
 
@@ -39,9 +33,14 @@ import { useRouter } from 'vue-router'
 
 import { useStore } from 'vuex'
 
-import { defineComponent, reactive, toRefs, computed } from 'vue'
+import { defineComponent, reactive, toRefs, computed, ref } from 'vue'
+
+import setThemeColor from './components/model.vue'
 
 export default defineComponent({
+  components: {
+    setThemeColor,
+  },
   setup() {
     const router = useRouter()
 
@@ -50,6 +49,8 @@ export default defineComponent({
     const data = reactive<Data>({
       navs: [],
     })
+
+    const setThemeColor = ref()
 
     const user = computed(() => store.state.user)
 
@@ -60,6 +61,8 @@ export default defineComponent({
         router.removeRoute(name)
       })
       sessionStorage.clear()
+      setThemeColor.value.setThemeColor('#409eff')
+      localStorage.clear()
       store.commit('setRouteNames', [])
       store.commit('setPermissions', [])
       store.commit('setMenus', [])
@@ -80,11 +83,18 @@ export default defineComponent({
         })
       })
     }
+
+    const changeThemeColor = () => {
+      setThemeColor.value.setVisible(true)
+    }
+
     return {
       ...toRefs(data),
       user,
       menus,
       logoutSystem,
+      setThemeColor,
+      changeThemeColor,
     }
   },
 })
@@ -111,10 +121,7 @@ export default defineComponent({
     align-items: center;
     .name {
       margin-right: 20px;
-      font-family: 'Helvetica Neue', Helvetica, 'PingFang SC',
-        'Hiragino Sans GB', 'Microsoft YaHei', '微软雅黑', Arial, sans-serif;
       font-size: 13px;
-      font-weight: 600;
       color: #303133;
     }
   }

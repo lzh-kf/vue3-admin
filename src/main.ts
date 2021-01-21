@@ -8,7 +8,7 @@ import 'element-plus/lib/theme-chalk/index.css';
 import locale from 'element-plus/lib/locale/lang/zh-cn';
 import registrationComponents from "@/components/index";
 import registrationDirectives from "@/directives";
-// import '@/assets/css/element-theme/index.css'
+import '@/assets/css/element-theme/index.css';
 
 const app = createApp(App);
 

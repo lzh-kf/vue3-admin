@@ -167,6 +167,7 @@ export default defineComponent({
     }
 
     const handleCancel = () => {
+      handleDialog(false)
       data.formData = lodash.cloneDeep(formData)
       nextTick(ruleForm.value.clearValidate)
     }

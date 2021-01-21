@@ -24,7 +24,7 @@
         >
       </el-col>
     </el-row>
-    <el-table :data="list" style="width: 100%" v-loading="loading">
+    <el-table :data="list" style="width: 100%" v-loading="loading" border>
       <el-table-column
         prop="defaultProperty"
         label="属性名"
@@ -154,6 +154,7 @@ export default defineComponent({
     };
 
     const handleCancel = () => {
+      handleDialog(false)
       data.formData = lodash.cloneDeep(formData);
       nextTick(ruleForm.value.clearValidate);
     };

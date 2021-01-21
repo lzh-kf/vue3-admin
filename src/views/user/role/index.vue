@@ -24,7 +24,7 @@
         >
       </el-col>
     </el-row>
-    <el-table :data="list" style="width: 100%" v-loading="loading">
+    <el-table :data="list" style="width: 100%" v-loading="loading" border>
       <el-table-column
         prop="roleName"
         label="角色名"
@@ -54,10 +54,7 @@
             @confirm="handleDeleteEvent(row)"
           >
             <template #reference>
-              <el-button
-                type="danger"
-                style="margin-left: 10px"
-                v-permission="''"
+              <el-button type="danger" style="margin-left: 10px"
                 >删除</el-button
               >
             </template>
@@ -224,6 +221,7 @@ export default defineComponent({
     }
 
     const handleCancel = () => {
+      handleDialog(false)
       data.formData = lodash.cloneDeep(formData)
       nextTick(ruleForm.value.clearValidate)
     }

@@ -24,7 +24,7 @@
         >
       </el-col>
     </el-row>
-    <el-table :data="list" style="width: 100%" v-loading="loading">
+    <el-table :data="list" style="width: 100%" v-loading="loading" border>
       <el-table-column
         prop="userName"
         label="用户名"
@@ -63,7 +63,6 @@
               <el-button
                 type="danger"
                 style="margin-left: 10px"
-                v-permission="''"
                 >删除</el-button
               >
             </template>
@@ -219,6 +218,7 @@ export default defineComponent({
     }
 
     const handleCancel = () => {
+      handleDialog(false)
       data.formData = lodash.cloneDeep(formData)
       nextTick(ruleForm.value.clearValidate)
     }

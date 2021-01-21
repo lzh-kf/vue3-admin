@@ -20,9 +20,9 @@ interface Record {
 
 
 interface CustomProps {
-    label: string,
-    value: string,
-    checkStrictly: boolean
+    label: string;
+    value: string;
+    checkStrictly: boolean;
 }
 
 

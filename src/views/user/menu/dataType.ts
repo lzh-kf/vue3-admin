@@ -18,16 +18,16 @@ interface Record extends FormData {
 }
 
 interface CustomProps {
-    label: string,
-    value: string,
-    checkStrictly: boolean
+    label: string;
+    value: string;
+    checkStrictly: boolean;
 }
 
 // data的数据
 interface Data {
     formData: FormData;
     rules: Rule;
-    customProps: CustomProps
+    customProps: CustomProps;
 }
 
 export { Data, Record, FormData }

@@ -21,10 +21,10 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from "vue";
-import submenu from "./submenu.vue";
+import { defineComponent } from 'vue'
+import submenu from './submenu.vue'
 export default defineComponent({
-  name: "menus",
+  name: 'menus',
   components: { submenu },
   props: {
     menus: {
@@ -32,13 +32,15 @@ export default defineComponent({
       required: true,
     },
   },
-});
+})
 </script>
 
 <style lang="scss" scoped>
 .menus {
+  padding-top: 20px;
+  box-sizing: border-box;
   width: 100%;
-  height: 100%;
+  height: calc(100% - 20px);
   overflow-x: hidden;
 }
 </style>

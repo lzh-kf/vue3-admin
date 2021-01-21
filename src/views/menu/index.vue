@@ -1,22 +1,28 @@
 <template>
   <el-container>
-    <el-aside width="180px">
-      <custom-menus :menus="menus" id="custom-menu"></custom-menus>
-    </el-aside>
-    <el-main>
+    <el-header>
       <div class="header">
         <el-button
           @click="changeThemeColor"
           type="text"
-          style="margin-right: 10px"
+          style="margin-right: 10px; color: white"
           >切换主题色</el-button
         >
         <span class="name">当前用户 {{ user.userName }}</span>
-        <el-button @click="logoutSystem">退出</el-button>
+        <el-button type="text" @click="logoutSystem" style="color: white"
+          >退出</el-button
+        >
       </div>
-      <div class="place"></div>
-      <router-view />
-    </el-main>
+      <div class="place"></div
+    ></el-header>
+    <el-container>
+      <el-aside width="180px">
+        <custom-menus :menus="menus" id="custom-menu"></custom-menus>
+      </el-aside>
+      <el-main>
+        <router-view />
+      </el-main>
+    </el-container>
     <el-backtop target=".el-main" :bottom="100"> </el-backtop>
     <setThemeColor ref="setThemeColor" />
   </el-container>
@@ -102,12 +108,12 @@ export default defineComponent({
 
 <style lang="scss">
 .el-aside {
-  height: 100vh;
+  height: calc(100vh - 70px);
 }
 .el-main {
-  padding: 10px 15px;
+  padding: 30px 15px 10px 10px;
   box-sizing: border-box;
-  height: 100vh;
+  height: calc(100vh - 70px);
   .nav {
     margin: 10px 0 10px 0x;
     border-bottom: 1px solid #e6e6e6;
@@ -115,15 +121,19 @@ export default defineComponent({
   .place {
     margin-bottom: 15px;
   }
-  .header {
-    display: flex;
-    justify-content: flex-end;
-    align-items: center;
-    .name {
-      margin-right: 20px;
-      font-size: 13px;
-      color: #303133;
-    }
+}
+.el-header {
+  height: 70px;
+  background: var(--theme-color);
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  color: white;
+}
+.header {
+  .name {
+    margin-right: 20px;
+    font-size: 13px;
   }
 }
 </style>

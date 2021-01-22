@@ -1,11 +1,10 @@
 <template>
   <div>
     <el-row>
-      <el-col :span="24" style="margin: 15px 20px 15px 0; text-align: right">
+      <el-col :span="24" style="text-align: right">
         <el-button
           @click="handleCreate"
           type="primary"
-          style="margin-right: 10px"
           v-permission="'menu.create'"
           >创建</el-button
         >
@@ -76,6 +75,13 @@
             clearable
           ></el-input>
         </el-form-item>
+        <el-form-item label="图标" prop="icon">
+          <el-select v-model="formData.icon" placeholder="请选择">
+            <el-option v-for="item in iconList" :key="item" :value="item">
+              <i :class="`iconfont ${item}`"></i>
+            </el-option>
+          </el-select>
+        </el-form-item>
       </el-form>
       <template #footer>
         <span class="dialog-footer">
@@ -100,12 +106,14 @@ import {
 } from '@/apis/user/menu/index'
 import lodash from 'lodash'
 import { findParentElement, Result, Menu } from '@/utils'
+import { iconList } from '@/utils/const'
 
 const formData: FormData = {
   menuName: '',
   path: '',
   ids: [],
   componentFilePath: '',
+  icon: 'icon-morentubiao',
 }
 
 // 配置项
@@ -125,12 +133,22 @@ export default defineComponent({
     const ruleForm = ref()
     const data = reactive<Data>({
       formData: lodash.cloneDeep(formData), // 表单数据
-      rules: {}, // 校验规则
+      rules: {
+        menuName: [
+          { required: true, message: '请输入菜单名', trigger: 'blur' },
+        ],
+        path: [{ required: true, message: '请输入页面路径', trigger: 'blur' }],
+        componentFilePath: [
+          { required: true, message: '请输入组件路径', trigger: 'blur' },
+        ],
+        icon: [{ required: true, message: '请选择图标', trigger: 'change' }],
+      }, // 校验规则
       customProps: {
         label: 'menuName',
         value: 'menuId',
         checkStrictly: true,
       },
+      iconList,
     })
     // 基础数据（分页数据），和增删改查处理函数，以及分页查询变化处理函数
     const {

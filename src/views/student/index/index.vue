@@ -34,17 +34,17 @@
       </el-form-item>
     </el-form>
     <el-row>
-      <el-col :span="24" style="margin: 15px 20px 15px 0; text-align: right">
+      <el-col :span="24" style="margin: 15px 0px; text-align: right">
         <el-button
           @click="handleCreate"
           type="primary"
-          style="margin-right: 10px"
+          style="margin-right: 0px"
           v-permission="'student.create'"
           >创建学生</el-button
         >
       </el-col>
     </el-row>
-    <el-table :data="list" style="width: 100%" v-loading="loading">
+    <el-table :data="list" border>
       <el-table-column
         prop="name"
         label="姓名"
@@ -143,6 +143,7 @@ import getHandleFn from '@/utils/curd'
 import { defineComponent, reactive, toRefs, ref, nextTick, watch } from 'vue'
 import { Data, Record, FormData } from './dataType'
 import { Config } from '@/utils/base'
+import { genderMap } from '@/utils/const'
 import {
   studentCreate,
   studentUpdate,
@@ -246,13 +247,7 @@ export default defineComponent({
       row: Record,
       column: unknown,
       value: '0' | '1'
-    ): string => {
-      const map = {
-        '0': '女',
-        '1': '男',
-      }
-      return map[value]
-    }
+    ): string => genderMap[value]
 
     handleSearch()
 
@@ -274,11 +269,3 @@ export default defineComponent({
   },
 })
 </script>
-
-<style lang="scss" scoped>
-.pagination {
-  margin: 20px;
-  display: flex;
-  justify-content: flex-end;
-}
-</style>:

@@ -1,18 +1,23 @@
 <template>
   <el-container>
     <el-header>
-      <div class="header">
-        <el-button
-          @click="changeThemeColor"
-          type="text"
-          style="margin-right: 10px; color: white"
-          >切换主题色</el-button
-        >
-        <span class="name">当前用户 {{ user.userName }}</span>
-        <el-button type="text" @click="logoutSystem" style="color: white"
-          >退出</el-button
-        >
-      </div>
+      <el-row class="row">
+        <el-col :span="12" class="column">
+          <img src="@/assets/image/logo.png" alt="" />
+        </el-col>
+        <el-col :span="12" class="column right">
+          <el-button
+            @click="changeThemeColor"
+            type="text"
+            class="change-theme-color"
+            >切换主题色</el-button
+          >
+          <span>当前用户 {{ user.userName }}</span>
+          <el-button type="text" @click="logoutSystem" class="exit"
+            >退出</el-button
+          >
+        </el-col>
+      </el-row>
       <div class="place"></div
     ></el-header>
     <el-container>
@@ -108,12 +113,12 @@ export default defineComponent({
 
 <style lang="scss">
 .el-aside {
-  height: calc(100vh - 70px);
+  height: calc(100vh - 60px);
 }
 .el-main {
   padding: 30px 15px 10px 10px;
   box-sizing: border-box;
-  height: calc(100vh - 70px);
+  height: calc(100vh - 60px);
   .nav {
     margin: 10px 0 10px 0x;
     border-bottom: 1px solid #e6e6e6;
@@ -123,17 +128,26 @@ export default defineComponent({
   }
 }
 .el-header {
-  height: 70px;
   background: var(--theme-color);
-  display: flex;
-  justify-content: flex-end;
-  align-items: center;
   color: white;
-}
-.header {
-  .name {
-    margin-right: 20px;
-    font-size: 13px;
+  font-size: 13px;
+  .row {
+    height: 100%;
+    .column {
+      height: 100%;
+      display: flex;
+      align-items: center;
+    }
+    .right {
+      justify-content: flex-end;
+      span {
+        color: white;
+        margin-right: 10px;
+      }
+    }
+  }
+  img {
+    width: 25px;
   }
 }
 </style>

@@ -1,11 +1,10 @@
 <template>
   <div>
     <el-row>
-      <el-col :span="24" style="margin: 15px 20px 15px 0; text-align: right">
+      <el-col :span="24" style="text-align: right">
         <el-button
           @click="handleCreate"
           type="primary"
-          style="margin-right: 10px"
           v-permission="'permission.create'"
           >创建</el-button
         >

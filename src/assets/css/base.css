@@ -1,0 +1,10 @@
+/* element-plus table组件，border没有合并，导致样式错乱 */
+table, tr, th {
+  border-collapse:collapse !important;
+}
+
+.pagination {
+  margin: 20px 0;
+  display: flex;
+  justify-content: flex-end;
+}

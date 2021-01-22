@@ -14,13 +14,12 @@
       </el-form-item>
     </el-form>
     <el-row>
-      <el-col :span="24" style="margin: 15px 20px 15px 0; text-align: right">
+      <el-col :span="24" style="margin: 15px 0; text-align: right">
         <el-button
           @click="handleCreate"
           type="primary"
-          style="margin-right: 10px"
           v-permission="'user.create'"
-          >创建</el-button
+          >创建用户</el-button
         >
       </el-col>
     </el-row>
@@ -60,9 +59,7 @@
             @confirm="handleDeleteEvent(row)"
           >
             <template #reference>
-              <el-button
-                type="danger"
-                style="margin-left: 10px"
+              <el-button type="danger" style="margin-left: 10px"
                 >删除</el-button
               >
             </template>
@@ -276,11 +273,3 @@ export default defineComponent({
   },
 })
 </script>
-
-<style lang="scss" scoped>
-.pagination {
-  margin: 20px;
-  display: flex;
-  justify-content: flex-end;
-}
-</style>

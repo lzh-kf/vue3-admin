@@ -14,13 +14,12 @@
       </el-form-item>
     </el-form>
     <el-row>
-      <el-col :span="24" style="margin: 15px 20px 15px 0; text-align: right">
+      <el-col :span="24" style="margin: 15px 0; text-align: right">
         <el-button
           @click="handleCreate"
           type="primary"
-          style="margin-right: 10px"
           v-permission="'role.create'"
-          >创建</el-button
+          >创建角色</el-button
         >
       </el-col>
     </el-row>
@@ -282,11 +281,3 @@ export default defineComponent({
   },
 })
 </script>
-
-<style lang="scss" scoped>
-.pagination {
-  margin: 20px;
-  display: flex;
-  justify-content: flex-end;
-}
-</style>

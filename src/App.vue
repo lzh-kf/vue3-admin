@@ -1,9 +1,6 @@
 <template>
   <router-view />
 </template>
-<script>
-export default {}
-</script>
 
 <style>
 /* 默认主题色 */

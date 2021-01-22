@@ -1,7 +1,7 @@
 <template>
   <div class="login">
     <div class="content">
-      <h4>自定义后台系统</h4>
+      <h4>admin-system</h4>
       <el-form
         :model="formData"
         :rules="rules"
@@ -34,13 +34,14 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, reactive, ref, toRefs } from 'vue'
+import { defineComponent, reactive, ref, toRefs, onMounted } from 'vue'
 import { login } from '@/apis/login'
 import { setSession } from '@/utils/cache'
 import { Data, FormData } from './dataType'
 import { useRouter } from 'vue-router'
 import { useStore } from 'vuex'
 import blueimpmd5 from 'blueimp-md5'
+import setThemeColor from '@/utils/setThemeColor'
 export default defineComponent({
   setup() {
     const ruleForm = ref()
@@ -67,6 +68,10 @@ export default defineComponent({
           },
         ],
       },
+    })
+
+    onMounted(() => {
+      setThemeColor()
     })
 
     const setParam = (): FormData => {

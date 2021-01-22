@@ -15,28 +15,26 @@
 <script lang="ts">
 import { defineComponent, reactive, toRefs, onMounted } from 'vue'
 import { setLocal } from '@/utils/cache'
-import { Data, DomElement } from './dataType'
+import { Data } from './dataType'
+import setThemeColor from '@/utils/setThemeColor'
+import { defaultThemeColor } from '@/utils/const'
 export default defineComponent({
   name: 'setThemeColor',
   setup() {
     const data = reactive<Data>({
       visible: false,
-      color: '#409EFF',
+      color: defaultThemeColor,
     })
 
-    const setThemeColor = (color?: string): void => {
-      const style: DomElement = document.querySelector('head style')
-      if (style) {
-        style.innerText = `:root {--theme-color: ${color || data.color};}`
-        setLocal.themeColor = data.color
-      }
+    const setLocalColor = (): void => {
+      setLocal.themeColor = data.color
+      setThemeColor()
     }
 
     onMounted(() => {
       const { themeColor } = setLocal
       if (themeColor) {
         data.color = themeColor
-        setThemeColor()
       }
     })
 
@@ -45,7 +43,7 @@ export default defineComponent({
     }
 
     const handleConfirm = (): void => {
-      setThemeColor()
+      setLocalColor()
       setVisible(false)
     }
 
@@ -58,7 +56,7 @@ export default defineComponent({
       handleCancel,
       handleConfirm,
       setVisible,
-      setThemeColor
+      setThemeColor,
     }
   },
 })

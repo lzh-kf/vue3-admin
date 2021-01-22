@@ -11,8 +11,9 @@
           <submenu :child="item" />
         </div>
         <el-menu-item v-else :index="item.path">
-          <template #title
-            ><span>{{ item.menuName }}</span></template
+          <template #title>
+            <i :class="`iconfont ${item.icon}`"></i>
+            <span>{{ item.menuName }}</span></template
           >
         </el-menu-item>
       </div>
@@ -37,10 +38,9 @@ export default defineComponent({
 
 <style lang="scss" scoped>
 .menus {
-  padding-top: 20px;
   box-sizing: border-box;
   width: 100%;
-  height: calc(100% - 20px);
+  height: 100%;
   overflow-x: hidden;
 }
 </style>

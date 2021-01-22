@@ -6,7 +6,7 @@
           @click="handleCreate"
           type="primary"
           v-permission="'permission.create'"
-          >创建</el-button
+          >创建权限</el-button
         >
       </el-col>
     </el-row>

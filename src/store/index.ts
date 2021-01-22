@@ -6,7 +6,8 @@ const store: Store = {
     permissions: [],
     menus: [],
     user: {},
-    routeNames: []
+    routeNames: [],
+    menuNames: []
   },
   mutations: {
     setPermissions(state, data) {
@@ -20,6 +21,9 @@ const store: Store = {
     },
     setRouteNames(state, data) {
       state.routeNames = data;
+    },
+    setMenuNames(state, data) {
+      state.menuNames = data;
     }
   }
 }

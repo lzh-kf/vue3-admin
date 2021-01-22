@@ -2,11 +2,14 @@
   <el-container>
     <el-header>
       <el-row class="row">
-        <el-col :span="12" class="column">
+        <el-col :span="16" class="column">
           <img src="@/assets/image/logo.png" alt="" />
           <span class="title">admin-system</span>
         </el-col>
-        <el-col :span="12" class="column right">
+        <el-col :span="3" class="column">
+          <searchMenu />
+        </el-col>
+        <el-col :span="5" class="column right">
           <el-button
             @click="changeThemeColor"
             type="text"
@@ -60,11 +63,14 @@ import { setSession } from '@/utils/cache'
 
 import { defineComponent, reactive, toRefs, computed, ref } from 'vue'
 
-import setThemeColor from './components/model.vue'
+import setThemeColor from './components/model/index.vue'
+
+import searchMenu from './components/searchMenu/index.vue'
 
 export default defineComponent({
   components: {
     setThemeColor,
+    searchMenu,
   },
   setup() {
     const router = useRouter()

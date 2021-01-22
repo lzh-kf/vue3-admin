@@ -15,14 +15,16 @@ type Route = Menus;
 interface MenusAndPermission {
     menus: Array<Menus>;
     routes: Array<Menus>;
+    menuNames: Array<Menus>;
     routeNames: Array<string>;
 }
 
-function savePermissionInfo(menus: Array<Menus>, permissions: Array<string>, routeNames: Array<string>): void {
+function savePermissionInfo(menus: Array<Menus>, permissions: Array<string>, routeNames: Array<string>, menuNames: Array<Menus>): void {
     store.commit("setPermissions", permissions);
     store.commit("setMenus", menus);
     store.commit("setRouteNames", routeNames);
     store.commit("setUser", setSession.user);
+    store.commit("setMenuNames", menuNames);
 }
 
 function saveRoute(data: Array<Route>): void {
@@ -59,6 +61,7 @@ function setTreeData(data: Array<Menus>): void {
 function getMenusAndRoutes(data: Array<Menus>): MenusAndPermission {
     const menus: Array<Menus> = [];
     const routes: Array<Menus> = [];
+    const menuNames: Array<Menus> = [];
     const routeNames: Array<string> = [];
     setTreeData(data);
     const { length } = data;
@@ -69,18 +72,23 @@ function getMenusAndRoutes(data: Array<Menus>): MenusAndPermission {
         }
         if (!item.children) {
             routes.push(item);
+            menuNames.push({
+                label: item.menuName,
+                path: item.path
+            })
             routeNames.push(item.componentFilePath as string);
         }
     }
-    return { menus, routes, routeNames };
+    return { menus, routes, routeNames, menuNames };
 }
+
 
 function setPermission(): Promise<unknown> {
     return new Promise((resolve, reject) => {
         queryPermission().then(res => {
-            const { menus, routes, routeNames } = getMenusAndRoutes(res.data.menus);
+            const { menus, routes, routeNames, menuNames } = getMenusAndRoutes(res.data.menus);
             const permissions = getPermission(res.data.permissions);
-            savePermissionInfo(menus, permissions, routeNames);
+            savePermissionInfo(menus, permissions, routeNames, menuNames);
             saveRoute(routes);
             resolve(true);
         }).catch(error => {

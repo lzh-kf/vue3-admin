@@ -8,6 +8,9 @@ interface State {
         [key: string]: any;
     };
     routeNames: Array<string>;
+    menuNames: Array<{
+        [key: string]: any;
+    }>;
 }
 
 interface Mutations {

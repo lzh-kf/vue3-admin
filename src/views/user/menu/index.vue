@@ -6,7 +6,7 @@
           @click="handleCreate"
           type="primary"
           v-permission="'menu.create'"
-          >创建</el-button
+          >创建菜单</el-button
         >
       </el-col>
     </el-row>

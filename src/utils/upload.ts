@@ -8,9 +8,9 @@ const checkFile = (fileType: string, currentPploadType?: Array<string>): boolean
 }
 
 // 校验文件大小
-const checkFileSize = (currentFileSize: number, ruleFileSize?: number): boolean => {
-    ruleFileSize = ruleFileSize || uploadFileSize
-    return ruleFileSize > (currentFileSize / 1024 / 1024)
+const checkFileSize = (currentFileSize: number, maxFileSize?: number): boolean => {
+    maxFileSize = maxFileSize || uploadFileSize
+    return maxFileSize > (currentFileSize / 1024 / 1024)
 }
 
 interface UploadFile {

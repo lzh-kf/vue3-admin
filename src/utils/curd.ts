@@ -2,24 +2,12 @@
 
 import { ElMessage } from "element-plus";
 import { reactive, watch } from "vue";
-import { Config, Param, Pagination } from '@/utils/base';
+import { Config, Param, BaseData } from '@/utils/base';
 import loadsh from 'lodash';
-
-interface Data {
-    pagination: Pagination;
-    pageSizes: Array<number>;
-    list: Array<{
-        [key: string]: any;
-    }>;
-    total: number;
-    isCreated: boolean;
-    visible: boolean;
-    loading: boolean;
-}
 
 const getHandleFn = (config: Config) => {
 
-    const baseData = reactive<Data>({
+    const baseData = reactive<BaseData>({
         pagination: {
             pageNum: 1,
             pageSize: 10,
@@ -32,7 +20,7 @@ const getHandleFn = (config: Config) => {
         loading: false
     })
 
-    const handleDialog = (value: boolean) => {
+    const handleDialog = (value: boolean): void => {
         baseData.visible = value
     }
 
@@ -77,11 +65,11 @@ const getHandleFn = (config: Config) => {
         handleDialog(false)
     }
 
-    const handleAdd = (params: Param): void => {
+    const handleAdd = <T>(params: T): void => {
         config.handleAdd(params).then(handleSuccessCallback)
     }
 
-    const handleDel = (params: Param): void => {
+    const handleDel = <T>(params: T): void => {
         config.handleDel(params).then((res: any) => {
             ElMessage({
                 message: res.data.message,
@@ -91,7 +79,7 @@ const getHandleFn = (config: Config) => {
         })
     }
 
-    const handleUpdate = (params: Param): void => {
+    const handleUpdate = <T>(params: T): void => {
         config.handleUpdate(params).then(handleSuccessCallback)
     }
 

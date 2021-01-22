@@ -8,13 +8,19 @@
     >
       <div v-for="(item, index) in menus" :key="index">
         <div v-if="item.children">
-          <submenu :child="item" />
+          <submenu :child="item" @getNames="getNames" />
         </div>
-        <el-menu-item v-else :index="item.path">
+        <el-menu-item
+          v-else
+          :index="item.path"
+          @click="handleClick(item.menuName)"
+        >
           <template #title>
-            <i :class="`iconfont ${item.icon}`"></i>
-            <span>{{ item.menuName }}</span></template
-          >
+            <div>
+              <i :class="`iconfont ${item.icon}`"></i>
+              <span>{{ item.menuName }}</span>
+            </div>
+          </template>
         </el-menu-item>
       </div>
     </el-menu>
@@ -32,6 +38,20 @@ export default defineComponent({
       type: Array,
       required: true,
     },
+  },
+  setup(props, ctx) {
+    const getNames = (names: Array<string>) => {
+      ctx.emit('getNames', names)
+    }
+
+    const handleClick = (menuName: string) => {
+      getNames([menuName])
+    }
+
+    return {
+      handleClick,
+      getNames,
+    }
   },
 })
 </script>

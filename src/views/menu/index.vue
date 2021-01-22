@@ -22,9 +22,20 @@
     ></el-header>
     <el-container>
       <el-aside width="180px">
-        <custom-menus :menus="menus" id="custom-menu"></custom-menus>
+        <custom-menus
+          :menus="menus"
+          id="custom-menu"
+          @getNames="getNames"
+        ></custom-menus>
       </el-aside>
       <el-main>
+        <div class="bottom-border">
+          <el-breadcrumb separator="/" class="breadcrumb" v-if="navs.length">
+            <el-breadcrumb-item v-for="(item, index) in navs" :key="index">{{
+              item
+            }}</el-breadcrumb-item>
+          </el-breadcrumb>
+        </div>
         <router-view />
       </el-main>
     </el-container>
@@ -44,6 +55,8 @@ import { useRouter } from 'vue-router'
 
 import { useStore } from 'vuex'
 
+import { setSession } from '@/utils/cache'
+
 import { defineComponent, reactive, toRefs, computed, ref } from 'vue'
 
 import setThemeColor from './components/model.vue'
@@ -58,7 +71,7 @@ export default defineComponent({
     const store = useStore()
 
     const data = reactive<Data>({
-      navs: [],
+      navs: setSession.names || ['用户中心', '用户管理'],
     })
 
     const setThemeColor = ref()
@@ -99,6 +112,10 @@ export default defineComponent({
       setThemeColor.value.setVisible(true)
     }
 
+    const getNames = (names: Array<string>) => {
+      data.navs = setSession.names = names
+    }
+
     return {
       ...toRefs(data),
       user,
@@ -106,6 +123,7 @@ export default defineComponent({
       logoutSystem,
       setThemeColor,
       changeThemeColor,
+      getNames,
     }
   },
 })
@@ -116,15 +134,17 @@ export default defineComponent({
   height: calc(100vh - 60px);
 }
 .el-main {
-  padding: 30px 15px 10px 10px;
+  padding: 0px 15px 10px 10px;
   box-sizing: border-box;
   height: calc(100vh - 60px);
-  .nav {
-    margin: 10px 0 10px 0x;
-    border-bottom: 1px solid #e6e6e6;
-  }
-  .place {
-    margin-bottom: 15px;
+  .bottom-border {
+    width: 100%;
+    border-bottom: 1px solid #eaeefb;
+    margin-bottom: 10px;
+    .breadcrumb {
+      margin: 15px 0;
+      cursor: pointer;
+    }
   }
 }
 .el-header {

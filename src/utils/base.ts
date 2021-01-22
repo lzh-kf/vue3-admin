@@ -1,6 +1,6 @@
-import { AxiosPromise } from 'axios';
-// 基础接口
+import { AxiosPromise } from 'axios'
 
+// 基础接口
 interface Rule {
     [key: string]: Array<{
         required?: boolean;
@@ -17,6 +17,23 @@ interface Param {
     [key: string]: any;
 }
 
+interface Pagination {
+    pageSize: number;
+    pageNum: number;
+}
+
+interface BaseData {
+    pagination: Pagination;
+    pageSizes: Array<number>;
+    list: Array<{
+        [key: string]: any;
+    }>;
+    total: number;
+    isCreated: boolean;
+    visible: boolean;
+    loading: boolean;
+}
+
 interface Config {
     handleAdd: HandleFn;
     handleDel: HandleFn;
@@ -24,14 +41,9 @@ interface Config {
     handleQuery: HandleFn;
     queryParam?: Param; // 查询参数
     customHandle?: {
-        (data: any, response: any): void;
+        (data: BaseData, response: any): void;
     }; // 自定义处理查询函数(一般是非分页的时候)
     isNotPagination?: boolean; // 非分页
 }
 
-interface Pagination {
-    pageSize: number;
-    pageNum: number;
-}
-
-export { Rule, Config, Param, Pagination }
+export { Rule, Config, Param, Pagination, BaseData }

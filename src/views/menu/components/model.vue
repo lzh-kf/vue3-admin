@@ -32,6 +32,7 @@ export default defineComponent({
     }
 
     onMounted(() => {
+      setThemeColor()
       const { themeColor } = setLocal
       if (themeColor) {
         data.color = themeColor

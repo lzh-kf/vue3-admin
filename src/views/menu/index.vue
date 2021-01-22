@@ -4,6 +4,7 @@
       <el-row class="row">
         <el-col :span="12" class="column">
           <img src="@/assets/image/logo.png" alt="" />
+          <span class="title">admin-system</span>
         </el-col>
         <el-col :span="12" class="column right">
           <el-button
@@ -94,10 +95,10 @@ export default defineComponent({
     }
 
     const logoutSystem = (): void => {
-      ElMessageBox.confirm('确认退出系统吗?', '确认框', {
+      ElMessageBox.confirm('确定退出ga系统吗?', '退出确认框', {
         confirmButtonText: '确定',
         cancelButtonText: '取消',
-        type: 'warning',
+        type: 'info',
       }).then(() => {
         logout().then(() => {
           removeData()
@@ -157,6 +158,9 @@ export default defineComponent({
       height: 100%;
       display: flex;
       align-items: center;
+      .title {
+        margin-left: 10px;
+      }
     }
     .right {
       justify-content: flex-end;

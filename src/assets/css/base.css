@@ -22,3 +22,8 @@ table, tr, th {
 .el-menu--collapse {
   width: 61px;
 }
+
+.el-dialog__title {
+  font-size: 15px;
+  font-weight: 500;
+}

@@ -2,7 +2,15 @@
   <el-container>
     <el-header style="min-width: 1400px">
       <el-row class="row">
-        <el-col :span="2" :xl="2" :lg="2" :md="2" :sm="2" class="column">
+        <el-col
+          :span="2"
+          :xl="2"
+          :lg="2"
+          :md="2"
+          :sm="2"
+          class="column"
+          v-show="!collapse"
+        >
           <img src="@/assets/image/logo.png" alt="" />
           <span class="title">admin-system</span>
         </el-col>
@@ -22,6 +30,16 @@
               ><i class="iconfont icon-open-right-blue-copy"></i
             ></span>
           </div>
+        </el-col>
+        <el-col
+          :span="2"
+          :xl="2"
+          :lg="2"
+          :md="2"
+          :sm="2"
+          class="column"
+          v-show="collapse"
+        >
         </el-col>
         <el-col :span="3" :xl="3" :lg="3" :md="6" :sm="6" class="column">
           <searchMenu />

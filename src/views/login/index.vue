@@ -13,6 +13,7 @@
           <el-input
             v-model="formData.userAccount"
             placeholder="请输入账号"
+            clearable
           ></el-input>
         </el-form-item>
         <el-form-item label="密码" prop="password">
@@ -21,6 +22,7 @@
             type="password"
             placeholder="请输入密码"
             @keyup.enter="submitForm()"
+            clearable
           ></el-input>
         </el-form-item>
         <el-form-item>
@@ -120,6 +122,9 @@ h4 {
   height: 100vh;
   .content {
     flex-wrap: wrap;
+    .demo-ruleForm {
+      width: 320px;
+    }
     h4 {
       width: 100%;
       padding-left: 74px;

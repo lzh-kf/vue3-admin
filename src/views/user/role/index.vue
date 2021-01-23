@@ -9,8 +9,12 @@
         ></el-input>
       </el-form-item>
       <el-form-item style="margin-left: 10px">
-        <el-button type="primary" @click="handleSearch">查询</el-button>
-        <el-button @click="handleReset">重置</el-button>
+        <el-button type="primary" @click="handleSearch">
+          <i class="iconfont icon-chaxun"></i> 查询</el-button
+        >
+        <el-button @click="handleReset">
+          <i class="iconfont icon-zhongzhi"></i>重置</el-button
+        >
       </el-form-item>
     </el-form>
     <el-row>
@@ -19,7 +23,8 @@
           @click="handleCreate"
           type="primary"
           v-permission="'role.create'"
-          >创建角色</el-button
+        >
+          <i class="iconfont icon-zengjiaxinzeng"></i> 创建角色</el-button
         >
       </el-col>
     </el-row>
@@ -44,8 +49,8 @@
       ></el-table-column>
       <el-table-column label="操作" align="center" header-align="center">
         <template #default="{ row }">
-          <el-button @click="handleEdit(row)" v-permission="'role.update'"
-            >编辑</el-button
+          <el-button @click="handleEdit(row)" v-permission="'role.update'">
+            <i class="iconfont icon-bianji"></i>编辑</el-button
           >
           <el-popconfirm
             title="确定删除吗？"
@@ -54,7 +59,7 @@
           >
             <template #reference>
               <el-button type="danger" style="margin-left: 10px"
-                >删除</el-button
+                ><i class="iconfont icon--delete"></i>删除</el-button
               >
             </template>
           </el-popconfirm>
@@ -72,52 +77,54 @@
         :total="total"
       ></el-pagination>
     </div>
-    <el-dialog
-      :title="isCreated ? '录入' : '修改'"
-      v-model="visible"
-      width="30%"
-      :destroy-on-close="true"
-    >
-      <el-form
-        :model="formData"
-        :rules="rules"
-        ref="ruleForm"
-        label-width="100px"
-        class="demo-ruleForm"
+    <teleport to="html">
+      <el-dialog
+        :title="isCreated ? '创建角色' : '编辑角色'"
+        v-model="visible"
+        width="37%"
+        :destroy-on-close="true"
       >
-        <el-form-item label="角色名" prop="roleName">
-          <el-input v-model="formData.roleName"></el-input>
-        </el-form-item>
-        <el-form-item label="菜单" prop="menuIds" style="width: 45%">
-          <el-tree
-            :data="menus"
-            show-checkbox
-            node-key="menuId"
-            ref="menuTree"
-            :default-checked-keys="formData.menuIds"
-            :props="defaultProps"
-          >
-          </el-tree>
-        </el-form-item>
-        <el-form-item label="权限" prop="permissionIds" style="width: 45%">
-          <el-tree
-            :data="actions"
-            show-checkbox
-            node-key="menuId"
-            ref="permissionTree"
-            :default-checked-keys="formData.permissionIds"
-            :props="defaultProps"
-          >
-          </el-tree>
-        </el-form-item>
-      </el-form>
-      <template #footer>
-        <span class="dialog-footer">
-          <el-button @click="handleCancel">取 消</el-button>
-          <el-button type="primary" @click="handleSubmit">确 定</el-button>
-        </span>
-      </template>
-    </el-dialog>
+        <el-form
+          :model="formData"
+          :rules="rules"
+          ref="ruleForm"
+          label-width="100px"
+          class="demo-ruleForm"
+        >
+          <el-form-item label="角色名" prop="roleName">
+            <el-input v-model="formData.roleName"></el-input>
+          </el-form-item>
+          <el-form-item label="菜单" prop="menuIds">
+            <el-tree
+              :data="menus"
+              show-checkbox
+              node-key="menuId"
+              ref="menuTree"
+              :default-checked-keys="formData.menuIds"
+              :props="defaultProps"
+            >
+            </el-tree>
+          </el-form-item>
+          <el-form-item label="权限" prop="permissionIds">
+            <el-tree
+              :data="actions"
+              show-checkbox
+              node-key="menuId"
+              ref="permissionTree"
+              :default-checked-keys="formData.permissionIds"
+              :props="defaultProps"
+            >
+            </el-tree>
+          </el-form-item>
+        </el-form>
+        <template #footer>
+          <span class="dialog-footer">
+            <el-button @click="handleCancel">取 消</el-button>
+            <el-button type="primary" @click="handleSubmit">确 定</el-button>
+          </span>
+        </template>
+      </el-dialog>
+    </teleport>
   </div>
 </template>
 

@@ -9,10 +9,10 @@
         label-width="100px"
         class="demo-ruleForm"
       >
-        <el-form-item label="用户账号" prop="userAccount">
+        <el-form-item label="账号" prop="userAccount">
           <el-input
             v-model="formData.userAccount"
-            placeholder="请输入用户账号"
+            placeholder="请输入账号"
           ></el-input>
         </el-form-item>
         <el-form-item label="密码" prop="password">

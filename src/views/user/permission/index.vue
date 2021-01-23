@@ -6,7 +6,9 @@
           @click="handleCreate"
           type="primary"
           v-permission="'permission.create'"
-          >创建权限</el-button
+        >
+          <i class="iconfont icon-zengjiaxinzeng"></i>
+          创建权限</el-button
         >
       </el-col>
     </el-row>
@@ -43,7 +45,7 @@
       </template>
     </el-tree>
     <el-dialog
-      :title="isCreated ? '新增权限' : '修改权限'"
+      :title="isCreated ? '创建权限' : '编辑权限'"
       v-model="visible"
       width="30%"
       :destroy-on-close="true"

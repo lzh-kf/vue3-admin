@@ -5,24 +5,21 @@
       :unique-opened="true"
       :default-active="$route.path"
       :router="true"
+      :collapse="collapse"
     >
-      <div v-for="(item, index) in menus" :key="index">
-        <div v-if="item.children">
+      <template v-for="(item, index) in menus" :key="index">
+        <template v-if="item.children">
           <submenu :child="item" @getNames="getNames" />
-        </div>
+        </template>
         <el-menu-item
           v-else
           :index="item.path"
           @click="handleClick(item.menuName)"
         >
-          <template #title>
-            <div>
-              <i :class="`iconfont ${item.icon}`"></i>
-              <span>{{ item.menuName }}</span>
-            </div>
-          </template>
+          <i :class="`iconfont ${item.icon}`"></i>
+          <template #title>{{ item.menuName }}</template>
         </el-menu-item>
-      </div>
+      </template>
     </el-menu>
   </div>
 </template>
@@ -37,6 +34,11 @@ export default defineComponent({
     menus: {
       type: Array,
       required: true,
+    },
+    collapse: {
+      type: Boolean,
+      required: true,
+      default: false,
     },
   },
   setup(props, ctx) {

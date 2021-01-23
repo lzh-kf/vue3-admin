@@ -1,23 +1,21 @@
 <template>
-  <div>
-    <el-submenu :index="child.path">
-      <template #title>
-        <i :class="`iconfont ${child.icon}`"></i>
-        {{ child.menuName }}</template
+  <el-submenu :index="child.path">
+    <template #title>
+      <i :class="`iconfont ${child.icon}`"></i>
+      <span>{{ child.menuName }}</span></template
+    >
+    <template v-for="(item, index) in child.children" :key="index">
+      <el-menu-item
+        v-if="!item.children"
+        :index="item.path"
+        @click="handleClick(item.menuName, child.menuName)"
       >
-      <div v-for="(item, index) in child.children" :key="index">
-        <el-menu-item
-          v-if="!item.children"
-          :index="item.path"
-          @click="handleClick(item.menuName, child.menuName)"
-        >
-          <i :class="`iconfont ${item.icon}`"></i>
-          {{ item.menuName }}
-        </el-menu-item>
-        <submenu :child="item" v-else @emitParent="emitParent" />
-      </div>
-    </el-submenu>
-  </div>
+        <i :class="`iconfont ${item.icon}`"></i>
+        {{ item.menuName }}
+      </el-menu-item>
+      <submenu :child="item" v-else @emitParent="emitParent" />
+    </template>
+  </el-submenu>
 </template>
 <script lang="ts">
 import { defineComponent } from 'vue'

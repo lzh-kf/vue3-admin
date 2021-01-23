@@ -1,15 +1,32 @@
 <template>
   <el-container>
-    <el-header>
+    <el-header style="min-width: 1400px">
       <el-row class="row">
-        <el-col :span="16" class="column">
+        <el-col :span="2" :xl="2" :lg="2" :md="2" :sm="2" class="column">
           <img src="@/assets/image/logo.png" alt="" />
           <span class="title">admin-system</span>
         </el-col>
-        <el-col :span="3" class="column">
+        <el-col
+          :span="15"
+          :xl="15"
+          :lg="15"
+          :md="6"
+          :sm="6"
+          class="column set-menu-btn"
+        >
+          <div @click="setCollapse">
+            <span v-show="!collapse"
+              ><i class="iconfont icon-open-right-blue"></i
+            ></span>
+            <span v-show="collapse"
+              ><i class="iconfont icon-open-right-blue-copy"></i
+            ></span>
+          </div>
+        </el-col>
+        <el-col :span="3" :xl="3" :lg="3" :md="6" :sm="6" class="column">
           <searchMenu />
         </el-col>
-        <el-col :span="5" class="column right">
+        <el-col :span="4" :xl="4" :lg="4" :md="6" :sm="6" class="column right">
           <el-button
             @click="changeThemeColor"
             type="text"
@@ -25,9 +42,10 @@
       <div class="place"></div
     ></el-header>
     <el-container>
-      <el-aside width="180px">
+      <el-aside :width="asideWidth">
         <custom-menus
           :menus="menus"
+          :collapse="collapse"
           id="custom-menu"
           @getNames="getNames"
         ></custom-menus>
@@ -79,6 +97,7 @@ export default defineComponent({
 
     const data = reactive<Data>({
       navs: setSession.names || ['用户中心', '用户管理'],
+      collapse: false,
     })
 
     const setThemeColor = ref()
@@ -86,6 +105,8 @@ export default defineComponent({
     const user = computed(() => store.state.user)
 
     const menus = computed(() => store.state.menus)
+
+    const asideWidth = computed(() => (data.collapse ? '64px' : '180px'))
 
     const removeData = () => {
       store.state.routeNames.forEach((name: string) => {
@@ -101,7 +122,7 @@ export default defineComponent({
     }
 
     const logoutSystem = (): void => {
-      ElMessageBox.confirm('确定退出ga系统吗?', '退出确认框', {
+      ElMessageBox.confirm('确定退出该系统吗?', '退出确认框', {
         confirmButtonText: '确定',
         cancelButtonText: '取消',
         type: 'info',
@@ -123,14 +144,20 @@ export default defineComponent({
       data.navs = setSession.names = names
     }
 
+    const setCollapse = (): void => {
+      data.collapse = !data.collapse
+    }
+
     return {
       ...toRefs(data),
+      asideWidth,
       user,
       menus,
       logoutSystem,
       setThemeColor,
       changeThemeColor,
       getNames,
+      setCollapse,
     }
   },
 })
@@ -145,18 +172,24 @@ export default defineComponent({
   box-sizing: border-box;
   height: calc(100vh - 60px);
   .bottom-border {
+    position: sticky;
+    padding-top: 15px;
+    top: 0;
+    box-sizing: border-box;
     width: 100%;
+    z-index: 1;
     border-bottom: 1px solid #eaeefb;
-    margin-bottom: 10px;
+    margin-bottom: 15px;
+    background: #fff;
     .breadcrumb {
-      margin: 15px 0;
+      margin: 0 0 15px 0;
       cursor: pointer;
     }
   }
 }
 .el-header {
   background: var(--theme-color);
-  color: white;
+  color: #fff;
   font-size: 13px;
   .row {
     height: 100%;
@@ -167,6 +200,11 @@ export default defineComponent({
       .title {
         margin-left: 10px;
       }
+    }
+    .set-menu-btn {
+      padding-left: 6.5px;
+      box-sizing: border-box;
+      cursor: pointer;
     }
     .right {
       justify-content: flex-end;

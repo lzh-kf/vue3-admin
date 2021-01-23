@@ -8,3 +8,17 @@ table, tr, th {
   display: flex;
   justify-content: flex-end;
 }
+
+.el-button span{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.el-overlay {
+  overflow-x: scroll;
+}
+
+.el-menu--collapse {
+  width: 61px;
+}

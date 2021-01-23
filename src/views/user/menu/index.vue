@@ -6,7 +6,7 @@
           @click="handleCreate"
           type="primary"
           v-permission="'menu.create'"
-          >创建菜单</el-button
+          ><i class="iconfont icon-zengjiaxinzeng"></i>创建菜单</el-button
         >
       </el-col>
     </el-row>
@@ -41,7 +41,7 @@
       </template>
     </el-tree>
     <el-dialog
-      :title="isCreated ? '创建菜单' : '修改菜单'"
+      :title="isCreated ? '创建菜单' : '编辑菜单'"
       v-model="visible"
       width="30%"
       :destroy-on-close="true"

@@ -61,6 +61,7 @@ axios.interceptors.response.use(async (response) => {
     return handleError(response.data.error.message, response.data)
   }
 }, (error) => {
+  handleError(error.message, null);
   return Promise.reject(error);
 });
 

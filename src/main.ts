@@ -9,6 +9,7 @@ import locale from 'element-plus/lib/locale/lang/zh-cn';
 import registrationComponents from "@/components/index";
 import registrationDirectives from "@/directives";
 import '@/assets/css/element-theme/index.css';
+import 'element-plus/lib/theme-chalk/base.css';
 import '@/assets/css/base.css';
 
 const app = createApp(App);

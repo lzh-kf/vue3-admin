@@ -9,8 +9,8 @@
         ></el-input>
       </el-form-item>
       <el-form-item style="margin-left: 10px">
-        <el-button type="primary" @click="handleSearch">查询</el-button>
-        <el-button @click="handleReset">重置</el-button>
+        <el-button type="primary" @click="handleSearch"><i class="iconfont icon-chaxun"></i> 查询</el-button>
+        <el-button @click="handleReset"><i class="iconfont icon-zhongzhi"></i>重置</el-button>
       </el-form-item>
     </el-form>
     <el-row>
@@ -19,7 +19,7 @@
           @click="handleCreate"
           type="primary"
           v-permission="''"
-          >创建</el-button
+          ><i class="iconfont icon-zengjiaxinzeng"></i>创建</el-button
         >
       </el-col>
     </el-row>
@@ -33,7 +33,7 @@
       <el-table-column label="操作" align="center" header-align="center">
         <template #default="{ row }">
           <el-button @click="handleEdit(row)" v-permission="''"
-            >编辑</el-button
+            ><i class="iconfont icon-bianji"></i>编辑</el-button
           >
           <el-popconfirm title="确定删除吗？" @confirm="handleDeleteEvent(row)">
             <template #reference>
@@ -41,7 +41,7 @@
                 type="danger"
                 style="margin-left: 10px"
                 v-permission="''"
-                >删除</el-button
+                ><i class="iconfont icon--delete"></i>删除</el-button
               >
             </template>
           </el-popconfirm>
@@ -60,7 +60,7 @@
       ></el-pagination>
     </div>
     <el-dialog
-      :title="isCreated ? '录入' : '修改'"
+      :title="isCreated ? '录入' : '编辑'"
       v-model="visible"
       width="30%"
       :destroy-on-close="true"

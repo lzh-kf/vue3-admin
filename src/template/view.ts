@@ -195,12 +195,4 @@ export default defineComponent({
     };
   },
 });
-</script>
-
-<style lang="scss" scoped>
-.pagination {
-  margin: 20px;
-  display: flex;
-  justify-content: flex-end;
-}
-</style>`
+</script>`

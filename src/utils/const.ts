@@ -6,7 +6,7 @@ const uploadType: Array<string> = ['image/png', 'image/jpeg']
 const uploadFileSize = 3
 
 // 菜单图标列表
-const iconList = ['icon-quanxian', 'icon-27', 'icon-menuManage', 'icon-jiaose', 'icon-xueshengguanli', 'icon-shangchuan', 'icon-yonghuzhongxin', 'icon-morentubiao']
+const iconList = ['icon-quanxian', 'icon-yonghu', 'icon-menuManage', 'icon-jiaose', 'icon-xuesheng', 'icon-shangchuan', 'icon-yonghuzhongxin', 'icon-morentubiao']
 
 // 性别映射
 const genderMap = {

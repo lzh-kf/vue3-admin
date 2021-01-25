@@ -11,7 +11,7 @@
   "dependencies": {
     "axios": "^0.21.0",
     "blueimp-md5": "^2.18.0",
-    "element-plus": "^1.0.1-beta.5",
+    "element-plus": "^1.0.1-beta.24",
     "lodash": "^4.17.20",
     "normalize.css": "^8.0.1",
     "vue": "^3.0.5",

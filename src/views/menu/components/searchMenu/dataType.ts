@@ -8,7 +8,7 @@ interface MenuInfo {
 }
 
 interface Callback {
-    <T>(result: T): T
+    <T>(result: T): T;
 }
 
 export { Data, MenuInfo, Callback }

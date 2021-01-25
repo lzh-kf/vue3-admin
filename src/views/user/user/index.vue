@@ -8,6 +8,13 @@
           clearable
         ></el-input>
       </el-form-item>
+      <el-form-item label="邮箱：">
+        <el-input
+          v-model="param.email"
+          placeholder="请输入"
+          clearable
+        ></el-input>
+      </el-form-item>
       <el-form-item style="margin-left: 10px">
         <el-button type="primary" @click="handleSearch"
           ><i class="iconfont icon-chaxun"></i>查询</el-button
@@ -41,13 +48,19 @@
         header-align="center"
       ></el-table-column>
       <el-table-column
-        prop="createDate"
+        prop="email"
+        label="邮箱"
+        align="center"
+        header-align="center"
+      ></el-table-column>
+      <el-table-column
+        prop="createTime"
         label="创建时间"
         align="center"
         header-align="center"
       ></el-table-column>
       <el-table-column
-        prop="updateDate"
+        prop="updateTime"
         label="更新时间"
         align="center"
         header-align="center"
@@ -101,6 +114,9 @@
         <el-form-item label="用户账号" prop="userAccount">
           <el-input v-model="formData.userAccount"></el-input>
         </el-form-item>
+        <el-form-item label="邮箱" prop="email">
+          <el-input v-model="formData.email" type="email"></el-input>
+        </el-form-item>
         <el-form-item
           label="密码"
           prop="password"
@@ -152,7 +168,9 @@ import blueimpmd5 from 'blueimp-md5'
 const formData: FormData = {
   userName: '',
   password: '',
+  sourcePassword: '',
   userAccount: '',
+  email: '',
   roleId: [],
 }
 // 配置项
@@ -168,7 +186,7 @@ export default defineComponent({
   setup() {
     const ruleForm = ref()
     const data = reactive<Data>({
-      param: { userName: '' }, // 查询参数
+      param: { userName: '', email: '' }, // 查询参数
       formData: lodash.cloneDeep(formData), // 表单数据
       rules: {
         userName: [
@@ -177,6 +195,7 @@ export default defineComponent({
         userAccount: [
           { required: true, message: '请输入用户账号', trigger: 'blur' },
         ],
+        email: [{ required: true, message: '请输入用户邮箱', trigger: 'blur' }],
         roleId: [{ required: true, message: '请选择角色', trigger: 'change' }],
       }, // 校验规则
       roles: [],
@@ -199,7 +218,7 @@ export default defineComponent({
     }
 
     const handleReset = () => {
-      data.param = { userName: '' }
+      data.param = { userName: '', email: '' }
       handleSearch()
     }
 
@@ -234,6 +253,7 @@ export default defineComponent({
     const setParam = (): FormData => {
       const params: FormData = lodash.cloneDeep(data.formData)
       if (params.password) {
+        params.sourcePassword = params.password
         params.password = blueimpmd5(params.password)
       }
       return params

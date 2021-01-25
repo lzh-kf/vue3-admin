@@ -36,14 +36,20 @@
         header-align="center"
       ></el-table-column>
       <el-table-column
+        prop="roleName"
+        label="角色名"
+        align="center"
+        header-align="center"
+      ></el-table-column>
+      <el-table-column
         prop="createTime"
         label="创建时间"
         align="center"
         header-align="center"
       ></el-table-column>
       <el-table-column
-        prop="roleName"
-        label="角色名"
+        prop="updateTime"
+        label="更新时间"
         align="center"
         header-align="center"
       ></el-table-column>

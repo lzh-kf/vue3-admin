@@ -74,6 +74,18 @@
         header-align="center"
         :formatter="formatterGender"
       ></el-table-column>
+      <el-table-column
+        prop="createTime"
+        label="创建时间"
+        align="center"
+        header-align="center"
+      ></el-table-column>
+      <el-table-column
+        prop="updateTime"
+        label="更新时间"
+        align="center"
+        header-align="center"
+      ></el-table-column>
       <el-table-column label="操作" align="center" header-align="center">
         <template #default="{ row }">
           <el-button @click="handleEdit(row)" v-permission="'student.update'"

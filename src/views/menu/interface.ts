@@ -1,7 +1,7 @@
 
 interface Data {
     navs: Array<string>;
-    collapse: boolean
+    collapse: boolean;
 }
 
 export { Data }

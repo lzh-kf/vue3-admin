@@ -9,7 +9,8 @@ let apiFilePath = null;
 const filename = __filename.replace('\\template\\createView.js', '')
 
 const customTemplateMap = {
-    "{{apiFilePath}}": ''
+    "{{apiFilePath}}": '',
+    "{{moduleName}}": '',
 }
 
 function inputFilePath () {
@@ -86,7 +87,11 @@ function replaceTemplate (templateData) {
     for (const [key, value] of Object.entries(tempData)) {
         let flag = true;
         while (flag) {
-            if (key === '{{apiFilePath}}') {
+            if (key === '{{moduleName}}') {
+                templateData = templateData.replace(key, beforeName);
+                flag = templateData.includes(key);
+            }
+            else if (key === '{{apiFilePath}}') {
                 templateData = templateData.replace(key, value);
                 flag = templateData.includes(key);
             } else {

@@ -18,7 +18,7 @@
         <el-button
           @click="handleCreate"
           type="primary"
-          v-permission="''"
+          v-permission="'{{moduleName}}.create'"
           ><i class="iconfont icon-zengjiaxinzeng"></i>创建</el-button
         >
       </el-col>
@@ -32,7 +32,7 @@
       ></el-table-column>
       <el-table-column label="操作" align="center" header-align="center">
         <template #default="{ row }">
-          <el-button @click="handleEdit(row)" v-permission="''"
+          <el-button @click="handleEdit(row)" v-permission="'{{moduleName}}.update'"
             ><i class="iconfont icon-bianji"></i>编辑</el-button
           >
           <el-popconfirm title="确定删除吗？" @confirm="handleDeleteEvent(row)">
@@ -40,7 +40,7 @@
               <el-button
                 type="danger"
                 style="margin-left: 10px"
-                v-permission="''"
+                v-permission="'{{moduleName}}.del'"
                 ><i class="iconfont icon--delete"></i>删除</el-button
               >
             </template>

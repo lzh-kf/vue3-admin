@@ -7,7 +7,7 @@ import { refreshToken } from '@/apis/login/index';
 
 axios.defaults.baseURL = process.env.VUE_APP_API;
 
-let token: string | unknown
+let token: string | undefined
 
 interface Response {
   err_code?: number,

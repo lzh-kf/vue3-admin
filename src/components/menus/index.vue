@@ -24,7 +24,7 @@
 import { defineComponent } from 'vue'
 import submenu from './submenu.vue'
 export default defineComponent({
-  name: 'menus',
+  name: 'menu',
   components: { submenu },
   props: {
     menus: {

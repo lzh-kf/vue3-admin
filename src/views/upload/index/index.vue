@@ -40,7 +40,7 @@ export default defineComponent({
       return true
     }
 
-    const handleuploadFile = ({ file }: UploadFile): void => {
+    const handleUploadFile = ({ file }: UploadFile): void => {
       const formData = new FormData()
       formData.append('file', file)
       uploadFile(formData).then((res) => {
@@ -49,7 +49,7 @@ export default defineComponent({
     }
 
     const customUpload = (UploadFile: UploadFile): void => {
-      beforeCheckUpload(UploadFile) && handleuploadFile(UploadFile)
+      beforeCheckUpload(UploadFile) && handleUploadFile(UploadFile)
     }
 
     return {

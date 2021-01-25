@@ -1,10 +1,10 @@
 <template>
   <div>
     <el-form :inline="true" :model="param" class="demo-form-inline">
-      <el-form-item label="角色名：">
+      <el-form-item label="角色名">
         <el-input
           v-model="param.roleName"
-          placeholder="请输入"
+          placeholder="请输入角色名"
           clearable
         ></el-input>
       </el-form-item>

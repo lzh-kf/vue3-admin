@@ -1,17 +1,17 @@
 <template>
   <div>
     <el-form :inline="true" :model="param" class="demo-form-inline">
-      <el-form-item label="用户名：">
+      <el-form-item label="用户名">
         <el-input
           v-model="param.userName"
-          placeholder="请输入"
+          placeholder="请输入用户名"
           clearable
         ></el-input>
       </el-form-item>
-      <el-form-item label="邮箱：">
+      <el-form-item label="邮箱">
         <el-input
           v-model="param.email"
-          placeholder="请输入"
+          placeholder="请输入邮箱"
           clearable
         ></el-input>
       </el-form-item>

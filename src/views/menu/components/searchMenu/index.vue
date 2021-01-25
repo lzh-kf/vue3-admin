@@ -9,7 +9,11 @@
       @select="handleSelect"
       clearable
       @clear="handleClear"
-    ></el-autocomplete>
+    >
+      <template #suffix>
+        <i v-show="!queryParam" class="el-input__icon el-icon-search"></i>
+      </template>
+    </el-autocomplete>
   </div>
 </template>
 

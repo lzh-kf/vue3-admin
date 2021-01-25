@@ -2,26 +2,11 @@
   <el-container>
     <el-header style="min-width: 1400px">
       <el-row class="row">
-        <el-col
-          :span="2"
-          :xl="2"
-          :lg="2"
-          :md="2"
-          :sm="2"
-          class="column"
-          v-show="!collapse"
-        >
+        <el-col :span="2" class="column" v-show="!collapse">
           <img src="@/assets/image/logo.png" alt="" />
           <span class="title">admin-system</span>
         </el-col>
-        <el-col
-          :span="15"
-          :xl="15"
-          :lg="15"
-          :md="6"
-          :sm="6"
-          class="column set-menu-btn"
-        >
+        <el-col :span="15" class="column set-menu-btn">
           <div @click="setCollapse">
             <span v-show="!collapse"
               ><i class="iconfont icon-open-right-blue"></i
@@ -31,20 +16,11 @@
             ></span>
           </div>
         </el-col>
-        <el-col
-          :span="2"
-          :xl="2"
-          :lg="2"
-          :md="2"
-          :sm="2"
-          class="column"
-          v-show="collapse"
-        >
-        </el-col>
-        <el-col :span="3" :xl="3" :lg="3" :md="6" :sm="6" class="column">
+        <el-col :span="2" class="column" v-show="collapse"> </el-col>
+        <el-col :span="3" class="column">
           <searchMenu />
         </el-col>
-        <el-col :span="4" :xl="4" :lg="4" :md="6" :sm="6" class="column right">
+        <el-col :span="4" class="column right">
           <el-button
             @click="changeThemeColor"
             type="text"
@@ -61,11 +37,7 @@
     ></el-header>
     <el-container>
       <el-aside :width="asideWidth">
-        <custom-menus
-          :menus="menus"
-          :collapse="collapse"
-          id="custom-menu"
-        ></custom-menus>
+        <custom-menu :menus="menus" :collapse="collapse"></custom-menu>
       </el-aside>
       <el-main>
         <div class="bottom-border">
@@ -86,7 +58,7 @@
 <script lang="ts">
 import { logout } from '@/apis/login'
 
-import { Data } from './interface'
+import { Data } from './dataType'
 
 import { ElMessageBox } from 'element-plus'
 
@@ -101,6 +73,8 @@ import { defineComponent, reactive, toRefs, computed, ref, watch } from 'vue'
 import setThemeColor from './components/model/index.vue'
 
 import searchMenu from './components/searchMenu/index.vue'
+
+import { defaultThemeColor } from '@/utils/const'
 
 export default defineComponent({
   components: {
@@ -125,14 +99,14 @@ export default defineComponent({
 
     const menus = computed(() => store.state.menus)
 
-    const asideWidth = computed(() => (data.collapse ? '64px' : '180px'))
+    const asideWidth = computed(() => (data.collapse ? '' : '180px'))
 
     const removeData = () => {
       store.state.routeNames.forEach((name: string) => {
         router.removeRoute(name)
       })
       sessionStorage.clear()
-      setThemeColor.value.setThemeColor('#409eff')
+      setThemeColor.value.setThemeColor(defaultThemeColor)
       localStorage.clear()
       store.commit('setRouteNames', [])
       store.commit('setPermissions', [])
@@ -222,7 +196,7 @@ export default defineComponent({
     width: 100%;
     z-index: 1;
     border-bottom: 1px solid #eaeefb;
-    margin-bottom: 15px;
+    margin-bottom: 20px;
     background: #fff;
     .breadcrumb {
       margin: 0 0 15px 0;

@@ -1,28 +1,28 @@
 <template>
   <div>
     <el-form :inline="true" :model="param" class="demo-form-inline">
-      <el-form-item label="名字：">
+      <el-form-item label="名字">
         <el-input
           v-model="param.name"
           placeholder="请输入名字"
           clearable
         ></el-input>
       </el-form-item>
-      <el-form-item label="班级：">
+      <el-form-item label="班级">
         <el-input
           v-model="param.class"
           placeholder="请输入班级"
           clearable
         ></el-input>
       </el-form-item>
-      <el-form-item label="兴趣：">
+      <el-form-item label="兴趣">
         <el-input
           v-model="param.interest"
           placeholder="请输入兴趣"
           clearable
         ></el-input>
       </el-form-item>
-      <el-form-item label="性别：">
+      <el-form-item label="性别">
         <el-radio-group v-model="param.gender">
           <el-radio label="0">女</el-radio>
           <el-radio label="1">男</el-radio>

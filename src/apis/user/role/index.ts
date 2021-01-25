@@ -47,7 +47,7 @@ const roleQuery = (data: QueryParam): AxiosPromise => {
     });
 };
 
-const roleQueryAll = (): AxiosPromise => {
+const allRoleQuery = (): AxiosPromise => {
     return request({
         method: "post",
         url: "/role/queryAll",
@@ -56,4 +56,4 @@ const roleQueryAll = (): AxiosPromise => {
 };
 
 
-export { roleCreate, roleUpdate, roleDel, roleQuery, roleQueryAll };
+export { roleCreate, roleUpdate, roleDel, roleQuery, allRoleQuery };

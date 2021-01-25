@@ -161,7 +161,7 @@ import {
   userUpdate,
   userQuery,
 } from '@/apis/user/user/index'
-import { roleQueryAll } from '@/apis/user/role/index'
+import { allRoleQuery } from '@/apis/user/role/index'
 import lodash from 'lodash'
 import blueimpmd5 from 'blueimp-md5'
 
@@ -272,7 +272,7 @@ export default defineComponent({
     }
 
     const getRoles = () => {
-      roleQueryAll().then((res) => {
+      allRoleQuery().then((res) => {
         data.roles = res.data
       })
     }

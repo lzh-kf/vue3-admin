@@ -5,15 +5,11 @@
       <span>{{ child.menuName }}</span></template
     >
     <template v-for="(item, index) in child.children" :key="index">
-      <el-menu-item
-        v-if="!item.children"
-        :index="item.path"
-        @click="handleClick(item.menuName, child.menuName)"
-      >
+      <el-menu-item v-if="!item.children" :index="item.path">
         <i :class="`iconfont ${item.icon}`"></i>
         {{ item.menuName }}
       </el-menu-item>
-      <submenu :child="item" v-else @emitParent="emitParent" />
+      <submenu v-else :child="item" />
     </template>
   </el-submenu>
 </template>
@@ -26,23 +22,6 @@ export default defineComponent({
       type: Object,
       required: true,
     },
-  },
-  setup(props, ctx) {
-    const handleClick = (menuName: string, parentMenuName: string) => {
-      const names: Array<string> = [parentMenuName, menuName]
-      ctx.emit('emitParent', names)
-      ctx.emit('getNames', names)
-    }
-
-    const emitParent = (names: Array<string>) => {
-      const tempdata: Array<string> = [props.child.menuName, ...names]
-      ctx.emit('emitParent', tempdata)
-      ctx.emit('getNames', tempdata)
-    }
-    return {
-      handleClick,
-      emitParent,
-    }
   },
 })
 </script>

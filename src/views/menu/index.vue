@@ -65,7 +65,6 @@
           :menus="menus"
           :collapse="collapse"
           id="custom-menu"
-          @getNames="getNames"
         ></custom-menus>
       </el-aside>
       <el-main>
@@ -91,13 +90,13 @@ import { Data } from './interface'
 
 import { ElMessageBox } from 'element-plus'
 
-import { useRouter } from 'vue-router'
+import { useRouter, useRoute } from 'vue-router'
 
 import { useStore } from 'vuex'
 
 import { setSession } from '@/utils/cache'
 
-import { defineComponent, reactive, toRefs, computed, ref } from 'vue'
+import { defineComponent, reactive, toRefs, computed, ref, watch } from 'vue'
 
 import setThemeColor from './components/model/index.vue'
 
@@ -111,10 +110,12 @@ export default defineComponent({
   setup() {
     const router = useRouter()
 
+    const route = useRoute()
+
     const store = useStore()
 
     const data = reactive<Data>({
-      navs: setSession.names || ['用户中心', '用户管理'],
+      navs: setSession.names,
       collapse: false,
     })
 
@@ -158,13 +159,32 @@ export default defineComponent({
       setThemeColor.value.setVisible(true)
     }
 
-    const getNames = (names: Array<string>) => {
-      data.navs = setSession.names = names
-    }
-
     const setCollapse = (): void => {
       data.collapse = !data.collapse
     }
+
+    const getMenuNames = (path: string, data = store.state.menus) => {
+      const result: Array<string> = []
+      for (let i = 0; i < data.length; i++) {
+        const item = data[i]
+        if (item.path === path || item.menuId === path) {
+          result.unshift(item.menuName)
+          if (item.parentId !== 0) {
+            result.unshift(...getMenuNames(item.parentId))
+          }
+        } else if (item.children) {
+          result.unshift(...getMenuNames(path, item.children))
+        }
+      }
+      return result
+    }
+
+    watch(
+      () => route.path,
+      (path) => {
+        setSession.names = data.navs = getMenuNames(path)
+      }
+    )
 
     return {
       ...toRefs(data),
@@ -174,7 +194,6 @@ export default defineComponent({
       logoutSystem,
       setThemeColor,
       changeThemeColor,
-      getNames,
       setCollapse,
     }
   },

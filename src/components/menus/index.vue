@@ -9,13 +9,9 @@
     >
       <template v-for="(item, index) in menus" :key="index">
         <template v-if="item.children">
-          <submenu :child="item" @getNames="getNames" />
+          <submenu :child="item" />
         </template>
-        <el-menu-item
-          v-else
-          :index="item.path"
-          @click="handleClick(item.menuName)"
-        >
+        <el-menu-item v-else :index="item.path">
           <i :class="`iconfont ${item.icon}`"></i>
           <template #title>{{ item.menuName }}</template>
         </el-menu-item>
@@ -40,20 +36,6 @@ export default defineComponent({
       required: true,
       default: false,
     },
-  },
-  setup(props, ctx) {
-    const getNames = (names: Array<string>) => {
-      ctx.emit('getNames', names)
-    }
-
-    const handleClick = (menuName: string) => {
-      getNames([menuName])
-    }
-
-    return {
-      handleClick,
-      getNames,
-    }
   },
 })
 </script>

@@ -115,7 +115,7 @@ export default defineComponent({
     const store = useStore()
 
     const data = reactive<Data>({
-      navs: setSession.names,
+      navs: [],
       collapse: false,
     })
 
@@ -177,6 +177,12 @@ export default defineComponent({
         }
       }
       return result
+    }
+
+    if (setSession.names) {
+      data.navs = setSession.names
+    } else {
+      setSession.names = data.navs = getMenuNames(route.path)
     }
 
     watch(

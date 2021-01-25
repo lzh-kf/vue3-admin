@@ -1,15 +1,10 @@
-/* element-plus table组件，border没有合并，导致样式错乱 */
-table, tr, th {
-  border-collapse:collapse !important;
-}
-
 .pagination {
   margin: 20px 0;
   display: flex;
   justify-content: flex-end;
 }
 
-.el-button span{
+.el-button span {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -19,11 +14,8 @@ table, tr, th {
   overflow-x: scroll;
 }
 
-.el-menu--collapse {
-  width: 61px;
-}
-
 .el-dialog__title {
   font-size: 15px;
   font-weight: 500;
 }
+

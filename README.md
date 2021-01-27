@@ -15,6 +15,10 @@
 
  [后端项目地址](https://github.com/lzh-kf/node)
 
+ ## 开发注意
+ 
+ 如果要开发常规页面（增删改查）,运行npm run ceratePage,该命令会自动生成对应模块的接口文件和页面文件
+
 ## Project setup
 ```
 yarn install

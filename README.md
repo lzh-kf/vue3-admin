@@ -1,5 +1,7 @@
 # vue3-admin
 
+# vue3beta + element-plus + typescript 
+就是单纯学习
 ## Project setup
 ```
 yarn install

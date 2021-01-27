@@ -11,6 +11,10 @@
 4. 用户管理
 5. 上传图片
 
+超级账号:admin a123456
+
+ [后端项目地址](https://github.com/lzh-kf/node)
+
 ## Project setup
 ```
 yarn install

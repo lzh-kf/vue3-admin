@@ -40,7 +40,7 @@ import { defineComponent, reactive, ref, toRefs, onMounted } from 'vue'
 import { login } from '@/apis/login'
 import { setSession } from '@/utils/cache'
 import { Data, FormData } from './dataType'
-import { useRouter } from 'vue-router'
+import { useRouter, useRoute } from 'vue-router'
 import { useStore } from 'vuex'
 import blueimpmd5 from 'blueimp-md5'
 import setThemeColor from '@/utils/setThemeColor'
@@ -48,6 +48,7 @@ export default defineComponent({
   setup() {
     const ruleForm = ref()
     const router = useRouter()
+    const route = useRoute()
     const store = useStore()
     const data = reactive<Data>({
       formData: {
@@ -99,6 +100,16 @@ export default defineComponent({
         valid && handleLogin()
       })
     }
+
+    const getAccountInfo = () => {
+      const query = route.query
+      if (Object.keys(query).length) {
+        data.formData.userAccount = query.userAccount as string
+        data.formData.password = query.password as string
+      }
+    }
+
+    getAccountInfo()
 
     return {
       ...toRefs(data),

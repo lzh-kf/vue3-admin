@@ -3,6 +3,7 @@ interface FormData {
     userAccount: string;
     password: string;
 }
+
 interface Data {
     formData: FormData;
     rules: Rule;

@@ -70,13 +70,12 @@
           <el-button @click="handleEdit(row)" v-permission="'user.update'"
             ><i class="iconfont icon-bianji"></i>编辑</el-button
           >
-          <el-popconfirm
-            title="确定删除吗？"
-            v-permission="'user.del'"
-            @confirm="handleDeleteEvent(row)"
-          >
+          <el-popconfirm title="确定删除吗？" @confirm="handleDeleteEvent(row)">
             <template #reference>
-              <el-button type="danger" style="margin-left: 10px"
+              <el-button
+                type="danger"
+                style="margin-left: 10px"
+                v-permission="'user.del'"
                 ><i class="iconfont icon--delete"></i>删除</el-button
               >
             </template>

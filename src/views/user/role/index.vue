@@ -60,11 +60,10 @@
           >
           <el-popconfirm
             title="确定删除吗？"
-            v-permission="'role.del'"
             @confirm="handleDeleteEvent(row)"
           >
             <template #reference>
-              <el-button type="danger" style="margin-left: 10px"
+              <el-button type="danger" style="margin-left: 10px" v-permission="'role.del'"
                 ><i class="iconfont icon--delete"></i>删除</el-button
               >
             </template>

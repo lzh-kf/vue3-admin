@@ -32,13 +32,17 @@
             >编辑</el-button
           >
           <el-popconfirm
-            v-permission="'permission.del'"
             v-if="data.permissionId"
             title="确定删除吗？"
             @confirm="handleDeleteEvent(data)"
           >
             <template #reference>
-              <el-button type="text" style="margin-left: 10px">删除</el-button>
+              <el-button
+                type="text"
+                style="margin-left: 10px"
+                v-permission="'permission.del'"
+                >删除</el-button
+              >
             </template>
           </el-popconfirm>
         </span>

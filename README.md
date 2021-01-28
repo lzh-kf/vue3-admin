@@ -2,7 +2,6 @@
 
 ## vue3beta + element-plus + typescript 
 
-就是单纯学习
 ## 主要功能（后台管理系统的基础功能）
 
 1. 菜单管理

@@ -2,9 +2,16 @@
 
 import { ElMessage } from "element-plus"
 import { reactive, watch } from "vue"
-import { Config, Param, BaseData } from '@/utils/base'
+import { Config, Param, BaseData } from './base'
 import loadsh from 'lodash'
-import { createBlob } from '@/utils/downloadFile'
+import { createBlob } from './downloadFile'
+import eventLister from '@/eventLister'
+
+let defaultFileName: string
+
+eventLister.resgiterEvent('getName', (fileName: Array<string>) => {
+    defaultFileName = fileName[0]
+})
 
 const getHandleFn = (config: Config) => {
 
@@ -84,10 +91,10 @@ const getHandleFn = (config: Config) => {
         config.handleUpdate(params).then(handleSuccessCallback)
     }
 
-    const handleExcel = (fileName: string) => {
+    const handleExcel = (fileName = defaultFileName) => {
         if (config.handleExcel) {
             config.handleExcel(getQueryParam()).then(res => {
-                createBlob(res.data.data, fileName)
+                createBlob(res.data.data, fileName + '.xsl')
             })
         }
     }

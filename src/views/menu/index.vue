@@ -1,6 +1,6 @@
 <template>
   <el-container>
-    <el-header style="min-width: 1400px">
+    <el-header>
       <el-row class="row">
         <el-col :span="2" class="column" v-show="!collapse">
           <img src="@/assets/image/logo.png" alt="" />
@@ -47,7 +47,7 @@
             }}</el-breadcrumb-item>
           </el-breadcrumb>
         </div>
-        <router-view />
+        <router-view aaa="123456" />
       </el-main>
     </el-container>
     <el-backtop target=".el-main" :bottom="100"> </el-backtop>
@@ -68,13 +68,23 @@ import { useStore } from 'vuex'
 
 import { setSession } from '@/utils/cache'
 
-import { defineComponent, reactive, toRefs, computed, ref, watch } from 'vue'
+import {
+  defineComponent,
+  reactive,
+  toRefs,
+  computed,
+  ref,
+  watch,
+  onUnmounted,
+} from 'vue'
 
 import setThemeColor from './components/model/index.vue'
 
 import searchMenu from './components/searchMenu/index.vue'
 
 import { defaultThemeColor } from '@/utils/const'
+
+import eventLister from '@/eventLister'
 
 export default defineComponent({
   components: {
@@ -153,16 +163,31 @@ export default defineComponent({
       return result
     }
 
-    if (setSession.names) {
-      data.navs = setSession.names
-    } else {
-      setSession.names = data.navs = getMenuNames(route.path)
+    const setNavs = () => {
+      if (setSession.names) {
+        data.navs = setSession.names
+      } else {
+        setSession.names = data.navs = getMenuNames(route.path)
+      }
     }
+
+    const emitEvent = () => {
+      eventLister.emit('getName', data.navs[data.navs.length - 1])
+    }
+
+    onUnmounted(() => {
+      eventLister.unResgiterEvent('getName')
+    })
+
+    setNavs()
+
+    emitEvent()
 
     watch(
       () => route.path,
       (path) => {
         setSession.names = data.navs = getMenuNames(path)
+        emitEvent()
       }
     )
 

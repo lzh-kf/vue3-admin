@@ -193,7 +193,8 @@ const config: Config = {
 }
 
 export default defineComponent({
-  setup() {
+  setup(props) {
+    console.log(props)
     const ruleForm = ref()
     const data = reactive<Data>({
       param: lodash.cloneDeep(formData), // 查询参数
@@ -245,7 +246,7 @@ export default defineComponent({
     }
 
     const exportExcel = () => {
-      handleExcel('信息管理.xls')
+      handleExcel()
     }
 
     const handleCancel = () => {

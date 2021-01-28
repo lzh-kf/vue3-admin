@@ -1,6 +1,6 @@
 <template>
   <div>
-    <el-form :inline="true" :model="param" class="demo-form-inline">
+    <el-form :inline="true" :model="param">
       <el-form-item label="名字">
         <el-input
           v-model="param.name"

@@ -4,7 +4,6 @@
       v-model="queryParam"
       :fetch-suggestions="querySearch"
       placeholder="请输入菜单名"
-      :trigger-on-focus="false"
       valueKey="label"
       @select="handleSelect"
       clearable
@@ -53,6 +52,8 @@ export default defineComponent({
             },
           ]
         }
+      } else {
+        result = menus
       }
       cb(result)
     }

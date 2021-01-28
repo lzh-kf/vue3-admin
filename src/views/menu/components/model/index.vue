@@ -3,7 +3,7 @@
     <el-dialog title="切换主题色" v-model="visible" width="30%">
       <div class="content">
         <div style="margin-bottom: 20px">
-          <input type="color" v-model="color" />
+          <el-color-picker v-model="color"></el-color-picker>
         </div>
         <el-button @click="handleCancel">取 消</el-button>
         <el-button type="primary" @click="handleConfirm">确 定</el-button>

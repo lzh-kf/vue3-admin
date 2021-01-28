@@ -5,11 +5,11 @@
       <span>{{ child.menuName }}</span></template
     >
     <template v-for="(item, index) in child.children" :key="index">
-      <el-menu-item v-if="!item.children" :index="item.path">
+      <submenu v-if="item.children" :child="item" />
+      <el-menu-item v-else :index="item.path">
         <i :class="`iconfont ${item.icon}`"></i>
         {{ item.menuName }}
       </el-menu-item>
-      <submenu v-else :child="item" />
     </template>
   </el-submenu>
 </template>

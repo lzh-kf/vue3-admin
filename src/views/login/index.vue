@@ -14,7 +14,9 @@
             v-model="formData.userAccount"
             placeholder="请输入账号"
             clearable
-          ></el-input>
+          >
+            <template #prefix><i class="iconfont icon-zhanghao"></i></template>
+          </el-input>
         </el-form-item>
         <el-form-item label="密码" prop="password">
           <el-input
@@ -23,6 +25,8 @@
             placeholder="请输入密码"
             @keyup.enter="submitForm()"
             clearable
+          >
+            <template #prefix><i class="iconfont icon-mima"></i></template
           ></el-input>
         </el-form-item>
         <el-form-item>
@@ -101,7 +105,7 @@ export default defineComponent({
       })
     }
 
-    const getAccountInfo = () => {
+    const setAccountInfo = () => {
       const query = route.query
       if (Object.keys(query).length) {
         data.formData.userAccount = query.userAccount as string
@@ -109,7 +113,7 @@ export default defineComponent({
       }
     }
 
-    getAccountInfo()
+    setAccountInfo()
 
     return {
       ...toRefs(data),

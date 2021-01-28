@@ -8,9 +8,7 @@
       :collapse="collapse"
     >
       <template v-for="(item, index) in menus" :key="index">
-        <template v-if="item.children">
-          <submenu :child="item" />
-        </template>
+        <submenu v-if="item.children" :child="item" />
         <el-menu-item v-else :index="item.path">
           <i :class="`iconfont ${item.icon}`"></i>
           <template #title>{{ item.menuName }}</template>

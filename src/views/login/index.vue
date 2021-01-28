@@ -77,10 +77,6 @@ export default defineComponent({
       },
     })
 
-    onMounted(() => {
-      setThemeColor()
-    })
-
     const setParam = (): FormData => {
       const param: FormData = { ...data.formData }
       param.password = blueimpmd5(param.password)
@@ -114,6 +110,10 @@ export default defineComponent({
     }
 
     setAccountInfo()
+
+    onMounted(() => {
+      setThemeColor()
+    })
 
     return {
       ...toRefs(data),

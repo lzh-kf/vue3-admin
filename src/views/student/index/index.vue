@@ -40,6 +40,12 @@
     <el-row>
       <el-col :span="24" style="margin: 15px 0px; text-align: right">
         <el-button
+          @click="exportExcel"
+          style="margin-right: 0px"
+          v-permission="'student.download'"
+          ><i class="iconfont icon-daochu"></i>导出excel</el-button
+        >
+        <el-button
           @click="handleCreate"
           type="primary"
           style="margin-right: 0px"
@@ -165,6 +171,7 @@ import {
   studentUpdate,
   studentdel,
   studentQuery,
+  donwloadStudentInfo,
 } from '@/apis/student'
 import lodash from 'lodash'
 
@@ -181,6 +188,7 @@ const config: Config = {
   handleDel: studentdel,
   handleUpdate: studentUpdate,
   handleQuery: studentQuery,
+  handleExcel: donwloadStudentInfo,
   queryParam: {},
 }
 
@@ -205,6 +213,7 @@ export default defineComponent({
       handleDel,
       handleUpdate,
       handleQuery,
+      handleExcel,
       handleSizeChange,
       handleCurrentChange,
       handleDialog,
@@ -233,6 +242,10 @@ export default defineComponent({
 
     const handleDeleteEvent = (row: Record) => {
       handleDel({ _id: row._id })
+    }
+
+    const exportExcel = () => {
+      handleExcel('信息管理.xls')
     }
 
     const handleCancel = () => {
@@ -276,6 +289,7 @@ export default defineComponent({
       ruleForm,
       handleCreate,
       handleEdit,
+      exportExcel,
       handleDeleteEvent,
       handleCancel,
       handleSubmit,

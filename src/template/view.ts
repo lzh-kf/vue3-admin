@@ -15,6 +15,12 @@
     </el-form>
     <el-row>
       <el-col :span="24" style="text-align: right">
+      <el-button
+      @click="exportExcel"
+      style="margin-right: 0px"
+      v-permission="'{{moduleName}}.download'"
+      ><i class="iconfont icon-daochu"></i>导出excel</el-button
+    >
         <el-button
           @click="handleCreate"
           type="primary"
@@ -91,7 +97,7 @@ import getHandleFn from "@/utils/curd";
 import { defineComponent, reactive, toRefs, ref, nextTick, watch } from "vue";
 import { Config } from "@/utils/base";
 import { Data, Record, FormData } from "./dataType";
-import { {{create}}, {{del}}, {{update}}, {{query}} } from "@/apis/{{apiFilePath}}/index";
+import { {{create}}, {{del}}, {{update}}, {{query}}, {{export}} } from "@/apis/{{apiFilePath}}/index";
 import lodash from "lodash";
 
 const formData: FormData = {
@@ -103,6 +109,7 @@ const config: Config = {
   handleDel: {{del}},
   handleUpdate: {{update}},
   handleQuery: {{query}},
+  handleExcel: {{export}},
   queryParam: {},
 };
 
@@ -121,6 +128,7 @@ export default defineComponent({
       handleAdd,
       handleDel,
       handleUpdate,
+      handleExcel,
       handleQuery,
       handleSizeChange,
       handleCurrentChange,
@@ -151,6 +159,10 @@ export default defineComponent({
     const handleDeleteEvent = (row: Record) => {
       handleDel({ id: row._id });
     };
+
+    const exportExcel = () => {
+      handleExcel('{{moduleName}}.xls')
+    }
 
     const handleCancel = () => {
       handleDialog(false)
@@ -188,6 +200,7 @@ export default defineComponent({
       handleCreate,
       handleEdit,
       handleDeleteEvent,
+      exportExcel,
       handleCancel,
       handleSubmit,
       handleSizeChange,

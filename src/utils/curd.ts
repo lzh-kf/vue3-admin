@@ -1,9 +1,10 @@
 /* eslint-disable */
 
-import { ElMessage } from "element-plus";
-import { reactive, watch } from "vue";
-import { Config, Param, BaseData } from '@/utils/base';
-import loadsh from 'lodash';
+import { ElMessage } from "element-plus"
+import { reactive, watch } from "vue"
+import { Config, Param, BaseData } from '@/utils/base'
+import loadsh from 'lodash'
+import { createBlob } from '@/utils/downloadFile'
 
 const getHandleFn = (config: Config) => {
 
@@ -83,6 +84,14 @@ const getHandleFn = (config: Config) => {
         config.handleUpdate(params).then(handleSuccessCallback)
     }
 
+    const handleExcel = (fileName: string) => {
+        if (config.handleExcel) {
+            config.handleExcel(getQueryParam()).then(res => {
+                createBlob(res.data.data, fileName)
+            })
+        }
+    }
+
     const handleSizeChange = (size: number) => {
         baseData.pagination.pageSize = size
         baseData.pagination.pageNum = 1
@@ -106,6 +115,7 @@ const getHandleFn = (config: Config) => {
         handleSizeChange,
         handleCurrentChange,
         handleDialog,
+        handleExcel
     }
 }
 

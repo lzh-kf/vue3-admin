@@ -43,5 +43,13 @@ const {{query}} = (data: QueryParam): AxiosPromise => {
     });
 };
 
+const {{export}} = (data: QueryParam): AxiosPromise => {
+    return request({
+        method: "post",
+        url: "",
+        data
+    });
+};
 
-export { {{create}}, {{update}}, {{del}}, {{query}} };`
+
+export { {{create}}, {{update}}, {{del}}, {{query}}, {{export}} };`

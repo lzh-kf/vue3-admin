@@ -39,6 +39,7 @@ interface Config {
     handleDel: HandleFn;
     handleUpdate: HandleFn;
     handleQuery: HandleFn;
+    handleExcel?: HandleFn;
     queryParam?: Param; // 查询参数
     customHandle?: {
         (data: BaseData, response: any): void;

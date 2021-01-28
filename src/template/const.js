@@ -9,7 +9,8 @@ const templateMap = {
     "{{query}}": "Query",
     "{{create}}": "Create",
     "{{del}}": "Del",
-    "{{update}}": "Update"
+    "{{update}}": "Update",
+    "{{export}}": "ExportExcel"
 };
 
 module.exports = {

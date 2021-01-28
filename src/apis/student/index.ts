@@ -53,8 +53,7 @@ const donwloadStudentInfo = (data: QueryParam): AxiosPromise => {
     return request({
         method: "post",
         url: "/student/download",
-        data,
-        responseType: "arraybuffer"
+        data
     });
 };
 

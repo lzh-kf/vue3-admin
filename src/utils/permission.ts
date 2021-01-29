@@ -45,7 +45,7 @@ function saveRoute(data: Array<Route>): void {
             component: () => import(`@/views${item.componentFilePath}/index.vue`)
         };
         router.addRoute('menu', route);
-        // addErrorRoute();
+        addErrorRoute();
     }
 }
 

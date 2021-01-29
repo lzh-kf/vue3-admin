@@ -27,6 +27,14 @@ function savePermissionInfo(menus: Array<Menus>, permissions: Array<string>, rou
     store.commit("setMenuNames", menuNames);
 }
 
+function addErrorRoute(): void {
+    router.addRoute('menu', {
+        path: "/:afterUser(.*)",
+        name: "error",
+        component: () => import(/* webpackChunkName: "error" */ "@/views/error/index.vue")
+    });
+}
+
 function saveRoute(data: Array<Route>): void {
     const { length } = data;
     for (let i = 0; i < length; i++) {
@@ -37,6 +45,7 @@ function saveRoute(data: Array<Route>): void {
             component: () => import(`@/views${item.componentFilePath}/index.vue`)
         };
         router.addRoute('menu', route);
+        // addErrorRoute();
     }
 }
 

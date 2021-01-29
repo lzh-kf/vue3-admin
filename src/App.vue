@@ -5,6 +5,6 @@
 <style>
 /* 默认主题色 */
 :root {
-  --theme-color: #409eff;
+  --theme-color: #A0A4C3;
 }
 </style>

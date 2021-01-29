@@ -15,6 +15,6 @@ const genderMap = {
 }
 
 // 默认主题色
-const defaultThemeColor = '#409eff'
+const defaultThemeColor = "#A0A4C3"
 
 export { uploadType, uploadFileSize, iconList, genderMap, defaultThemeColor }

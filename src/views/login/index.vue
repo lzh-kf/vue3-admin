@@ -135,10 +135,12 @@ h4 {
 .login {
   width: 100vw;
   height: 100vh;
+  background: url('../../assets/image/background.png') center no-repeat;
+  background-size: auto;
   .content {
     flex-wrap: wrap;
     .demo-ruleForm {
-      width: 320px;
+      width: 340px;
     }
     h4 {
       width: 100%;

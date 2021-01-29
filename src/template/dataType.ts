@@ -1,4 +1,4 @@
-`import { Rule } from '@/utils/base';
+`import { Rule } from '@/utils/base'
 
 // 查询参数
 interface Param {

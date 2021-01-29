@@ -1,6 +1,6 @@
-`import request from "@/utils/request";
-import { AxiosPromise } from 'axios';
-import { Pagination } from '@/utils/base';
+`import request from "@/utils/request"
+import { AxiosPromise } from 'axios'
+import { Pagination } from '@/utils/base'
 
 interface Data {
     [key: string]: unknown
@@ -52,4 +52,4 @@ const {{export}} = (data: QueryParam): AxiosPromise => {
 };
 
 
-export { {{create}}, {{update}}, {{del}}, {{query}}, {{export}} };`
+export { {{create}}, {{update}}, {{del}}, {{query}}, {{export}} }`

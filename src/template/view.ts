@@ -93,15 +93,15 @@
 </template>
 
 <script lang="ts">
-import getHandleFn from "@/utils/curd";
-import { defineComponent, reactive, toRefs, ref, nextTick, watch } from "vue";
-import { Config } from "@/utils/base";
-import { Data, Record, FormData } from "./dataType";
-import { {{create}}, {{del}}, {{update}}, {{query}}, {{export}} } from "@/apis/{{apiFilePath}}/index";
+import getHandleFn from "@/utils/curd"
+import { defineComponent, reactive, toRefs, ref, nextTick, watch } from "vue"
+import { Config } from "@/utils/base"
+import { Data, Record, FormData } from "./dataType"
+import { {{create}}, {{del}}, {{update}}, {{query}}, {{export}} } from "@/apis/{{apiFilePath}}/index"
 import lodash from "lodash";
 
 const formData: FormData = {
-};
+}
 
 // 配置项
 const config: Config = {
@@ -111,7 +111,7 @@ const config: Config = {
   handleQuery: {{query}},
   handleExcel: {{export}},
   queryParam: {},
-};
+}
 
 export default defineComponent({
   setup() {
@@ -121,7 +121,7 @@ export default defineComponent({
       formData: lodash.cloneDeep(formData), // 表单数据
       rules: {
       }, // 校验规则
-    });
+    })
     // 基础数据（分页数据），和增删改查处理函数，以及分页查询变化处理函数
     const {
       baseData,
@@ -133,32 +133,32 @@ export default defineComponent({
       handleSizeChange,
       handleCurrentChange,
       handleDialog,
-    } = getHandleFn(config);
+    } = getHandleFn(config)
 
     const handleSearch = () => {
-      config.queryParam = { ...data.param };
-      handleQuery();
-    };
+      config.queryParam = { ...data.param }
+      handleQuery()
+    }
 
     const handleReset = () => {
-      data.param = { ...formData };
-      handleSearch();
-    };
+      data.param = { ...formData }
+      handleSearch()
+    }
 
     const handleCreate = () => {
-      baseData.isCreated = true;
-      handleDialog(true);
-    };
+      baseData.isCreated = true
+      handleDialog(true)
+    }
 
     const handleEdit = (row: Record) => {
-      baseData.isCreated = false;
-      data.formData = lodash.cloneDeep(row);
-      handleDialog(true);
-    };
+      baseData.isCreated = false
+      data.formData = lodash.cloneDeep(row)
+      handleDialog(true)
+    }
 
     const handleDeleteEvent = (row: Record) => {
-      handleDel({ id: row._id });
-    };
+      handleDel({ id: row._id })
+    }
 
     const exportExcel = () => {
       handleExcel('{{moduleName}}.xls')
@@ -166,7 +166,7 @@ export default defineComponent({
 
     const handleCancel = () => {
       handleDialog(false)
-      data.formData = lodash.cloneDeep(formData);
+      data.formData = lodash.cloneDeep(formData)
       nextTick(ruleForm.value.clearValidate);
     };
 
@@ -181,15 +181,15 @@ export default defineComponent({
       ruleForm.value.validate((valid: boolean) => {
         if (valid) {
           if (baseData.isCreated) {
-            handleAdd(data.formData);
+            handleAdd(data.formData)
           } else {
-            handleUpdate(data.formData);
+            handleUpdate(data.formData)
           }
         }
-      });
-    };
+      })
+    }
 
-    handleSearch();
+    handleSearch()
 
     return {
       ...toRefs(data),
@@ -205,7 +205,7 @@ export default defineComponent({
       handleSubmit,
       handleSizeChange,
       handleCurrentChange,
-    };
+    }
   },
-});
+})
 </script>`

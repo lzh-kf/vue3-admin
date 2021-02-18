@@ -9,7 +9,7 @@
     "createPage": "node src/template/createApi.js&&node src/template/createView.js&&npm run serve"
   },
   "dependencies": {
-    "axios": "^0.21.0",
+    "axios": "^0.21.1",
     "blueimp-md5": "^2.18.0",
     "element-plus": "^1.0.1-beta.24",
     "lodash": "^4.17.20",

@@ -115,6 +115,7 @@ export default defineComponent({
       store.state.routeNames.forEach((name: string) => {
         router.removeRoute(name)
       })
+      router.removeRoute('error')
       sessionStorage.clear()
       setThemeColor.value.setThemeColor(defaultThemeColor)
       localStorage.clear()

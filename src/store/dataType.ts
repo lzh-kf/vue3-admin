@@ -19,9 +19,14 @@ interface Mutations {
     };
 }
 
+interface HandleFn {
+    <T>(store: T): void | any
+}
+
 interface Store {
     state: State;
     mutations: Mutations;
+    // plugins: Array<HandleFn>
 }
 
 export default Store

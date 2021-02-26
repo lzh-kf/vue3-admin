@@ -161,7 +161,7 @@ export default defineComponent({
     }
 
     const exportExcel = () => {
-      handleExcel('{{moduleName}}.xls')
+      handleExcel()
     }
 
     const handleCancel = () => {

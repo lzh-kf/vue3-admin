@@ -94,7 +94,7 @@ const getHandleFn = (config: Config) => {
     const handleExcel = (fileName = defaultFileName) => {
         if (config.handleExcel) {
             config.handleExcel(getQueryParam()).then(res => {
-                createBlob(res.data.data, fileName + '.xsl')
+                createBlob(res.data.data, fileName + '.xls')
             })
         }
     }

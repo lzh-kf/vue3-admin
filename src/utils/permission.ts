@@ -28,7 +28,7 @@ function savePermissionInfo(menus: Array<Menus>, permissions: Array<string>, rou
 }
 
 function addErrorRoute(): void {
-    router.addRoute('menu', {
+    router.addRoute({
         path: "/:afterUser(.*)",
         name: "error",
         component: () => import(/* webpackChunkName: "error" */ "@/views/error/index.vue")

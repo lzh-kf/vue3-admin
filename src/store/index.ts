@@ -1,5 +1,15 @@
-import { createStore } from 'vuex';
-import Store from './dataType';
+import { createStore } from 'vuex'
+import Store from './dataType'
+import { setSession } from '@/utils/cache'
+
+// vuex数据做持久化处理
+// const setStore = (store: any) => {
+//   const { state } = setSession
+//   state && store.replaceState(state)
+//   store.subscribe((mutation: string, state: Store) => {
+//     setSession.state = state
+//   })
+// }
 
 const store: Store = {
   state: {
@@ -25,7 +35,8 @@ const store: Store = {
     setMenuNames(state, data) {
       state.menuNames = data;
     }
-  }
+  },
+  // plugins: [setStore]
 }
 
 export default createStore(store)

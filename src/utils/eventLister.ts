@@ -1,4 +1,4 @@
-
+/* eslint-disable */
 interface Callback {
     (...args: Array<any>): void;
 }

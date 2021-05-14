@@ -23,3 +23,7 @@
   font-weight: 500;
 }
 
+.el-table--border th,
+.el-table--border td {
+  border-right: none !important;
+}

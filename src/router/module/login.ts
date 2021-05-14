@@ -1,15 +1,16 @@
-import { RouteRecordRaw } from 'vue-router';
+import { RouteRecordRaw } from 'vue-router'
 
 const login: Array<RouteRecordRaw> = [
   {
-    path: "/login",
-    name: "login",
-    component: () => import(/* webpackChunkName: "login" */ "@/views/login/index.vue")
+    path: '/login',
+    name: 'login',
+    component: () =>
+      import(/* webpackChunkName: "login" */ '@/views/login/index.vue')
   },
   {
-    path: "/",
-    redirect: "/login"
+    path: '/',
+    redirect: '/login'
   }
 ]
 
-export default login;
+export default login

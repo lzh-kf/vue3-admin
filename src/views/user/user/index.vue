@@ -34,7 +34,13 @@
         >
       </el-col>
     </el-row>
-    <el-table :data="list" style="width: 100%" v-loading="loading" border>
+    <el-table
+      :data="list"
+      style="width: 100%"
+      v-loading="loading"
+      border
+      :stripe="true"
+    >
       <el-table-column
         prop="userName"
         label="用户名"
@@ -122,7 +128,7 @@
           :rules="{
             required: isCreated,
             message: '请输入密码',
-            trigger: 'blur',
+            trigger: 'blur'
           }"
         >
           <el-input type="password" v-model="formData.password"></el-input>
@@ -158,7 +164,7 @@ import {
   userCreate,
   userDel,
   userUpdate,
-  userQuery,
+  userQuery
 } from '@/apis/user/user/index'
 import { allRoleQuery } from '@/apis/user/role/index'
 import lodash from 'lodash'
@@ -170,7 +176,7 @@ const formData: FormData = {
   sourcePassword: '',
   userAccount: '',
   email: '',
-  roleId: [],
+  roleId: []
 }
 // 配置项
 const config: Config = {
@@ -178,7 +184,7 @@ const config: Config = {
   handleDel: userDel,
   handleUpdate: userUpdate,
   handleQuery: userQuery,
-  queryParam: {},
+  queryParam: {}
 }
 
 export default defineComponent({
@@ -189,15 +195,15 @@ export default defineComponent({
       formData: lodash.cloneDeep(formData), // 表单数据
       rules: {
         userName: [
-          { required: true, message: '请输入用户名', trigger: 'blur' },
+          { required: true, message: '请输入用户名', trigger: 'blur' }
         ],
         userAccount: [
-          { required: true, message: '请输入用户账号', trigger: 'blur' },
+          { required: true, message: '请输入用户账号', trigger: 'blur' }
         ],
         email: [{ required: true, message: '请输入用户邮箱', trigger: 'blur' }],
-        roleId: [{ required: true, message: '请选择角色', trigger: 'change' }],
+        roleId: [{ required: true, message: '请选择角色', trigger: 'change' }]
       }, // 校验规则
-      roles: [],
+      roles: []
     })
     // 基础数据（分页数据），和增删改查处理函数，以及分页查询变化处理函数
     const {
@@ -208,7 +214,7 @@ export default defineComponent({
       handleQuery,
       handleSizeChange,
       handleCurrentChange,
-      handleDialog,
+      handleDialog
     } = getHandleFn(config)
 
     const handleSearch = () => {
@@ -291,8 +297,8 @@ export default defineComponent({
       handleCancel,
       handleSubmit,
       handleSizeChange,
-      handleCurrentChange,
+      handleCurrentChange
     }
-  },
+  }
 })
 </script>

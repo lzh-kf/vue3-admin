@@ -47,7 +47,7 @@
             }}</el-breadcrumb-item>
           </el-breadcrumb>
         </div>
-        <router-view aaa="123456" />
+        <router-view />
       </el-main>
     </el-container>
     <el-backtop target=".el-main" :bottom="100"> </el-backtop>
@@ -75,7 +75,7 @@ import {
   computed,
   ref,
   watch,
-  onUnmounted,
+  onUnmounted
 } from 'vue'
 
 import setThemeColor from './components/model/index.vue'
@@ -89,7 +89,7 @@ import eventLister from '@/eventLister'
 export default defineComponent({
   components: {
     setThemeColor,
-    searchMenu,
+    searchMenu
   },
   setup() {
     const router = useRouter()
@@ -100,7 +100,7 @@ export default defineComponent({
 
     const data = reactive<Data>({
       navs: [],
-      collapse: false,
+      collapse: false
     })
 
     const setThemeColor = ref()
@@ -129,12 +129,12 @@ export default defineComponent({
       ElMessageBox.confirm('确定退出该系统吗?', '退出确认框', {
         confirmButtonText: '确定',
         cancelButtonText: '取消',
-        type: 'info',
+        type: 'info'
       }).then(() => {
         logout().then(() => {
           removeData()
           router.replace({
-            path: '/',
+            path: '/'
           })
         })
       })
@@ -148,7 +148,10 @@ export default defineComponent({
       data.collapse = !data.collapse
     }
 
-    const getMenuNames = (path: string, data = store.state.menus) => {
+    const getMenuNames = (
+      path: string,
+      data = store.state.menus
+    ): Array<string> => {
       const result: Array<string> = []
       for (let i = 0; i < data.length; i++) {
         const item = data[i]
@@ -165,11 +168,7 @@ export default defineComponent({
     }
 
     const setNavs = () => {
-      if (setSession.names) {
-        data.navs = setSession.names
-      } else {
-        setSession.names = data.navs = getMenuNames(route.path)
-      }
+      setSession.names = data.navs = getMenuNames(route.path)
     }
 
     const emitEvent = () => {
@@ -187,7 +186,7 @@ export default defineComponent({
     watch(
       () => route.path,
       (path) => {
-        setSession.names = data.navs = getMenuNames(path)
+        data.navs = getMenuNames(path)
         emitEvent()
       }
     )
@@ -200,9 +199,9 @@ export default defineComponent({
       logoutSystem,
       setThemeColor,
       changeThemeColor,
-      setCollapse,
+      setCollapse
     }
-  },
+  }
 })
 </script>
 

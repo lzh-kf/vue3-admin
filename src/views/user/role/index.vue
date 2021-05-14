@@ -28,7 +28,13 @@
         >
       </el-col>
     </el-row>
-    <el-table :data="list" style="width: 100%" v-loading="loading" border>
+    <el-table
+      :data="list"
+      style="width: 100%"
+      v-loading="loading"
+      border
+      :stripe="true"
+    >
       <el-table-column
         prop="roleName"
         label="角色名"
@@ -58,12 +64,12 @@
           <el-button @click="handleEdit(row)" v-permission="'role.update'">
             <i class="iconfont icon-bianji"></i>编辑</el-button
           >
-          <el-popconfirm
-            title="确定删除吗？"
-            @confirm="handleDeleteEvent(row)"
-          >
+          <el-popconfirm title="确定删除吗？" @confirm="handleDeleteEvent(row)">
             <template #reference>
-              <el-button type="danger" style="margin-left: 10px" v-permission="'role.del'"
+              <el-button
+                type="danger"
+                style="margin-left: 10px"
+                v-permission="'role.del'"
                 ><i class="iconfont icon--delete"></i>删除</el-button
               >
             </template>
@@ -87,7 +93,7 @@
         :title="isCreated ? '创建角色' : '编辑角色'"
         v-model="visible"
         width="37%"
-        :destroy-on-close="true"
+        :before-close="beforeClose"
       >
         <el-form
           :model="formData"
@@ -100,26 +106,32 @@
             <el-input v-model="formData.roleName"></el-input>
           </el-form-item>
           <el-form-item label="菜单" prop="menuIds">
-            <el-tree
-              :data="menus"
-              show-checkbox
-              node-key="menuId"
-              ref="menuTree"
-              :default-checked-keys="formData.menuIds"
-              :props="defaultProps"
-            >
-            </el-tree>
+            <el-scrollbar>
+              <el-tree
+                style="max-height: 350px"
+                :default-expand-all="true"
+                :data="menus"
+                show-checkbox
+                node-key="menuId"
+                ref="menuTree"
+                :props="defaultProps"
+              >
+              </el-tree>
+            </el-scrollbar>
           </el-form-item>
           <el-form-item label="权限" prop="permissionIds">
-            <el-tree
-              :data="actions"
-              show-checkbox
-              node-key="menuId"
-              ref="permissionTree"
-              :default-checked-keys="formData.permissionIds"
-              :props="defaultProps"
-            >
-            </el-tree>
+            <el-scrollbar>
+              <el-tree
+                style="max-height: 350px"
+                :default-expand-all="true"
+                :data="actions"
+                show-checkbox
+                node-key="menuId"
+                ref="permissionTree"
+                :props="defaultProps"
+              >
+              </el-tree>
+            </el-scrollbar>
           </el-form-item>
         </el-form>
         <template #footer>
@@ -145,13 +157,13 @@ import {
   roleCreate,
   roleDel,
   roleUpdate,
-  roleQuery,
+  roleQuery
 } from '@/apis/user/role/index'
 
 const formData: FormData = {
   roleName: '',
   menuIds: [],
-  permissionIds: [],
+  permissionIds: []
 }
 
 // 配置项
@@ -160,7 +172,7 @@ const config: Config = {
   handleDel: roleDel,
   handleUpdate: roleUpdate,
   handleQuery: roleQuery,
-  queryParam: {},
+  queryParam: {}
 }
 
 export default defineComponent({
@@ -172,16 +184,14 @@ export default defineComponent({
       param: { roleName: '' }, // 查询参数
       formData: lodash.cloneDeep(formData), // 表单数据
       rules: {
-        roleName: [
-          { required: true, message: '请输入角色名', trigger: 'blur' },
-        ],
+        roleName: [{ required: true, message: '请输入角色名', trigger: 'blur' }]
       }, // 校验规则
       defaultProps: {
         children: 'children',
-        label: 'menuName',
+        label: 'menuName'
       },
       menus: [],
-      actions: [],
+      actions: []
     })
 
     // 基础数据（分页数据），和增删改查处理函数，以及分页查询变化处理函数
@@ -193,7 +203,7 @@ export default defineComponent({
       handleQuery,
       handleSizeChange,
       handleCurrentChange,
-      handleDialog,
+      handleDialog
     } = getHandleFn(config)
 
     const handleSearch = () => {
@@ -224,7 +234,26 @@ export default defineComponent({
     const handleEdit = (row: Record) => {
       baseData.isCreated = false
       data.formData = lodash.cloneDeep(row)
+      nextTick(() => {
+        data.formData.menuIds.forEach((item) => {
+          const node = menuTree.value.getNode(item)
+          if (node.isLeaf) {
+            menuTree.value.setChecked(node, true)
+          }
+        })
+        data.formData.permissionIds.forEach((item) => {
+          const node = permissionTree.value.getNode(item)
+          if (node.isLeaf) {
+            permissionTree.value.setChecked(node, true)
+          }
+        })
+      })
       handleDialog(true)
+    }
+    const beforeClose = (done: { (): void }) => {
+      permissionTree.value.setCheckedKeys([])
+      menuTree.value.setCheckedKeys([])
+      done()
     }
 
     const handleDeleteEvent = (row: Record) => {
@@ -289,7 +318,8 @@ export default defineComponent({
       handleCurrentChange,
       menuTree,
       permissionTree,
+      beforeClose
     }
-  },
+  }
 })
 </script>

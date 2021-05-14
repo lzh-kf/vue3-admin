@@ -11,9 +11,11 @@
   "dependencies": {
     "axios": "^0.21.0",
     "blueimp-md5": "^2.18.0",
-    "element-plus": "^1.0.1-beta.24",
+    "element-plus": "^1.0.2-beta.42",
     "lodash": "^4.17.20",
     "normalize.css": "^8.0.1",
+    "nprogress": "^0.2.0",
+    "tslib": "^2.2.0",
     "vue": "^3.0.5",
     "vue-router": "^4.0.0-0",
     "vuex": "^4.0.0-0"
@@ -22,6 +24,7 @@
     "@types/axios": "^0.14.0",
     "@types/blueimp-md5": "^2.7.0",
     "@types/lodash": "^4.14.165",
+    "@types/nprogress": "^0.2.0",
     "@typescript-eslint/eslint-plugin": "^2.33.0",
     "@typescript-eslint/parser": "^2.33.0",
     "@vue/babel-helper-vue-jsx-merge-props": "^1.2.1",

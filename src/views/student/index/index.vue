@@ -54,7 +54,7 @@
         >
       </el-col>
     </el-row>
-    <el-table :data="list" v-loading="loading" border>
+    <el-table :data="list" v-loading="loading" border :stripe="true">
       <el-table-column
         prop="name"
         label="姓名"
@@ -171,7 +171,7 @@ import {
   studentUpdate,
   studentdel,
   studentQuery,
-  donwloadStudentInfo,
+  donwloadStudentInfo
 } from '@/apis/student'
 import lodash from 'lodash'
 
@@ -179,7 +179,7 @@ const formData: FormData = {
   name: '',
   gender: '',
   interest: '',
-  class: '',
+  class: ''
 }
 
 // 配置项
@@ -189,7 +189,7 @@ const config: Config = {
   handleUpdate: studentUpdate,
   handleQuery: studentQuery,
   handleExcel: donwloadStudentInfo,
-  queryParam: {},
+  queryParam: {}
 }
 
 export default defineComponent({
@@ -203,8 +203,8 @@ export default defineComponent({
         name: [{ required: true, message: '请输入名字', trigger: 'blur' }],
         class: [{ required: true, message: '请输入班级', trigger: 'blur' }],
         interest: [{ required: true, message: '请输入兴趣', trigger: 'blur' }],
-        gender: [{ required: true, message: '请选择性别', trigger: 'change' }],
-      }, // 校验规则
+        gender: [{ required: true, message: '请选择性别', trigger: 'change' }]
+      } // 校验规则
     })
 
     // 基础数据（分页数据），和增删改查处理函数，以及分页查询变化处理函数
@@ -217,7 +217,7 @@ export default defineComponent({
       handleExcel,
       handleSizeChange,
       handleCurrentChange,
-      handleDialog,
+      handleDialog
     } = getHandleFn(config)
 
     const handleSearch = () => {
@@ -296,8 +296,8 @@ export default defineComponent({
       handleSubmit,
       handleSizeChange,
       handleCurrentChange,
-      formatterGender,
+      formatterGender
     }
-  },
+  }
 })
 </script>

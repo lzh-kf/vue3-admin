@@ -40,11 +40,21 @@ export default defineComponent({
       return true
     }
 
-    const handleUploadFile = ({ file }: UploadFile): void => {
-      const formData = new FormData()
-      formData.append('file', file)
-      uploadFile(formData).then((res) => {
-        imgUrl.value = res.data[0].path
+    const handleUploadFile = (File: UploadFile): void => {
+      const reader = new FileReader()
+      reader.readAsArrayBuffer(File.file)
+      reader.addEventListener('loadend', (res: any) => {
+        const result = res.target.result
+        const condition: number = Math.ceil(result.byteLength / 1024)
+        for (let i = 0; i < condition; i++) {
+          const bytes = result.slice(i * 1024, (i + 1) * 1024)
+          const formData = new FormData()
+          const blod = new Blob([bytes], { type: 'application/octet-stream' })
+          formData.append('file', blod)
+          uploadFile(formData).then((res) => {
+            imgUrl.value = res.data[0].path
+          })
+        }
       })
     }
 

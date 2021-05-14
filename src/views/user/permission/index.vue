@@ -6,48 +6,42 @@
           @click="handleCreate"
           type="primary"
           v-permission="'permission.create'"
+          style="margin: 15px 0; text-align: right"
         >
           <i class="iconfont icon-zengjiaxinzeng"></i>
           创建权限</el-button
         >
       </el-col>
     </el-row>
-    <el-tree
-      :data="list"
-      node-key="menuId"
-      empty-text="暂无权限菜单"
-      default-expand-all
-      :expand-on-click-node="false"
-    >
-      <template #default="{ data }">
-        <span>
-          <span style="font-size: 12px; margin-right: 10px">{{
-            data.menuName
-          }}</span>
-          <el-button
-            type="text"
-            @click="handleEdit(data)"
-            v-if="data.permissionId"
-            v-permission="'permission.update'"
-            >编辑</el-button
-          >
+    <el-table :data="list" row-key="menuId" border :stripe="true">
+      <el-table-column prop="menuName" label="菜单名" />
+      <el-table-column prop="icon" label="图标">
+        <template #default="{ row }">
+          <i :class="'iconfont ' + row.icon" />
+        </template>
+      </el-table-column>
+      <el-table-column prop="path" label="路由路径" />
+      <el-table-column prop="componentFilePath" label="文件夹路径" />
+      <el-table-column prop="createTime" label="创建时间" />
+      <el-table-column prop="updateTime" label="更新时间" />
+      <el-table-column label="操作" align="center">
+        <template #default="{ row }">
+          <el-button v-permission="'permission.update'" @click="handleEdit(row)"
+            ><i class="iconfont icon-bianji"></i>修改
+          </el-button>
           <el-popconfirm
-            v-if="data.permissionId"
             title="确定删除吗？"
             @confirm="handleDeleteEvent(data)"
           >
             <template #reference>
-              <el-button
-                type="text"
-                style="margin-left: 10px"
-                v-permission="'permission.del'"
-                >删除</el-button
+              <el-button type="danger" v-permission="'permission.del'"
+                ><i class="iconfont icon--delete"></i>删除</el-button
               >
             </template>
           </el-popconfirm>
-        </span>
-      </template>
-    </el-tree>
+        </template>
+      </el-table-column>
+    </el-table>
     <el-dialog
       :title="isCreated ? '创建权限' : '编辑权限'"
       v-model="visible"
@@ -95,7 +89,7 @@ import {
   permissionCreate,
   permissionDel,
   permissionUpdate,
-  permissionQuery,
+  permissionQuery
 } from '@/apis/user/permission/index'
 import { findParentElement, Result, Menu } from '@/utils'
 import lodash from 'lodash'
@@ -103,7 +97,7 @@ import lodash from 'lodash'
 const formData: FormData = {
   action: '',
   permissionName: '',
-  ids: [],
+  ids: []
 }
 
 // 配置项
@@ -115,7 +109,7 @@ const config: Config = {
   queryParam: {},
   customHandle: (baseData, res) => {
     baseData.list = res.data
-  },
+  }
 }
 
 export default defineComponent({
@@ -125,18 +119,18 @@ export default defineComponent({
       formData: lodash.cloneDeep(formData), // 表单数据
       rules: {
         action: [
-          { required: true, message: '请输入权限行为', trigger: 'blur' },
+          { required: true, message: '请输入权限行为', trigger: 'blur' }
         ],
         permissionName: [
-          { required: true, message: '请输入权限名', trigger: 'blur' },
+          { required: true, message: '请输入权限名', trigger: 'blur' }
         ],
-        ids: [{ required: true, message: '请选择所属页面', trigger: 'change' }],
+        ids: [{ required: true, message: '请选择所属页面', trigger: 'change' }]
       }, // 校验规则
       customProps: {
         label: 'menuName',
         value: 'menuId',
-        checkStrictly: true,
-      },
+        checkStrictly: true
+      }
     })
     // 基础数据（分页数据），和增删改查处理函数，以及分页查询变化处理函数
     const {
@@ -147,7 +141,7 @@ export default defineComponent({
       handleQuery,
       handleSizeChange,
       handleCurrentChange,
-      handleDialog,
+      handleDialog
     } = getHandleFn(config)
 
     const handleCreate = () => {
@@ -224,9 +218,9 @@ export default defineComponent({
       handleCancel,
       handleSubmit,
       handleSizeChange,
-      handleCurrentChange,
+      handleCurrentChange
     }
-  },
+  }
 })
 </script>
 

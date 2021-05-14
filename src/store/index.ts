@@ -1,6 +1,6 @@
 import { createStore } from 'vuex'
 import Store from './dataType'
-import { setSession } from '@/utils/cache'
+// import { setSession } from '@/utils/cache'
 
 // vuex数据做持久化处理
 // const setStore = (store: any) => {
@@ -21,21 +21,21 @@ const store: Store = {
   },
   mutations: {
     setPermissions(state, data) {
-      state.permissions = data;
+      state.permissions = data
     },
     setMenus(state, data) {
-      state.menus = data;
+      state.menus = data
     },
     setUser(state, data) {
-      state.user = data;
+      state.user = data
     },
     setRouteNames(state, data) {
-      state.routeNames = data;
+      state.routeNames = data
     },
     setMenuNames(state, data) {
-      state.menuNames = data;
+      state.menuNames = data
     }
-  },
+  }
   // plugins: [setStore]
 }
 

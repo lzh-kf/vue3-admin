@@ -6,44 +6,37 @@
           @click="handleCreate"
           type="primary"
           v-permission="'menu.create'"
+          style="margin: 15px 0; text-align: right"
           ><i class="iconfont icon-zengjiaxinzeng"></i>创建菜单</el-button
         >
       </el-col>
     </el-row>
-    <el-tree
-      :data="list"
-      node-key="menuId"
-      empty-text="暂无菜单"
-      default-expand-all
-      :expand-on-click-node="false"
-    >
-      <template #default="{ data }">
-        <span>
-          <span style="font-size: 12px; margin-right: 10px">{{
-            data.menuName
-          }}</span>
-          <el-button
-            type="text"
-            v-permission="'menu.update'"
-            @click="handleEdit(data)"
-            >编辑</el-button
-          >
-          <el-popconfirm
-            title="确定删除吗？"
-            @confirm="handleDeleteEvent(data)"
-          >
+    <el-table :data="list" row-key="menuId" border :stripe="true">
+      <el-table-column prop="menuName" label="菜单名" />
+      <el-table-column prop="icon" label="图标">
+        <template #default="{ row }">
+          <i :class="'iconfont ' + row.icon" />
+        </template>
+      </el-table-column>
+      <el-table-column prop="path" label="路由路径" />
+      <el-table-column prop="componentFilePath" label="文件夹路径" />
+      <el-table-column prop="createTime" label="创建时间" />
+      <el-table-column prop="updateTime" label="更新时间" />
+      <el-table-column label="操作" align="center">
+        <template #default="{ row }">
+          <el-button v-permission="'menu.update'" @click="handleEdit(row)"
+            ><i class="iconfont icon-bianji"></i>修改
+          </el-button>
+          <el-popconfirm title="确定删除吗？" @confirm="handleDeleteEvent(row)">
             <template #reference>
-              <el-button
-                type="text"
-                style="margin-left: 10px"
-                v-permission="'menu.del'"
-                >删除</el-button
+              <el-button type="danger" v-permission="'menu.del'"
+                ><i class="iconfont icon--delete"></i>删除</el-button
               >
             </template>
           </el-popconfirm>
-        </span>
-      </template>
-    </el-tree>
+        </template>
+      </el-table-column>
+    </el-table>
     <el-dialog
       :title="isCreated ? '创建菜单' : '编辑菜单'"
       v-model="visible"
@@ -106,7 +99,7 @@ import {
   menuCreate,
   menuDel,
   menuUpdate,
-  menuQuery,
+  menuQuery
 } from '@/apis/user/menu/index'
 import lodash from 'lodash'
 import { findParentElement, Result, Menu } from '@/utils'
@@ -117,7 +110,7 @@ const formData: FormData = {
   path: '',
   ids: [],
   componentFilePath: '',
-  icon: 'icon-morentubiao',
+  icon: 'icon-morentubiao'
 }
 
 // 配置项
@@ -129,7 +122,7 @@ const config: Config = {
   queryParam: {},
   customHandle: (baseData, res) => {
     baseData.list = res.data
-  },
+  }
 }
 
 export default defineComponent({
@@ -139,20 +132,20 @@ export default defineComponent({
       formData: lodash.cloneDeep(formData), // 表单数据
       rules: {
         menuName: [
-          { required: true, message: '请输入菜单名', trigger: 'blur' },
+          { required: true, message: '请输入菜单名', trigger: 'blur' }
         ],
         path: [{ required: true, message: '请输入页面路径', trigger: 'blur' }],
         componentFilePath: [
-          { required: true, message: '请输入组件路径', trigger: 'blur' },
+          { required: true, message: '请输入组件路径', trigger: 'blur' }
         ],
-        icon: [{ required: true, message: '请选择图标', trigger: 'change' }],
+        icon: [{ required: true, message: '请选择图标', trigger: 'change' }]
       }, // 校验规则
       customProps: {
         label: 'menuName',
         value: 'menuId',
-        checkStrictly: true,
+        checkStrictly: true
       },
-      iconList,
+      iconList
     })
     // 基础数据（分页数据），和增删改查处理函数，以及分页查询变化处理函数
     const {
@@ -163,7 +156,7 @@ export default defineComponent({
       handleQuery,
       handleSizeChange,
       handleCurrentChange,
-      handleDialog,
+      handleDialog
     } = getHandleFn(config)
 
     const handleCreate = () => {
@@ -240,9 +233,9 @@ export default defineComponent({
       handleCancel,
       handleSubmit,
       handleSizeChange,
-      handleCurrentChange,
+      handleCurrentChange
     }
-  },
+  }
 })
 </script>
 

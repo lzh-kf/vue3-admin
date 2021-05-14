@@ -1,12 +1,14 @@
-import { RouteRecordRaw } from 'vue-router';
+import { RouteRecordRaw } from 'vue-router'
+import { __spreadArray } from 'tslib'
 
 function getRoutes(): Array<RouteRecordRaw> {
-  const files = require.context("./module", false, /\.ts$/);
-  const routes: Array<RouteRecordRaw> = [];
+  const files = require.context('./module', false, /\.ts$/)
+  const routes: Array<RouteRecordRaw> = []
   files.keys().forEach((key: string) => {
-    routes.push(...files(key).default);
-  });
-  return routes;
+    const currentRoute: Array<RouteRecordRaw> = files(key).default
+    __spreadArray(routes, currentRoute)
+  })
+  return routes
 }
 
-export default getRoutes;
+export default getRoutes

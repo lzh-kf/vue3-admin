@@ -20,7 +20,7 @@ interface Mutations {
 }
 
 interface HandleFn {
-    <T>(store: T): void | any
+    <T>(store: T): void | any;
 }
 
 interface Store {

@@ -2,7 +2,9 @@
   <div class="error">
     <img src="../../assets/image/404.png" alt="404" />
     <p>页面路径匹配错误</p>
-    <el-button type="primary" @click="goBack" style="margin-left: 10px">返回上一级</el-button>
+    <el-button type="primary" @click="goBack" style="margin-left: 10px"
+      >返回上一级</el-button
+    >
   </div>
 </template>
 
@@ -17,9 +19,9 @@ export default defineComponent({
       Router.go(-1)
     }
     return {
-      goBack,
+      goBack
     }
-  },
+  }
 })
 </script>
 

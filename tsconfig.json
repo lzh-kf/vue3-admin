@@ -15,7 +15,8 @@
       "webpack-env",
       "lodash",
       "blueimp-md5",
-      "axios"
+      "axios",
+      "nprogress"
     ],
     "paths": {
       "@/*": [
@@ -35,8 +36,10 @@
     "src/**/*.vue",
     "tests/**/*.ts",
     "tests/**/*.tsx",
-    "src/template/createApi.js"
-, "vue.config.js"  ],
+    "src/template/createApi.js",
+    "vue.config.js",
+    "src/views/test/index.js"
+  ],
   "exclude": [
     "node_modules"
   ]
